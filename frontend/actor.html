@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/actor.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar--logo">
+        <a href="#">AcVis</a>
+    </div>
+    <div class="navbar__links" id="navbarLinks">
+        <a href="#">Dummy 1</a>
+        <a href="#">Dummy 2</a>
+        <a href="#">Dummy 3</a>
+        <a href="#">Login</a>
+    </div>
+    <button class="navbar--toggle" id="navbarToggle">☰</button>
+</nav>
+
+    <div class="actor-profile">
+        <img src="img/jdepp.jpg" alt="johnny depp" class="actor-profile--image">
+        <div class="actor-profile--name">
+            <h1>Johnny Depp</h1>
+        </div>
+    </div>
+    <div class="description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur autem blanditiis, commodi dicta earum esse fugiat illum in ipsa ipsam ipsum itaque libero nam nesciunt nostrum, numquam odio perspiciatis porro qui tenetur vel voluptatum? A consequuntur distinctio dolor doloremque, eos ex illo illum impedit in itaque laborum magnam, necessitatibus nesciunt nobis obcaecati officiis omnis perspiciatis provident quae rem repellat reprehenderit similique suscipit tempora, temporibus ut voluptas! A accusamus alias autem cum delectus dolorem dolores enim eos est hic illo ipsa itaque necessitatibus neque nesciunt, nihil optio placeat provident qui quidem quis quod repellendus repudiandae saepe sed unde vel veniam!
+    </div>
+    <div class="news-container">
+        <p>Recent news:</p>
+        <div class="news-container__news">
+            <img src="img/jdepp.jpg" alt="johnny depp photo" class="news-container--image">
+            <p class="news-container--title">News Title</p>
+        </div>
+        <div class="news-container__news">
+            <img src="img/jdepp.jpg" alt="johnny depp photo" class="news-container--image">
+            <p class="news-container--title">News Title</p>
+        </div>
+    </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarLinks = document.getElementById('navbarLinks');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
