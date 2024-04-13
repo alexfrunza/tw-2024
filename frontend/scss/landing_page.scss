@@ -1,0 +1,87 @@
+@import 'vars';
+
+.hero {
+  margin-top: 20px;
+  margin-bottom: 100px;
+
+  @at-root #{&}__text {
+  }
+
+  @at-root #{&}--title {
+    @include text-5xl;
+    margin-bottom: 30px;
+  }
+
+  @at-root #{&}--highlight {
+    color: $color-h-1;
+  }
+
+  @at-root #{&}--description {
+    @include text-2xl;
+    margin-bottom: 30px;
+  }
+
+  @at-root #{&}--button {
+    @include text-3xl;
+    padding: 10px 40px;
+    border-radius: 30px;
+    background-color: $color-h-1;
+    color: #0A0019;
+  }
+
+  @at-root #{&}--img {
+    border-radius: 30px;
+    width: 350px;
+    display: none;
+  }
+
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    @at-root #{&}--img {
+      display: block;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    gap: 100px;
+
+    @at-root #{&}--img {
+      width: 500px;
+    }
+  }
+}
+
+.about-sag {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+
+  @at-root #{&}--title {
+    @include text-3xl;
+    display: inline-block;
+    margin: 0 auto 30px auto;
+  }
+
+  @at-root #{&}--description {
+    @include text-xl;
+    margin-bottom: 30px;
+  }
+
+  @at-root #{&}--image {
+    border-radius: 30px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @media only screen and (min-width: 600px) {
+    @at-root #{&}--image {
+      width: 80%;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+  }
+}
