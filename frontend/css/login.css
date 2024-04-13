@@ -1,0 +1,81 @@
+.login-section {
+  margin: 100px 0;
+}
+.login-section__art {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.login-section__art--img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.login-section__art--title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.login-section--image {
+  border-radius: 30px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.login-section--title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 20px;
+}
+
+.login-section--form {
+  display: flex;
+  flex-direction: column;
+}
+.login-section--form > * {
+  margin-bottom: 10px;
+}
+
+.login-section--input {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #3A0F3C;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #fdfdfd;
+}
+
+.login-section--button {
+  display: flex;
+  flex-direction: column;
+  background-color: #E62168;
+  width: 50%;
+  align-self: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #fdfdfd;
+}
+
+@media only screen and (min-width: 600px) {
+  .login-section {
+    display: flex;
+    gap: 100px;
+  }
+  .login-section__form {
+    margin-right: 20px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .login-section {
+    gap: 200px;
+  }
+  .login-section__form {
+    margin-right: 100px;
+  }
+}
+
+/*# sourceMappingURL=login.css.map */

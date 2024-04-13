@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="navbar--logo">
+            <a href="#">AcVis</a>
+        </div>
+        <div class="navbar__links" id="navbarLinks">
+            <a href="#">Dummy 1</a>
+            <a href="#">Dummy 2</a>
+            <a href="#">Dummy 3</a>
+            <a href="#">Login</a>
+        </div>
+        <button class="navbar--toggle" id="navbarToggle">☰</button>
+    </nav>
+
+    <div class="login-section">
+        <div class="login-section__art">
+            <img src="./img/micah-williams-lmFJOx7hPc4-unsplash.jpg" alt="Hero Image" class="login-section__art--img">
+            <h2 class="login-section__art--title"> Keep in touch with the actors </h2>
+        </div>
+        <div class="login-section__form">
+            <h2 class="login-section--title">Login</h2>
+            <form action="/login" method="post" class="login-section--form">
+                <label for="username" class="login-section--label">Username:</label>
+                <input type="text" id="username" name="username" class="login-section--input" required>
+                <label for="password" class="login-section--label">Password:</label>
+                <input type="password" id="password" name="password" class="login-section--input" required>
+                <button type="submit" class="login-section--button">Login</button>
+            </form>
+        </div>
+    </div>
+
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="./js/index.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarLinks = document.getElementById('navbarLinks');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    });
+
+</script>
+</body>
+</html>
