@@ -1,0 +1,80 @@
+@import 'vars';
+
+.login-section {
+  margin: 100px 0;
+
+
+  @at-root #{&}__art {
+    @include text-3xl;
+  }
+
+  @at-root #{&}__art--img {
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  @at-root #{&}__art--title {
+    @include text-3xl;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  @at-root #{&}--image {
+    border-radius: 30px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @at-root #{&}--title {
+    @include text-3xl;
+    margin-bottom: 20px;
+  }
+
+  @at-root #{&}--form {
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+      margin-bottom: 10px;
+    }
+  }
+
+  @at-root #{&}--input {
+    @include text-xl;
+    display: flex;
+    flex-direction: column;
+    background-color: $bg-2;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: $font-color-1;
+  }
+
+  @at-root #{&}--button {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-h-2;
+    width: 50%;
+    align-self: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: $font-color-1;
+  }
+
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    gap: 100px;
+
+    @at-root #{&}__form {
+      margin-right: 20px
+    }
+
+  }
+
+  @media only screen and (min-width: 1024px) {
+    gap: 200px;
+
+    @at-root #{&}__form {
+      margin-right: 100px;
+    }
+  }
+}
