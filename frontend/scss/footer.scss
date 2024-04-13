@@ -1,13 +1,69 @@
 @import 'vars';
 
 .footer {
-  @at-root #{&}__links {
-    background-color: $footer-links-background;
+  padding: 10px;
 
+  @at-root #{&}__links-section {
+    background-color: $footer-links-background;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 30px;
+  }
+
+  @at-root #{&}--social-icon {
+    width: 32px;
+    height: 32px;
+    margin: 10px 20px 10px 0;
+  }
+
+  @at-root #{&}--link, {
+    text-decoration: none;
+    margin-bottom: 10px;
+
+    &:visited {
+      text-decoration: none;
+    }
+
+    @include text-xl;
+    color: $font-color-2;
+  }
+
+  @at-root #{&}--info-text {
+    margin-bottom: 10px;
   }
 
   @at-root #{&}--title {
-    @include text-5xl;
+    @include text-6xl;
+    margin-bottom: 10px;
     color: $color-h-5;
+  }
+
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    justify-content: space-around;
+    // add gap between elements
+    gap: 20px;
+
+    @at-root #{&}--text {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    @at-root #{&}--social-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    @at-root #{&}__links-section {
+      min-width: 300px;
+    }
+
+    @at-root #{&}--info-text {
+      @include text-xl;
+    }
   }
 }

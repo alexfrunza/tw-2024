@@ -12,4 +12,11 @@ body {
   color: #fdfdfd;
 }
 
+a {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=index.css.map */
