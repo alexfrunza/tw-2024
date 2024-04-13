@@ -16,12 +16,9 @@ navBarTemplate.innerHTML = `
 
 class Navbar extends HTMLElement {
     constructor() {
-        super()
-        this.attachShadow({mode: 'open'})
-        this.shadowRoot.appendChild(template.content.cloneNode(true))
+        super();
+        this.appendChild(navBarTemplate.content.cloneNode(true));
     }
 }
-
-customElements.define('Navbar', Navbar)
 
 export default Navbar;
