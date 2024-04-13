@@ -52,3 +52,19 @@
     @include text-xl;
   }
 }
+
+.news-container {
+  @include text-2xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &--image {
+    width: 25%;
+  }
+
+  &__news {
+    display: flex;
+    align-items: center;
+  }
+}

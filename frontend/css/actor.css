@@ -55,4 +55,19 @@
   }
 }
 
+.news-container {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.news-container--image {
+  width: 25%;
+}
+.news-container__news {
+  display: flex;
+  align-items: center;
+}
+
 /*# sourceMappingURL=actor.css.map */
