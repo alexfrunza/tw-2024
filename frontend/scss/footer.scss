@@ -1,0 +1,11 @@
+$footer-links-background: #261331;
+
+.footer {
+  @at-root #{&}__links {
+    background-color: $footer-links-background;
+  }
+
+  @at-root #{&}--modifier {
+    color: red;
+  }
+}

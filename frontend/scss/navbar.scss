@@ -1,0 +1,9 @@
+.block {
+  @at-root #{&}__element {
+    maring: 10px;
+  }
+
+  @at-root #{&}--modifier {
+    color: blue;
+  }
+}
