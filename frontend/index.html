@@ -13,23 +13,53 @@
 
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/landing_page.css">
     <link rel="stylesheet" type="text/css" href="./css/footer.css">
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="navbar--logo">
-        <a href="#">AcVis</a>
+<div class="container">
+    <nav class="navbar">
+        <div class="navbar--logo">
+            <a href="#">AcVis</a>
+        </div>
+        <div class="navbar__links" id="navbarLinks">
+            <a href="#">Dummy 1</a>
+            <a href="#">Dummy 2</a>
+            <a href="#">Dummy 3</a>
+            <a href="#">Login</a>
+        </div>
+        <button class="navbar--toggle" id="navbarToggle">☰</button>
+    </nav>
+
+    <div class="hero">
+        <div class="hero__text">
+            <h2 class="hero--title">Curious to learn more about your <span
+                    class="hero--highlight">favourite actors</span>?</h2>
+            <p class="hero--description">Hollywood actors captivate audiences worldwide with their talent and charisma.
+                They bring stories to life, creating unforgettable moments that resonate with people of all ages and
+                cultures.</p>
+            <a href="#" class="hero--button">Learn more...</a>
+        </div>
+        <img src="./img/nikhil-mistry-z8Iw_NVO2ss-unsplash.jpg" alt="Hero Image" class="hero--img">
     </div>
-    <div class="navbar__links" id="navbarLinks">
-        <a href="#">Dummy 1</a>
-        <a href="#">Dummy 2</a>
-        <a href="#">Dummy 3</a>
-        <a href="#">Login</a>
+
+    <div class="about-sag">
+        <h2 class="about-sag--title">What is Screen Actors Guild?</h2>
+        <p class="about-sag--description">The Screen Actors Guild (SAG) was an American labor union which represented
+            over 100,000 film and television principal and background performers worldwide. On March 30, 2012, the union
+            leadership announced that the SAG membership voted to merge with the American Federation of Television and
+            Radio Artists (AFTRA) to create SAG-AFTRA. According to SAG's Mission Statement, the Guild sought to:
+            negotiate and enforce collective bargaining agreements that establish equitable levels of compensation,
+            benefits, and working conditions for its performers.</p>
+        <img src="./img/The-23rd-Annual-Screen-Actors-Guild-Awards-Show-Los-Angeles-USA-29-Jan-2017-387510169.jpg"
+             alt="Image with actors" class="about-sag--image">
+
     </div>
-    <button class="navbar--toggle" id="navbarToggle">☰</button>
-</nav>
-<app-footer></app-footer>
+
+
+    <app-footer></app-footer>
+</div>
 
 <script type="module" src="./js/index.js"></script>
 <script>

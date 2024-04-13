@@ -1,7 +1,7 @@
 @import 'vars';
 
 .footer {
-  padding: 10px;
+  margin-bottom: 30px;
 
   @at-root #{&}__links-section {
     background-color: $footer-links-background;
