@@ -2,8 +2,10 @@
   background-color: #261331;
 }
 
-.footer--modifier {
-  color: red;
+.footer--title {
+  font-size: 3rem;
+  line-height: 1;
+  color: #FFCC33;
 }
 
 /*# sourceMappingURL=footer.css.map */

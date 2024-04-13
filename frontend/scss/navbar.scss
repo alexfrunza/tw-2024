@@ -1,3 +1,5 @@
+@import 'vars';
+
 .block {
   @at-root #{&}__element {
     maring: 10px;
