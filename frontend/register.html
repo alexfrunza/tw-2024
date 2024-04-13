@@ -13,8 +13,8 @@
 
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="./css/landing_page.css">
     <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/register.css">
 </head>
 <body>
 
@@ -32,6 +32,24 @@
         <button class="navbar--toggle" id="navbarToggle">☰</button>
     </nav>
 
+    <div class="register-section">
+        <div class="register-section__art">
+            <img src="./img/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg" alt="Hero Image" class="register-section__art--img">
+            <h2 class="register-section__art--title"> Create your account now! </h2>
+        </div>
+        <div class="register-section__form">
+            <h2 class="register-section--title">Register</h2>
+            <form action="/register" method="post" class="register-section--form">
+                <label for="email" class="register-section--label">Email:</label>
+                <input type="text" id="email" name="email" class="register-section--input" required>
+                <label for="username" class="register-section--label">Username:</label>
+                <input type="text" id="username" name="username" class="register-section--input" required>
+                <label for="password" class="register-section--label">Password:</label>
+                <input type="password" id="password" name="password" class="register-section--input" required>
+                <button type="submit" class="register-section--button">Register</button>
+            </form>
+        </div>
+    </div>
 
 
     <app-footer></app-footer>

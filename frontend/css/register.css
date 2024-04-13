@@ -1,0 +1,81 @@
+.register-section {
+  margin: 100px 0;
+}
+.register-section__art {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.register-section__art--img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.register-section__art--title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.register-section--image {
+  border-radius: 30px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.register-section--title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-bottom: 20px;
+}
+
+.register-section--form {
+  display: flex;
+  flex-direction: column;
+}
+.register-section--form > * {
+  margin-bottom: 10px;
+}
+
+.register-section--input {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #3A0F3C;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #fdfdfd;
+}
+
+.register-section--button {
+  display: flex;
+  flex-direction: column;
+  background-color: #E62168;
+  width: 50%;
+  align-self: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #fdfdfd;
+}
+
+@media only screen and (min-width: 600px) {
+  .register-section {
+    display: flex;
+    gap: 100px;
+  }
+  .register-section__form {
+    margin-right: 20px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .register-section {
+    gap: 200px;
+  }
+  .register-section__form {
+    margin-right: 100px;
+  }
+}
+
+/*# sourceMappingURL=register.css.map */
