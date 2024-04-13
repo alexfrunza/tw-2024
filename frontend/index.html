@@ -16,9 +16,32 @@
     <link rel="stylesheet" type="text/css" href="./css/footer.css">
 </head>
 <body>
-<div id="root">
-    <app-footer></app-footer>
-</div>
+
+<nav class="navbar">
+    <div class="navbar--logo">
+        <a href="#">AcVis</a>
+    </div>
+    <div class="navbar__links" id="navbarLinks">
+        <a href="#">Dummy 1</a>
+        <a href="#">Dummy 2</a>
+        <a href="#">Dummy 3</a>
+        <a href="#">Login</a>
+    </div>
+    <button class="navbar--toggle" id="navbarToggle">☰</button>
+</nav>
+<app-footer></app-footer>
+
 <script type="module" src="./js/index.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarLinks = document.getElementById('navbarLinks');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    });
+
+</script>
 </body>
 </html>
