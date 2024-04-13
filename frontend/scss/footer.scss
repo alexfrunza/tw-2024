@@ -25,13 +25,14 @@
     color: $font-color-2;
   }
 
-  @at-root #{&}--title {
-    @include text-6xl;
-    color: $color-h-5;
+  @at-root #{&}--info-text {
+    margin-bottom: 10px;
   }
 
-  @at-root #{&}--text {
+  @at-root #{&}--title {
+    @include text-6xl;
     margin-bottom: 10px;
+    color: $color-h-5;
   }
 
   @media only screen and (min-width: 600px) {
@@ -42,6 +43,16 @@
 
     @at-root #{&}--text {
       margin-bottom: 20px;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    @at-root #{&}__links-section {
+      min-width: 300px;
+    }
+
+    @at-root #{&}--info-text {
+      @include text-xl;
     }
   }
 }

@@ -22,14 +22,15 @@
   text-decoration: none;
 }
 
+.footer--info-text {
+  margin-bottom: 10px;
+}
+
 .footer--title {
   font-size: 3.75rem;
   line-height: 1;
-  color: #FFCC33;
-}
-
-.footer--text {
   margin-bottom: 10px;
+  color: #FFCC33;
 }
 
 @media only screen and (min-width: 600px) {
@@ -40,6 +41,15 @@
   }
   .footer--text {
     margin-bottom: 20px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .footer__links-section {
+    min-width: 300px;
+  }
+  .footer--info-text {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 
