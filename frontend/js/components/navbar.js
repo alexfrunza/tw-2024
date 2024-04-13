@@ -1,4 +1,3 @@
-// create an HTML template element
 const navBarTemplate = document.createElement('template')
 
 navBarTemplate.innerHTML = `

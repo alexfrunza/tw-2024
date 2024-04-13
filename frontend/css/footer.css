@@ -1,11 +1,46 @@
-.footer__links {
+.footer {
+  padding: 10px;
+}
+.footer__links-section {
   background-color: #261331;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 30px;
+}
+
+.footer--link {
+  text-decoration: none;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: #B4B0B8;
+}
+.footer--link:visited {
+  text-decoration: none;
 }
 
 .footer--title {
-  font-size: 3rem;
+  font-size: 3.75rem;
   line-height: 1;
   color: #FFCC33;
+}
+
+.footer--text {
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+  .footer {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  .footer--text {
+    margin-bottom: 20px;
+  }
 }
 
 /*# sourceMappingURL=footer.css.map */

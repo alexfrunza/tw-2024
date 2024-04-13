@@ -1,13 +1,47 @@
 @import 'vars';
 
 .footer {
-  @at-root #{&}__links {
-    background-color: $footer-links-background;
+  padding: 10px;
 
+  @at-root #{&}__links-section {
+    background-color: $footer-links-background;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 30px;
+  }
+
+  @at-root #{&}--link, {
+    text-decoration: none;
+    margin-bottom: 10px;
+
+    &:visited {
+      text-decoration: none;
+    }
+
+    @include text-xl;
+    color: $font-color-2;
   }
 
   @at-root #{&}--title {
-    @include text-5xl;
+    @include text-6xl;
     color: $color-h-5;
+  }
+
+  @at-root #{&}--text {
+    margin-bottom: 10px;
+  }
+
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    justify-content: space-around;
+    // add gap between elements
+    gap: 20px;
+
+    @at-root #{&}--text {
+      margin-bottom: 20px;
+    }
   }
 }
