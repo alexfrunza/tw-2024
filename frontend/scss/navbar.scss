@@ -1,11 +1,54 @@
 @import 'vars';
 
-.block {
-  @at-root #{&}__element {
-    maring: 10px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+
+  &--logo {
+    a {
+      @include text-5xl;
+      color: $color-h-5;
+      text-decoration: none;
+    }
   }
 
-  @at-root #{&}--modifier {
-    color: blue;
+  &__links {
+    a {
+      margin: 0 10px;
+      color: $font-color-1;
+      text-decoration: none;
+    }
+
+    &.active {
+      display: flex;
+    }
+
+    @media (max-width: 600px) {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background-color: $bg-color;
+      a:hover {
+        background-color: $primary-color;
+      }
+    }
+  }
+
+  &--toggle {
+    @include text-xl;
+    display: none;
+    color: $font-color-1;
+    background: none;
+    border: none;
+    text-decoration: none;
+
+    @media (max-width: 600px) {
+      display: block;
+    }
   }
 }
