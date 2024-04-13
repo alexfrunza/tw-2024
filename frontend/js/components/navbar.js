@@ -1,16 +1,17 @@
 const navBarTemplate = document.createElement('template')
 
 navBarTemplate.innerHTML = `
-<nav>
-    <div>
-        <img src="./img/iconmonstr-customer-1-64.png" alt="logo">
-    </div>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/services">Services</a></li>
-        <li><a href="/contact">Contact</a></li>
-    </ul>
+<nav class="navbar">
+        <div class="navbar--logo">
+            <a href="#">AcVis</a>
+        </div>
+        <div class="navbar__links" id="navbarLinks">
+            <a href="#">Dummy 1</a>
+            <a href="#">Dummy 2</a>
+            <a href="#">Dummy 3</a>
+            <a href="#">Login</a>
+        </div>
+        <button class="navbar--toggle" id="navbarToggle">☰</button>
 </nav>
 `
 

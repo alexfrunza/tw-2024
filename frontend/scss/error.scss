@@ -1,0 +1,50 @@
+@import 'vars';
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+
+  &--photo {
+    width: 75%;
+    border-radius: 30px;
+  }
+
+  &--button {
+    @include text-xl;
+    padding: 5px 20px;
+    border-radius: 30px;
+    background-color: $color-h-1;
+    color: #0A0019;
+  }
+
+  @media (min-width: 600px) {
+    gap: 50px;
+
+    &--title {
+      @include text-5xl;
+    }
+
+    &--photo {
+      max-width: 500px;
+    }
+
+    &--button {
+      @include text-2xl;
+      padding: 10px 40px;
+      border-radius: 30px;
+      background-color: $color-h-1;
+      color: #0A0019;
+    }
+  }
+}
