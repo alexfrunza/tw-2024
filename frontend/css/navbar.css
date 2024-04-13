@@ -1,9 +1,50 @@
-.block__element {
-  maring: 10px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
 }
-
-.block--modifier {
-  color: blue;
+.navbar--logo a {
+  font-size: 3rem;
+  line-height: 1;
+  color: #FFCC33;
+  text-decoration: none;
+}
+.navbar__links a {
+  margin: 0 10px;
+  color: #fdfdfd;
+  text-decoration: none;
+}
+.navbar__links.active {
+  display: flex;
+}
+@media (max-width: 600px) {
+  .navbar__links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #0A0019;
+  }
+  .navbar__links a:hover {
+    background-color: #333;
+  }
+}
+.navbar--toggle {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  display: none;
+  color: #fdfdfd;
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  .navbar--toggle {
+    display: block;
+  }
 }
 
 /*# sourceMappingURL=navbar.css.map */

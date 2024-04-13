@@ -2,6 +2,7 @@
 <html lang="en-US">
 <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AcVis</title>
     <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
 
@@ -14,8 +15,21 @@
     <link rel="stylesheet" type="text/css" href="./css/footer.css">
 </head>
 <body>
-<p>
-</p>
+
+<nav class="navbar">
+    <div class="navbar--logo">
+        <a href="#">AcVis</a>
+    </div>
+    <div class="navbar__links" id="navbarLinks">
+        <a href="#">Dummy 1</a>
+        <a href="#">Dummy 2</a>
+        <a href="#">Dummy 3</a>
+        <a href="#">Login</a>
+    </div>
+    <button class="navbar--toggle" id="navbarToggle">☰</button>
+</nav>
+
+
 <footer class="footer">
 
     <section>
@@ -37,5 +51,18 @@
     </section>
 
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarLinks = document.getElementById('navbarLinks');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    });
+
+</script>
+
 </body>
 </html>
