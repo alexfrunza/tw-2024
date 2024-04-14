@@ -41,8 +41,6 @@
 .login-section--input {
   font-size: 1.25rem;
   line-height: 1.75rem;
-  display: flex;
-  flex-direction: column;
   background-color: #3A0F3C;
   border-radius: 20px;
   padding: 10px 20px;
@@ -50,8 +48,6 @@
 }
 
 .login-section--button {
-  display: flex;
-  flex-direction: column;
   background-color: #E62168;
   width: 50%;
   align-self: center;
