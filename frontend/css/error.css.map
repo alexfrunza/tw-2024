@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"sourceRoot":"","sources":["../scss/error.scss","../scss/_vars.scss"],"names":[],"mappings":"AAEA;EACE;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AAEA;EACE;EACA;;AAGF;ECgBA;EACA;EDfE;EACA;EACA,kBCfQ;EDgBR;;AAGF;EAtBF;IAuBI;;EAEA;ICyBF;IACA;;EDtBE;IACE;;EAGF;ICEF;IACA;IDDI;IACA;IACA,kBClCM;IDmCN","file":"error.css"}
+=======
+{"version":3,"sourceRoot":"","sources":["../scss/error.scss","../scss/_vars.scss"],"names":[],"mappings":"AAEA;EACE;EACA;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;;AAEA;EACE;EACA;;AAGF;ECeA;EACA;EDdE;EACA;EACA,kBChBQ;EDiBR;;AAGF;EAtBF;IAuBI;;EAEA;ICwBF;IACA;;EDrBE;IACE;;EAGF;ICCF;IACA;IDAI;IACA;IACA,kBCnCM;IDoCN","file":"error.css"}
+>>>>>>> 7008924 (add about page)
