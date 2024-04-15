@@ -22,6 +22,26 @@
 
     1. [User interface](#user-interface)
 
+        1. [Landing page](#landing-page)
+
+        2. [Login page](#login-page)
+
+        3. [Register page](#register-page)
+
+        4. [Dashboard](#dashboard)
+
+        5. [Actors page](#actors-page)
+
+        6. [Edit profile page](#edit-profile-page)
+
+        7. [Statistics page](#statistics-page)
+
+    2. [Hardware interface](#hardware-interface)
+
+    3. [Software interface](#software-interface)
+
+    4. [Communication interface](#communication-interface)
+
 5. [Characteristics of the application](#characteristics-of-the-application)
 
     1. [Session management](#session-management)
@@ -106,37 +126,6 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 
 ## General description
 
-### Product Perspective
-
-- AcVis (Actors Smart Visualiser) is a web tool developed to provide flexible visualization of data regarding actors nominations at the Screen Actors Guild (SAG) Awards, using a REST/GraphQL API. Additional information about each actor and film production will be retrieved from The Movie Database (TMDb). The system will also provide support for displaying news about each nominee, based on configurable external data sources within the developed application.
-
-### Product Features
-
-Users will have access to the following features:
-
-- Authentication and registration on the website.
-- Viewing of data regarding actors nominations at SAG Awards.
-- Access to additional information about each actor and film production from TMDb.
-- Generation and export of statistics and visualizations in CSV, WebP, and SVG formats.
-- Playback of news about each nominee using external sources.
-- Access to additional resources regarding data visualization.
-
-### User Classes and Characteristics
-
-#### Primary User
-Primary users may include:
-- Movie enthusiasts interested in SAG Awards and actors' performances.
-- Film industry professionals who want to monitor and analyze actors' nominations.
-
-#### Characteristics
-- Primary users can access data about actors nominations, additional information about actors and films, generated statistics and visualizations, as well as relevant news.
-
-### Operating Environment
-- AcVis can be used on any device with a web browser that supports HTML5, CSS, and JavaScript. 
-
-### User Documentation
-- Users can refer to this document to understand the functionalities and operation mode of the AcVis application.
-
 ## Application Interface
 
 ### User Interface
@@ -144,6 +133,46 @@ Primary users may include:
 #### Landing page
 
 - The landing page will contain a presentation of the application and what is it about.
+
+![Landing page](images/index.png)
+
+#### Login page
+
+- The login page will contain a form where the user can enter their username and password to log in.
+
+![Login page](images/login.png)
+
+#### Register page
+
+- The register page will contain a form where the user can enter their username, email, and password to create an
+  account.
+
+![Register page](images/register.png)
+
+#### Dashboard
+
+- The dashboard will contain a summary of the user's activity, such as the latest searches and the latest viewed actors
+  and movies.
+
+![Dashboard](images/dashboard.png)
+
+#### Actors page
+
+- The actors page will contain a list of actors that the user can search for.
+
+![Actors page](images/actors.png)
+
+#### Edit profile page
+
+- The edit profile page will contain a form where the user can edit their profile information.
+
+![Edit profile page](images/edit_profile.png)
+
+#### Statistics page
+
+- The statistics page will contain visualizations of the data, such as pie charts and bar charts.
+
+![Statistics page](images/statistics.png)
 
 ### Hardware interface
 
