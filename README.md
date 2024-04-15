@@ -18,6 +18,12 @@
 
 3. [General description](#general-description)
 
+   1. [Product Perspective](#product-perspective)
+   2. [Product Features](#product-features)
+   3. [User Classes and Characteristics](#user-classes-and-characteristics)
+   4. [Operating Environment](#operating-environment)
+   5. [User Documentation](#user-documentation)
+
 4. [Application Interface](#application-interface)
 
     1. [User interface](#user-interface)
@@ -44,15 +50,20 @@
 
 5. [Characteristics of the application](#characteristics-of-the-application)
 
-    1. [Session management](#session-management)
+    1. [Account Management](#account-management)
+   
+    2. [User Section](#user-section)
+    3. [Admin Section](#admin-section)
+    
+    4. [Session management](#session-management)
 
-        1. [Description](#description)
+         1. [Description](#description)
 
-        2. [Data flow](#data-flow)
+         2. [Data flow](#data-flow)
 
-        3. [Requirements and constraints](#requirements-and-constraints)
+         3. [Requirements and constraints](#requirements-and-constraints)
 
-    2. [Other functionalities](#other-functionalities)
+   5. [Other functionalities](#other-functionalities)
 
         1. [Description](#description)
 
@@ -292,7 +303,7 @@ Users can refer to this document to understand the functionalities and operation
 #### Information Update
 - When the admin adds an actor or a movie, the information is inserted into the database.
 - When the admin modifies an actor or movie, the information is updated in the database.
-### Operating Conditions
+#### Operating Conditions
 - The user must be authenticated.
 - The user must have admin rights.
 
