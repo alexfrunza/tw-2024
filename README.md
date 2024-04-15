@@ -226,6 +226,34 @@ Users can refer to this document to understand the functionalities and operation
 
 ## Characteristics of the application
 
+### Account Management
+#### Description and Generalities
+- A user can register by choosing a username, an email, a password, first name, and last name. They can authenticate themselves by only needing the username and password.
+#### Information Update
+- When a new user is created, their credentials are entered into the database. Similarly, when the user decides to modify their credentials, the new values are also updated in the database.
+####  Operating Conditions
+- To modify their credentials, the user must be authenticated.
+- To authenticate, the user needs an account registered in the database.
+
+### User Section
+#### Description and Generalities
+- The User Section is intended for the admin, providing them with the ability to view a list of all users in the database. Additionally, they have the ability to delete users from the database if desired.
+#### Information Update
+- Upon clicking the delete button next to each user, the credentials of the selected user are deleted from the database.
+#### Operating Conditions
+- The user must be authenticated.
+- The user must have admin rights.
+
+### Admin Section
+#### Description and Generalities
+- The Admin Section is intended for users with administrator rights, providing them with facilities that a normal user does not have. When the admin accesses the control panel, they can add/modify actor and movie pages directly from the platform. Additionally, they are able to delete user accounts.
+#### Information Update
+- When the admin adds an actor or a movie, the information is inserted into the database.
+- When the admin modifies an actor or movie, the information is updated in the database.
+### Operating Conditions
+- The user must be authenticated.
+- The user must have admin rights.
+
 ### Session management
 
 #### Description
