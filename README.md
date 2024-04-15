@@ -110,6 +110,34 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 
 ### User Interface
 
+#### Landing page
+
+- The landing page will contain a presentation of the application and what is it about.
+
+#### 
+
+### Hardware interface
+
+- The application will run on a server.
+
+- The application will require an internet connection to access external data sources.
+
+- The application will require a computer or mobile device to access the user interface.
+
+### Software interface
+
+- The application will use a RESTful API to communicate with the server.
+
+- The application will be accessed through a web browser.
+
+- The application will use JavaScript to interact with the user interface.
+
+### Communication interface
+
+- The application will use HTTP to communicate with the server.
+
+- The application will use JSON to send and receive data.
+
 ## Characteristics of the application
 
 ### Session management
