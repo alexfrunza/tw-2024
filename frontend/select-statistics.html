@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Select statistics</title>
+    <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/select-statistics.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <section class="select-statistics">
+        <img src="./img/rc-xyz-nft-gallery-w9coDxtsfts-unsplash.jpg" alt="Statistic 1" class="select-statistics--img">
+        <h2 class="select-statistics--title">Select statistics</h2>
+        <form action="/edit_profile" method="post" class="select-statistics__form">
+            <label for="stats1" class="select-statistics--label">Statistics 1:</label>
+            <select name="gender" id="stats1" class="select-statistics--input">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <label for="stats2" class="select-statistics--label">Statistics 2:</label>
+            <select name="gender" id="stats2" class="select-statistics--input">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <label for="stats3" class="select-statistics--label">Statistics 3:</label>
+            <select name="gender" id="stats3" class="select-statistics--input">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <label for="stats4" class="select-statistics--label">Statistics 4:</label>
+            <select name="gender" id="stats4" class="select-statistics--input">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <label for="stats5" class="select-statistics--label">Statistics 5:</label>
+            <select name="gender" id="stats5" class="select-statistics--input">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <button type="submit" class="select-statistics--button">Select</button>
+
+        </form>
+    </section>
+
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="./js/index.js"></script>
+<script src="./js/drawer.js"></script>
+</body>
+</html>

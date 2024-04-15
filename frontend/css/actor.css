@@ -65,6 +65,7 @@
 }
 .news-container--image {
   width: 25%;
+  margin: 20px;
 }
 .news-container__news {
   display: flex;
