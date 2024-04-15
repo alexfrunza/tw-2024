@@ -41,10 +41,24 @@
         4. [Dashboard](#dashboard)
 
         5. [Actors page](#actors-page)
+       
+        6. [Actor page](#actor-page) 
+       
+        7. [Error 400 page](#error-400-page)
+       
+        8. [Error 404 page](#error-404-page)
+       
+        9. [Error 500 page](#error-500-page)
+       
+       10. [Profile page](#profile-page)
 
-        6. [Edit profile page](#edit-profile-page)
+       11. [Edit profile page](#edit-profile-page)
+       
+       12. [Select statistics page](#select-statistics-page)
 
-        7. [Statistics page](#statistics-page)
+       13. [Statistics page](#statistics-page)
+       
+       14. [About page](#about-page)
 
     2. [Hardware interface](#hardware-interface)
 
