@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard
+        </div>
+        <div class="users-panel__menu">
+            <button class="users-panel__menu--button">Add User</button>
+            <button class="users-panel__menu--button">Delete Users</button>
+            <button class="users-panel__menu--button">Export Users</button>
+        </div>
+        <div class="users-panel__content">
+            <div class="users-panel__headers">
+                <div class="users-panel__header">
+                    User Name
+                </div>
+                <div class="users-panel__header">
+                    Id
+                </div>
+                <div class="users-panel__header">
+                    Role
+                </div>
+            </div>
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <label>
+                        <input type="checkbox" class="users-panel--user__checkbox">
+                    </label>
+                    <img src="./img/actor1.webp" class="users-panel--profile-image" alt="profile image">
+                    <p class="users-panel--username"> Frunza Alexandru-Ioan </p>
+                </div>
+                <div class="users-panel__field">
+                    1234123412834812384812384
+                </div>
+                <div class="users-panel__field">
+                    Manager
+                </div>
+            </div>
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <label>
+                        <input type="checkbox" class="users-panel--user__checkbox">
+                    </label>
+                    <img src="./img/actor1.webp" class="users-panel--profile-image" alt="profile image">
+                    <p class="users-panel--username"> Frunza Alexandru-Ioan </p>
+                </div>
+                <div class="users-panel__field">
+                    1234123412834812384812384
+                </div>
+                <div class="users-panel__field">
+                    Manager
+                </div>
+            </div>
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <label>
+                        <input type="checkbox" class="users-panel--user__checkbox">
+                    </label>
+                    <img src="./img/actor1.webp" class="users-panel--profile-image" alt="profile image">
+                    <p class="users-panel--username"> Frunza Alexandru-Ioan </p>
+                </div>
+                <div class="users-panel__field">
+                    1234123412834812384812384
+                </div>
+                <div class="users-panel__field">
+                    Manager
+                </div>
+            </div>
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <label>
+                        <input type="checkbox" class="users-panel--user__checkbox">
+                    </label>
+                    <img src="./img/actor1.webp" class="users-panel--profile-image" alt="profile image">
+                    <p class="users-panel--username"> Frunza Alexandru-Ioan </p>
+                </div>
+                <div class="users-panel__field">
+                    1234123412834812384812384
+                </div>
+                <div class="users-panel__field">
+                    Manager
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="./js/index.js"></script>
+<script src="./js/drawer.js"></script>
+</body>
+</html>
