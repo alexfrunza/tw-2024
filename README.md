@@ -190,17 +190,59 @@ Users can refer to this document to understand the functionalities and operation
 
 ![Actors page](images/actors.png)
 
+#### Actor page
+
+- The actor's page will show information about an actor.
+
+![actor.png](images/actor.png)
+
+#### Error 400 page
+
+- Error 400 page - Bad Request.
+
+![error400.png](images/error400.png)
+
+#### Error 404 page
+
+- Error 404 page - Page not found.
+
+![error404.png](images/error404.png)
+
+#### Error 500 page
+
+- Error 500 page - Internal Server Error.
+
+![error500.png](images/error500.png)
+
+#### Profile page
+
+- Profile page will show information about a user.
+
+![profile.png](images/profile.png)
+
 #### Edit profile page
 
 - The edit profile page will contain a form where the user can edit their profile information.
 
 ![Edit profile page](images/edit_profile.png)
 
+#### Select statistics page
+
+- The select statistics page offers a a statistics generation configuration
+
+![select-statistics.png](images/select-statistics.png)
+
 #### Statistics page
 
 - The statistics page will contain visualizations of the data, such as pie charts and bar charts.
 
 ![Statistics page](images/statistics.png)
+
+#### About page
+
+- About page presents information about Screen Actors Guild.
+
+![about.png](images/about.png)
 
 ### Hardware interface
 
