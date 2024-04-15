@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your profile</title>
+    <link rel="icon" type="image/png" href="./img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/profile.css">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <section class="profile">
+        <img src="./img/blank-profile-picture-973460_640.png" alt="User Image" class="profile--img">
+        <h2 class="profile--title">Your username</h2>
+        <p class="profile--email">Email: example@domain.com</p>
+        <p class="profile--gender">Gender: M</p>
+        <a href="edit_profile.html" type="submit" class="profile--edit-button">Edit Profile</a>
+        <a href="index.html" type="submit" class="profile--delete-button">Delete Profile</a>
+    </section>
+
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="./js/index.js"></script>
+<script src="./js/drawer.js"></script>
+</body>
+</html>

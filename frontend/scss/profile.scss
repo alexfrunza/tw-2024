@@ -1,0 +1,60 @@
+@import 'vars';
+
+.profile {
+  margin: 50px 0 100px 0;
+  display: flex;
+  flex-direction: column;
+
+  @at-root #{&}--img {
+    width: 80%;
+    max-width: 200px;
+    border-radius: 50%;
+    align-self: center;
+    margin-bottom: 20px;
+  }
+
+  @at-root #{&}--title {
+    @include text-3xl;
+    margin-bottom: 20px;
+    align-self: center;
+  }
+
+  @at-root #{&}--email {
+    align-self: center;
+  }
+
+  @at-root #{&}--gender {
+    align-self: center;
+  }
+  @at-root #{&}--edit-button {
+    text-align: center;
+    white-space: nowrap;
+    background-color: $color-h-3;
+    width: 50%;
+    margin-top: 20px;
+    max-width: 300px;
+    align-self: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: $font-color-1;
+  }
+
+  @at-root #{&}--delete-button {
+    text-align: center;
+    white-space: nowrap;
+    background-color: $color-h-2;
+    width: 50%;
+    margin-top: 20px;
+    max-width: 300px;
+    align-self: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: $font-color-1;
+  }
+
+  @media only screen and (min-width: 600px) {
+  }
+
+  @media only screen and (min-width: 1024px) {
+  }
+}
