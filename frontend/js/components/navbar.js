@@ -6,10 +6,12 @@ navBarTemplate.innerHTML = `
             <a href="./index.html">AcVis</a>
         </div>
         <div class="navbar__links" id="navbarLinks">
-            <a href="#">Dummy 1</a>
-            <a href="#">Dummy 2</a>
-            <a href="#">Dummy 3</a>
-            <a href="#">Login</a>
+            <a href="about.html">About</a>
+            <a href="actors.html">Actors</a>
+            <a href="actor.html">Actor</a>
+            <a href="edit_profile.html">Edit Profile</a>
+            <a href="register.html">Register</a>
+            <a href="login.html">Login</a>
         </div>
         <button class="navbar--toggle" id="navbarToggle">☰</button>
 </nav>
