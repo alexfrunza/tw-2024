@@ -41,8 +41,6 @@
 
   @at-root #{&}--input {
     @include text-xl;
-    display: flex;
-    flex-direction: column;
     background-color: $bg-2;
     border-radius: 20px;
     padding: 10px 20px;
@@ -50,8 +48,6 @@
   }
 
   @at-root #{&}--button {
-    display: flex;
-    flex-direction: column;
     background-color: $color-h-2;
     width: 50%;
     align-self: center;
