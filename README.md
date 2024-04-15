@@ -22,6 +22,26 @@
 
     1. [User interface](#user-interface)
 
+        1. [Landing page](#landing-page)
+
+        2. [Login page](#login-page)
+
+        3. [Register page](#register-page)
+
+        4. [Dashboard](#dashboard)
+
+        5. [Actors page](#actors-page)
+
+        6. [Edit profile page](#edit-profile-page)
+
+        7. [Statistics page](#statistics-page)
+
+    2. [Hardware interface](#hardware-interface)
+
+    3. [Software interface](#software-interface)
+
+    4. [Communication interface](#communication-interface)
+
 5. [Characteristics of the application](#characteristics-of-the-application)
 
     1. [Session management](#session-management)
@@ -114,7 +134,45 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 
 - The landing page will contain a presentation of the application and what is it about.
 
-#### 
+![Landing page](images/index.png)
+
+#### Login page
+
+- The login page will contain a form where the user can enter their username and password to log in.
+
+![Login page](images/login.png)
+
+#### Register page
+
+- The register page will contain a form where the user can enter their username, email, and password to create an
+  account.
+
+![Register page](images/register.png)
+
+#### Dashboard
+
+- The dashboard will contain a summary of the user's activity, such as the latest searches and the latest viewed actors
+  and movies.
+
+![Dashboard](images/dashboard.png)
+
+#### Actors page
+
+- The actors page will contain a list of actors that the user can search for.
+
+![Actors page](images/actors.png)
+
+#### Edit profile page
+
+- The edit profile page will contain a form where the user can edit their profile information.
+
+![Edit profile page](images/edit_profile.png)
+
+#### Statistics page
+
+- The statistics page will contain visualizations of the data, such as pie charts and bar charts.
+
+![Statistics page](images/statistics.png)
 
 ### Hardware interface
 
