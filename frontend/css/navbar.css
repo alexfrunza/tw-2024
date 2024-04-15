@@ -27,9 +27,13 @@
     top: 60px;
     left: 0;
     background-color: #0A0019;
+    box-shadow: 0 2px 5px rgba(84, 194, 225, 0.5);
+    border-radius: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-top: none;
   }
   .navbar__links a:hover {
-    background-color: #333;
+    background-color: rgb(25, 103, 211);
   }
 }
 .navbar--toggle {
