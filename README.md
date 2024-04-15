@@ -19,9 +19,13 @@
 3. [General description](#general-description)
 
    1. [Product Perspective](#product-perspective)
+      
    2. [Product Features](#product-features)
+      
    3. [User Classes and Characteristics](#user-classes-and-characteristics)
+      
    4. [Operating Environment](#operating-environment)
+      
    5. [User Documentation](#user-documentation)
 
 4. [Application Interface](#application-interface)
