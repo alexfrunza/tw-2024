@@ -1,0 +1,24 @@
+.statistics {
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+.statistics--title {
+  margin-bottom: 30px;
+}
+
+.statistic {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+.statistic--title {
+  margin-bottom: 30px;
+}
+
+.statistic--img {
+  align-self: center;
+  width: 80%;
+}
+
+/*# sourceMappingURL=statistics.css.map */
