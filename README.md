@@ -106,6 +106,37 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 
 ## General description
 
+### Product Perspective
+
+- AcVis (Actors Smart Visualiser) is a web tool developed to provide flexible visualization of data regarding actors nominations at the Screen Actors Guild (SAG) Awards, using a REST/GraphQL API. Additional information about each actor and film production will be retrieved from The Movie Database (TMDb). The system will also provide support for displaying news about each nominee, based on configurable external data sources within the developed application.
+
+### Product Features
+
+Users will have access to the following features:
+
+- Authentication and registration on the website.
+- Viewing of data regarding actors nominations at SAG Awards.
+- Access to additional information about each actor and film production from TMDb.
+- Generation and export of statistics and visualizations in CSV, WebP, and SVG formats.
+- Playback of news about each nominee using external sources.
+- Access to additional resources regarding data visualization.
+
+### User Classes and Characteristics
+
+#### Primary User
+Primary users may include:
+- Movie enthusiasts interested in SAG Awards and actors' performances.
+- Film industry professionals who want to monitor and analyze actors' nominations.
+
+#### Characteristics
+- Primary users can access data about actors nominations, additional information about actors and films, generated statistics and visualizations, as well as relevant news.
+
+### Operating Environment
+- AcVis can be used on any device with a web browser that supports HTML5, CSS, and JavaScript. 
+
+### User Documentation
+- Users can refer to this document to understand the functionalities and operation mode of the AcVis application.
+
 ## Application Interface
 
 ### User Interface
@@ -113,8 +144,6 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 #### Landing page
 
 - The landing page will contain a presentation of the application and what is it about.
-
-#### 
 
 ### Hardware interface
 
