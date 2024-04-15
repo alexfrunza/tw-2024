@@ -22,7 +22,7 @@
   }
 
   @at-root #{&}--button {
-    @include text-3xl;
+    @include text-xl;
     padding: 10px 40px;
     border-radius: 30px;
     background-color: $color-h-1;
@@ -40,8 +40,8 @@
     align-items: center;
     gap: 40px;
 
-    @at-root #{&}--img {
-      display: block;
+    @at-root #{&}--button {
+      @include text-3xl;
     }
   }
 
@@ -50,6 +50,10 @@
 
     @at-root #{&}--img {
       width: 500px;
+    }
+
+    @at-root #{&}--img {
+      display: block;
     }
   }
 }
