@@ -7,13 +7,13 @@ footerTemplate.innerHTML = `
         <p class="footer--info-text">Made with ❤️ by Frunză Alexandru-Ioan and Ștefan Vlad</p>
         <div>
             <a href="#">
-                <img src="./img/iconmonstr-facebook-4-240.png" alt="facebook" class="footer--social-icon">
+                <img src="../../img/iconmonstr-facebook-4-240.png" alt="facebook" class="footer--social-icon">
             </a>
             <a href="#">
-                <img src="./img/iconmonstr-instagram-11-240.png" alt="instagram" class="footer--social-icon">
+                <img src="../../img/iconmonstr-instagram-11-240.png" alt="instagram" class="footer--social-icon">
             </a>
             <a href="#">
-                <img src="./img/iconmonstr-youtube-6-240.png" alt="youtube" class="footer--social-icon">
+                <img src="../../img/iconmonstr-youtube-6-240.png" alt="youtube" class="footer--social-icon">
             </a>
         </div>
         <p class="footer--info-text">2024 © All rights reserved</p>

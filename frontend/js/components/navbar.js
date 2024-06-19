@@ -3,7 +3,7 @@ const navBarTemplate = document.createElement('template')
 navBarTemplate.innerHTML = `
 <nav class="navbar">
         <div class="navbar--logo">
-            <a href="./index.html">AcVis</a>
+            <a href="index.html">AcVis</a>
         </div>
         <div class="navbar__links" id="navbarLinks">
             <a href="about.html">About</a>
