@@ -23,11 +23,9 @@ export const mainRouter = async (req, res) => {
             return;
         }
 
+        res.jsonBody = null;
         req.handled = false;
         req.fullUrl = new URL(req.url, `http://${req.headers.host}`);
-
-        const parsedUrl = url.parse(req.url, true);
-        const {pathname} = parsedUrl;
 
         if (req.fullUrl.pathname.startsWith('/actors')) {
             req.fullUrl = new URL(req.url.substring('/actors'.length), `http://${req.headers.host}`);
