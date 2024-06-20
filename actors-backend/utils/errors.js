@@ -6,6 +6,12 @@ export class APIError extends Error {
     }
 }
 
+export class ServerError extends APIError {
+    constructor(message) {
+        super(message, "500", 500);
+    }
+}
+
 export class NotFoundError extends APIError {
     constructor(message) {
         super(message, "NotFoundError", 404);

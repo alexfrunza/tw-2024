@@ -1,7 +1,7 @@
 import url from "url";
 import {verifyToken} from "../utils/authentication.js";
 import {actorsRouter} from "./actors.js";
-import {APIError, NotFoundError} from "../utils/errors.js";
+import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
 
 // dummy, de luat din database
 const actors = [
@@ -39,6 +39,15 @@ export const mainRouter = async (req, res) => {
         if (!req.handled) {
             throw new NotFoundError("Not Found");
         }
+
+        if (!res.jsonBody) {
+            console.log(res);
+            throw new ServerError("Internal server error");
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(res.statusCode);
+        res.end(JSON.stringify(res.jsonBody));
     } catch (err) {
         if (err instanceof APIError) {
             res.writeHead(err.statusCode, {'Content-Type': 'application/json'});
