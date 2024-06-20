@@ -6,6 +6,7 @@ const SECRET_KEY = 'secret_key';
 
 export const createUser = async (req, res) => {
     const {username, email, firstName, lastName, password} = req.body;
+    console.log(req.body)
 
     const hashedPassword = bcrypt.hashSync(password, 8);
 
