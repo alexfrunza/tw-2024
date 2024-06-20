@@ -1,11 +1,9 @@
-const { Pool } = require('pg');
+import pg from 'pg';
 
-const pool = new Pool({
+export const pool = new pg.Pool({
     user: 'postgresusers',
     host: 'localhost',
     database: 'postgresusers_db',
     password: 'S3cret',
     port: 5433,
 });
-
-module.exports = pool;

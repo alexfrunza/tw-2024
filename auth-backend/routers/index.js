@@ -1,13 +1,6 @@
-import url from "url";
-import {verifyToken} from "../utils/authentication.js";
-import {actorsRouter} from "./actors.js";
 import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
-
-// dummy, de luat din database
-const actors = [
-    {id: 1, name: 'Robert Downey Jr.', age: 56, movies: ['Iron Man', 'Sherlock Holmes']},
-    {id: 2, name: 'Chris Hemsworth', age: 38, movies: ['Thor', 'Extraction']}
-];
+import {login} from "../controllers/user_session.js";
+import {usersRouter} from "./users.js";
 
 export const mainRouter = async (req, res) => {
     try {
@@ -27,11 +20,34 @@ export const mainRouter = async (req, res) => {
         req.handled = false;
         req.fullUrl = new URL(req.url, `http://${req.headers.host}`);
 
-        if (req.fullUrl.pathname.startsWith('/actors')) {
-            req.fullUrl = new URL(req.url.substring('/actors'.length), `http://${req.headers.host}`);
-            await actorsRouter(req, res);
-        } else if (req.fullUrl.pathname.startsWith('/awards')) {
-            console.log("Not implemented");
+        let body = [];
+        req.on('data', chunk => {
+            body.push(chunk);
+        });
+
+        await new Promise((resolve, reject) => {
+            req.on('end', () => {
+                let parsedBody;
+
+                if (req.headers['content-type'] === 'application/json') {
+                    parsedBody = JSON.parse(Buffer.concat(body).toString());
+                } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+                    parsedBody = new URLSearchParams(Buffer.concat(body).toString());
+                } else {
+                    // Handle other content types as needed
+                }
+                // console.log(parsedBody);
+                req.body = parsedBody;
+                resolve();
+            });
+        });
+
+        if (req.fullUrl.pathname === '/login' && req.method === 'POST') {
+            req.fullUrl = new URL(req.url.substring('/login'.length), `http://${req.headers.host}`);
+            await login(req, res);
+        } else if(req.fullUrl.pathname.startsWith('/users')) {
+            req.fullUrl = new URL(req.url.substring('/users'.length), `http://${req.headers.host}`);
+            await usersRouter(req, res);
         }
 
         if (!req.handled) {
@@ -39,7 +55,6 @@ export const mainRouter = async (req, res) => {
         }
 
         if (!res.jsonBody) {
-            console.log(res);
             throw new ServerError("Internal server error");
         }
 
@@ -65,5 +80,3 @@ export const mainRouter = async (req, res) => {
         }
     }
 };
-
-
