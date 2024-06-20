@@ -1,23 +1,22 @@
-const jwt = require("jsonwebtoken");
+import * as jwt from 'jsonwebtoken';
+import {UnauthorizedError} from "./errors.js";
 
 const SECRET_KEY = 'secret_key';
 
-export const verifyToken = (req, res, callback) => {
-    const token = req.headers['x-access-token'];
-    if (!token) {
-        res.writeHead(403, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({message: 'No token provided'}));
-        return;
+export const verifyToken = (req, res) => {
+    const authHeader = req.headers['Authorization'];
+
+    if (!authHeader) {
+        throw new UnauthorizedError("No token provided");
     }
+
+    const token = authHeader.substring("Bearer ".length);
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
-            res.writeHead(500, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify({message: 'Failed to authenticate token'}));
-            return;
+            throw new UnauthorizedError("Failed to authenticate token");
         }
 
-        req.userId = decoded.id;
-        callback();
+        req.jwtPayload = decoded;
     });
 };

@@ -1,7 +1,5 @@
-const http = require('http');
-const url = require('url');
-const jwt = require('jsonwebtoken');
-const {mainRouter} = require("./routers");
+import * as http from "node:http";
+import {mainRouter} from "./routers/index.js";
 
 const PORT = 5001;
 
