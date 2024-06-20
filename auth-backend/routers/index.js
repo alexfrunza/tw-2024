@@ -1,5 +1,6 @@
 import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
 import {login} from "../controllers/user_session.js";
+import {usersRouter} from "./users.js";
 
 export const mainRouter = async (req, res) => {
     try {
@@ -44,6 +45,9 @@ export const mainRouter = async (req, res) => {
         if (req.fullUrl.pathname === '/login' && req.method === 'POST') {
             req.fullUrl = new URL(req.url.substring('/login'.length), `http://${req.headers.host}`);
             await login(req, res);
+        } else if(req.fullUrl.pathname.startsWith('/users')) {
+            req.fullUrl = new URL(req.url.substring('/users'.length), `http://${req.headers.host}`);
+            await usersRouter(req, res);
         }
 
         if (!req.handled) {
