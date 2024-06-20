@@ -1,10 +1,10 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import {UnauthorizedError} from "./errors.js";
 
 const SECRET_KEY = 'secret_key';
 
 export const verifyToken = (req, res) => {
-    const authHeader = req.headers['Authorization'];
+    const authHeader = req.headers['authorization'];
 
     if (!authHeader) {
         throw new UnauthorizedError("No token provided");
