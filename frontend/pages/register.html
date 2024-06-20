@@ -29,12 +29,18 @@
         <div class="register-section__form">
             <h2 class="register-section--title">Register</h2>
             <form action="/register" method="post" class="register-section--form">
-                <label for="email" class="register-section--label">Email:</label>
-                <input type="text" id="email" name="email" class="register-section--input" required>
                 <label for="username" class="register-section--label">Username:</label>
                 <input type="text" id="username" name="username" class="register-section--input" required>
+                <label for="email" class="register-section--label">Email:</label>
+                <input type="email" id="email" name="email" class="register-section--input" required>
+                <label for="firstname" class="register-section--label">First name:</label>
+                <input type="text" id="firstname" name="firstname" class="register-section--input" required>
+                <label for="lastname" class="register-section--label">Last name:</label>
+                <input type="text" id="lastname" name="lastname" class="register-section--input" required>
                 <label for="password" class="register-section--label">Password:</label>
                 <input type="password" id="password" name="password" class="register-section--input" required>
+                <label for="confirmPassword" class="register-section--label">Confirm password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="register-section--input" required>
                 <button type="submit" class="register-section--button">Register</button>
             </form>
         </div>
@@ -55,6 +61,35 @@
         });
     });
 
+</script>
+
+<script>
+    document.querySelector('.register-section--form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, email, firstname, lastname, password })
+        });
+
+        const data = await response.json();
+
+        if (data.auth) {
+            localStorage.setItem('token', data.token);
+            window.location.href = '/'; // redirect pe pagina principala
+        } else {
+            // tratare erori
+        }
+    });
 </script>
 </body>
 </html>

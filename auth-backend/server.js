@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const usersRouter = require('./routers/users');
 
 const SECRET_KEY = 'secret_key';
 const PORT = 5000;
@@ -17,7 +18,7 @@ const users = [
 
 const requestHandler = (req, res) => {
     // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
 
@@ -31,33 +32,8 @@ const requestHandler = (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const { pathname } = parsedUrl;
 
-    if (pathname === '/login' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-
-        req.on('end', () => {
-            const { username, password } = JSON.parse(body);
-            const user = users.find(u => u.username === username);
-
-            if (!user) {
-                res.writeHead(404, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'User not found' }));
-                return;
-            }
-
-            const passwordIsValid = bcrypt.compareSync(password, user.password);
-            if (!passwordIsValid) {
-                res.writeHead(401, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Invalid password' }));
-                return;
-            }
-
-            const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: 86400 });
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ auth: true, token }));
-        });
+    if (pathname.startsWith('/users')) {
+        usersRouter(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Not Found' }));
