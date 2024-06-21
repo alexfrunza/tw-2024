@@ -1,5 +1,5 @@
 import {verifyToken} from "../utils/authentication.js";
-import {deleteActor, getActor, getActors} from "../controllers/actors.js";
+import {createActor, deleteActor, getActor, getActors, modifyActor} from "../controllers/actors.js";
 
 export const actorsRouter = async (req, res) => {
     req.handled = true;
@@ -22,6 +22,16 @@ export const actorsRouter = async (req, res) => {
         console.log(`DELETE /actors/${id}`);
         verifyToken(req);
         await deleteActor(req, res);
+    } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
+        console.log("POST /actors");
+        verifyToken(req);
+        await createActor(req, res);
+    } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'PUT') {
+        let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
+        req.params.id = id;
+        console.log(`PUT /actors/${id}`);
+        verifyToken(req);
+        await modifyActor(req, res);
     } else {
         req.handled = false;
     }

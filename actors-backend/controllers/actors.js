@@ -1,6 +1,7 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
+import {validateActorName} from "../utils/validations.js";
 
 export const getActors = async (req, res) => {
 
@@ -79,4 +80,39 @@ export const deleteActor = async (req, res) => {
     };
     res.statusCode = 200;
 
+}
+
+export const createActor = async (req, res) => {
+    const {name} = req.body;
+
+    validateActorName(name);
+
+    const resultActor = await pool.query('INSERT INTO actor (name) VALUES ($1) RETURNING id', [name]);
+
+    res.jsonBody = {
+        message: "Success",
+        data: {
+            id: resultActor.rows[0].id,
+            name
+        }
+    };
+    res.statusCode = 201;
+}
+
+export const modifyActor = async (req, res) => {
+    const {name} = req.body;
+
+    validateActorName(name);
+
+    const resultActor = await pool.query('UPDATE actor SET name = $1 WHERE id = $2 RETURNING id', [name, req.params.id]);
+    console.log(resultActor)
+
+    res.jsonBody = {
+        message: "Success",
+        data: {
+            id: resultActor.rows[0].id,
+            name
+        }
+    };
+    res.statusCode = 200;
 }

@@ -29,3 +29,9 @@ export class InvalidCsvError extends APIError {
         super(message, "InvalidCsvError", 400);
     }
 }
+
+export class InvalidActorName extends APIError {
+    constructor() {
+        super("Actor name must be a string with length greater than 5", "InvalidActorName", 400);
+    }
+}
