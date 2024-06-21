@@ -32,6 +32,11 @@ class Navbar extends HTMLElement {
             const loginLink = navbarLinks.querySelector('a[href="login.html"]');
             registerLink.remove();
             loginLink.remove();
+            const logoutButton = this.querySelector('#logout');
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                location.reload();
+            });
         } else {
             // daca userul nu e logat, nu afisam 'Edit Profile' si 'Logout'
             const editProfileLink = navbarLinks.querySelector('a[href="edit_profile.html"]');
@@ -39,12 +44,6 @@ class Navbar extends HTMLElement {
             logoutLink.remove();
             editProfileLink.remove();
         }
-
-        const logoutButton = this.querySelector('#logout');
-        logoutButton.addEventListener('click', () => {
-            localStorage.removeItem('token');
-            location.reload();
-        });
     }
 }
 

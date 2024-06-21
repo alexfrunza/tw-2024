@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import {pool} from "../db.js";
 import {InvalidPasswordError, UserNotFoundError} from "../utils/errors.js";
 
 const SECRET_KEY = 'secret_key';
@@ -14,7 +15,8 @@ const users = [
 
 export const login = async (req, res) => {
     const {username, password} = req.body;
-    const user = users.find(u => u.username === username);
+    const result = await pool.query('SELECT * FROM "user" WHERE username = $1', [username]);
+    const user = result.rows[0];
 
     if (!user) {
         throw new UserNotFoundError();

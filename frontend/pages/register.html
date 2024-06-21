@@ -87,7 +87,7 @@
             localStorage.setItem('token', data.token);
             window.location.href = '/'; // redirect pe pagina principala
         } else {
-            // tratare erori
+            console.error('Register failed:', data);
         }
     });
 </script>
