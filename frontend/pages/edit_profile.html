@@ -49,6 +49,8 @@
                 <button type="submit" class="edit-profile--button">Edit Profile</button>
 
             </form>
+
+            <p id="error" class="edit-profile--error"></p>
         </section>
 
 
@@ -98,7 +100,9 @@ https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
                     document.getElementById('firstName').value = user.first_name;
                     document.getElementById('lastName').value = user.last_name;
                 } else {
+                    const data = await response.json();
                     console.error('Failed to fetch user data', response);
+                    document.getElementById('error').textContent = data.errors[0].message;
                 }
             }
         }
@@ -128,8 +132,17 @@ https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
             };
 
             if (password && password.trim() !== '' && newPassword === confirmNewPassword) {
+                if (newPassword.length < 5) {
+                    document.getElementById('error').textContent = 'New password must be at least 5 characters long';
+                    return;
+                }
                 user.password = newPassword;
                 user.oldPassword = password;
+            } else if ((newPassword && newPassword.trim() !== '') || (confirmNewPassword && confirmNewPassword.trim() !== '')) {
+                if (!password || password.trim() === '') {
+                    document.getElementById('error').textContent = 'You must enter your current password to change your password';
+                    return;
+                }
             }
 
             const response = await fetch(`http://localhost:5000/users/${userId}`, {
@@ -144,8 +157,11 @@ https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
             if (response.ok) {
                 const data = await response.json();
                 console.log('Profile updated', data);
+                window.location.reload()
             } else {
+                const data = await response.json();
                 console.error('Failed to update profile', response);
+                document.getElementById('error').textContent = data.errors[0].message;
             }
         });
     </script>
