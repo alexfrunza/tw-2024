@@ -42,6 +42,10 @@
     }
   }
 
+  @at-root #{&}--error {
+    color: red;
+  }
+
   @at-root #{&}--input {
     @include text-xl;
     display: flex;
