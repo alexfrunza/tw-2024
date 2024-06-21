@@ -91,5 +91,15 @@
         }
     });
 </script>
+
+<script>
+    window.onload = function() {
+        const isLoggedIn = localStorage.getItem('token') !== null;
+
+        if (isLoggedIn) {
+            window.location.href = 'index.html';
+        }
+    }
+</script>
 </body>
 </html>

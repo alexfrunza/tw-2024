@@ -51,6 +51,16 @@
     <app-footer></app-footer>
 </div>
 
+<script>
+    window.onload = function() {
+        const isLoggedIn = localStorage.getItem('token') !== null;
+
+        if (!isLoggedIn) {
+            window.location.href = 'login.html';
+        }
+    }
+</script>
+
 <script type="module" src="../js/index.js"></script>
 <script src="../js/drawer.js"></script>
 </body>
