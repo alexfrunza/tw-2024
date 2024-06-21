@@ -35,6 +35,10 @@
             font-family: monospace;
         }
 
+        .svg-text {
+            fill: white;
+        }
+
         #win-proportion, #category-distribution {
             margin-top: 100px;
             margin-bottom: 50px;
@@ -98,7 +102,9 @@
     <section class="general-statistics">
         <h1>SAG Awards General Statistics</h1>
         <div id="win-proportion"></div>
+        <button id="export-winners-svg">Export SVG</button>
         <div id="category-distribution"></div>
+        <button id="export-category-svg">Export SVG</button>
     </section>
 
 
@@ -143,13 +149,34 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        svg1.append("style")
+            .text(`
+        .bar {
+            fill: steelblue;
+        }
+        .bar.won {
+            fill: orange;
+        }
+        .axis-label {
+            font-size: 12px;
+            font-family: monospace;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+
+        }
+    `);
+
         // Add title for the first chart
         svg1.append("text")
             .attr("x", width1 / 2)
             .attr("y", -margin.top / 2)
             .attr("class", "title")
             .style("font-family", "monospace")
-            .style('fill', 'white')
+            //.style('fill', 'white')
+            .classed("svg-text", true)
             .text("Distribution of Nominations by Category");
 
         const x1 = d3.scaleLinear()
@@ -182,7 +209,8 @@
             .attr("y", d => y1(d.category) + y1.bandwidth() / 2)
             .attr("dy", ".35em")
             .style("font-family", "monospace")
-            .style('fill', 'white')
+            //.style('fill', 'white')
+            .classed("svg-text", true)
             .text(d => d.count);
 
         svg1.append("g")
@@ -211,13 +239,34 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        svg2.append("style")
+            .text(`
+        .bar {
+            fill: steelblue;
+        }
+        .bar.won {
+            fill: orange;
+        }
+        .axis-label {
+            font-size: 12px;
+            font-family: monospace;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+
+        }
+    `);
+
         // Add title for the second chart
         svg2.append("text")
             .attr("x", width1 / 2)
             .attr("y", -margin.top / 2)
             .attr("class", "title")
             .style("font-family", "monospace")
-            .style('fill', 'white')
+            //.style('fill', 'white')
+            .classed("svg-text", true)
             .text("Proportion of Winners vs Nominees");
 
         const x2 = d3.scaleLinear()
@@ -249,7 +298,8 @@
             .attr("y", d => y2(d.won ? 'Winners' : 'Nominees') + y2.bandwidth() / 2)
             .attr("dy", ".35em")
             .style("font-family", "monospace")
-            .style('fill', 'white')
+            .classed("svg-text", true)
+            //.style('fill', 'white')
             .text(d => d.count);
 
         svg2.append("g")
@@ -266,6 +316,44 @@
         console.error('Error loading the CSV data:', error);
     });
 </script>
+
+<script>
+    // Funcție pentru exportul SVG
+    function exportSVG(containerID, filename) {
+        const svgElement = document.querySelector(containerID + ' svg');
+        const svgString = new XMLSerializer().serializeToString(svgElement);
+
+        // Adăugare stiluri direct în SVG
+        const styledSvgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style><![CDATA[' + getSvgStyles(containerID) + ']]></style>');
+
+        const blob = new Blob([styledSvgString], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename + ".svg";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Funcție pentru a obține stilurile CSS pentru SVG
+    function getSvgStyles(containerID) {
+        const svgStyle = document.querySelector(containerID + ' style');
+        return svgStyle ? svgStyle.textContent : '';
+    }
+
+    // Actualizare pentru adăugarea evenimentelor de click pentru export
+    document.getElementById('export-category-svg').addEventListener('click', function() {
+        exportSVG('#category-distribution', 'category_distribution');
+    });
+
+    document.getElementById('export-winners-svg').addEventListener('click', function() {
+        exportSVG('#win-proportion', 'winners_proportion');
+    });
+</script>
+
 <script type="module" src="../js/index.js"></script>
 <script src="../js/drawer.js"></script>
 </body>
