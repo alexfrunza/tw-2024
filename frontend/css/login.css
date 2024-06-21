@@ -33,6 +33,7 @@
 .login-section--form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .login-section--form > * {
   margin-bottom: 10px;
@@ -56,6 +57,10 @@
   color: #fdfdfd;
 }
 
+.login-section--button:hover {
+  background-color: #b81b51;
+}
+
 @media only screen and (min-width: 600px) {
   .login-section {
     display: flex;
@@ -70,6 +75,9 @@
     gap: 200px;
   }
   .login-section__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-right: 100px;
   }
 }

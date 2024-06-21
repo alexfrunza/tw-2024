@@ -4,14 +4,6 @@ import {pool} from "../db.js";
 import {InvalidPasswordError, UserNotFoundError} from "../utils/errors.js";
 
 const SECRET_KEY = 'secret_key';
-// dummy, de luat din database
-const users = [
-    {
-        id: 1,
-        username: 'user1',
-        password: bcrypt.hashSync('password1', 8)
-    }
-];
 
 export const login = async (req, res) => {
     const {username, password} = req.body;

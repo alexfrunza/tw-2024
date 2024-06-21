@@ -4,6 +4,9 @@
 .register-section__art {
   font-size: 1.875rem;
   line-height: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .register-section__art--img {
@@ -61,7 +64,7 @@
 }
 
 .register-section--button:hover {
-  background-color: #c40e4d;
+  background-color: #b81b51;
 }
 
 @media only screen and (min-width: 600px) {

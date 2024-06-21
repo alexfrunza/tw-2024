@@ -33,6 +33,7 @@
   @at-root #{&}--form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
     & > * {
       margin-bottom: 10px;
@@ -56,6 +57,10 @@
     color: $font-color-1;
   }
 
+  @at-root #{&}--button:hover {
+    background-color: #b81b51;
+  }
+
   @media only screen and (min-width: 600px) {
     display: flex;
     gap: 100px;
@@ -70,6 +75,9 @@
     gap: 200px;
 
     @at-root #{&}__form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       margin-right: 100px;
     }
   }
