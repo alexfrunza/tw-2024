@@ -1,4 +1,7 @@
 // dummy, de luat din database
+import * as fs from "node:fs";
+import {parse} from "csv";
+
 const actors = [
     {id: 1, name: 'Robert Downey Jr.', age: 56, movies: ['Iron Man', 'Sherlock Holmes']},
     {id: 2, name: 'Chris Hemsworth', age: 38, movies: ['Thor', 'Extraction']}
