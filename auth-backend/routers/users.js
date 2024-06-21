@@ -1,5 +1,6 @@
 import {createUser} from "../controllers/users.js";
 import {getUser} from "../controllers/getUser.js";
+import {updateUser} from "../controllers/updateUser.js";
 
 export const usersRouter = async (req, res) => {
     req.handled = true;
@@ -13,9 +14,9 @@ export const usersRouter = async (req, res) => {
     } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
         console.log("POST /users");
         await createUser(req, res);
-    } else if (req.fullUrl.pathname.startsWith('/users/') && req.method === 'PUT') {
-        req.handled = false;
-        //
+    } else if (req.fullUrl.pathname.startsWith('/') && req.method === 'PUT') {
+        console.log("PUT /users/id");
+        await updateUser(req, res);
     } else if (req.fullUrl.pathname.startsWith('/users/') && req.method === 'DELETE') {
         req.handled = false;
         //

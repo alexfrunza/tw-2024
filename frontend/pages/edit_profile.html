@@ -38,13 +38,13 @@
                 <input type="text" value="lastName" id="lastName" name="lastName" class="edit-profile--input" required>
 
                 <label for="password" class="edit-profile--label">Current password:</label>
-                <input type="password" id="password" name="password" class="edit-profile--input" required>
+                <input type="password" id="password" name="password" class="edit-profile--input">
 
                 <label for="newPassword" class="edit-profile--label">New password:</label>
-                <input type="password" id="newPassword" name="newPassword" class="edit-profile--input" required>
+                <input type="password" id="newPassword" name="newPassword" class="edit-profile--input">
 
                 <label for="confirmNewPassword" class="edit-profile--label">Confirm new password:</label>
-                <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="edit-profile--input" required>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="edit-profile--input">
 
                 <button type="submit" class="edit-profile--button">Edit Profile</button>
 
@@ -57,7 +57,7 @@
     <script src="
 https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
 "></script>
-    <script type="module">
+    <script>
 
         function parseJwt (token) {
             var base64Url = token.split('.')[1];
@@ -102,6 +102,52 @@ https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
                 }
             }
         }
+    </script>
+
+    <script>
+        document.querySelector('.edit-profile__form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const token = localStorage.getItem('token');
+            const decoded = parseJwt(token);
+            const userId = decoded.id;
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const password = document.getElementById('password').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            const user = {
+                username,
+                email,
+                first_name: firstName,
+                last_name: lastName,
+            };
+
+            if (password && password.trim() !== '' && newPassword === confirmNewPassword) {
+                user.password = newPassword;
+                user.oldPassword = password;
+            }
+
+            const response = await fetch(`http://localhost:5000/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': token
+                },
+                body: JSON.stringify(user)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Profile updated', data);
+            } else {
+                console.error('Failed to update profile', response);
+            }
+        });
     </script>
 
     <script type="module" src="../js/index.js"></script>
