@@ -17,6 +17,12 @@
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
+        .general-statistics {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px;
+        }
         .bar {
             fill: steelblue;
         }
@@ -103,12 +109,18 @@
         <h1>SAG Awards General Statistics</h1>
 
         <div id="win-proportion"></div>
-        <button id="export-winners-svg">Export SVG</button>
-        <button id="export-winners-csv">Export CSV</button>
+        <div>
+            <button id="export-winners-svg">Export SVG</button>
+            <button id="export-winners-csv">Export CSV</button>
+            <button id="export-winners-webp">Export WebP</button>
+        </div>
 
         <div id="category-distribution"></div>
-        <button id="export-category-svg">Export SVG</button>
-        <button id="export-category-csv">Export CSV</button>
+        <div>
+            <button id="export-category-svg">Export SVG</button>
+            <button id="export-category-csv">Export CSV</button>
+            <button id="export-category-webp">Export WebP</button>
+        </div>
 
     </section>
 
@@ -176,7 +188,7 @@
 
         // Add title for the first chart
         svg1.append("text")
-            .attr("x", width1 / 2)
+            .attr("x", (width1 - margin.left + 75) / 2)
             .attr("y", -margin.top / 2)
             .attr("class", "title")
             .style("font-family", "monospace")
@@ -244,7 +256,7 @@
             .attr("width", width1 + margin.left + margin.right) // Utilizează aceeași lățime ca primul grafic
             .attr("height", height2)
             .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            .attr("transform", `translate(${margin.left - 175},${margin.top})`);
 
         svg2.append("style")
             .text(`
@@ -402,6 +414,43 @@
 
     document.getElementById('export-winners-svg').addEventListener('click', function() {
         exportSVG('#win-proportion', 'winners_proportion');
+    });
+
+    function exportWebP(containerID, filename) {
+        const svgElement = document.querySelector(containerID + ' svg');
+        const svgString = new XMLSerializer().serializeToString(svgElement);
+
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(svgBlob);
+
+        const img = new Image();
+        img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+
+            canvas.toBlob(function (blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename + ".webp";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/webp');
+        };
+        img.src = url;
+    }
+
+    document.getElementById('export-category-webp').addEventListener('click', function() {
+        exportWebP('#category-distribution', 'category_distribution');
+    });
+
+    document.getElementById('export-winners-webp').addEventListener('click', function() {
+        exportWebP('#win-proportion', 'winners_proportion');
     });
 </script>
 
