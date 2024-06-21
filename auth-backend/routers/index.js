@@ -27,16 +27,14 @@ export const mainRouter = async (req, res) => {
 
         await new Promise((resolve, reject) => {
             req.on('end', () => {
-                let parsedBody;
+                let parsedBody = Buffer.concat(body).toString();
 
                 if (req.headers['content-type'] === 'application/json') {
-                    parsedBody = JSON.parse(Buffer.concat(body).toString());
+                    parsedBody = JSON.parse(parsedBody);
                 } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
-                    parsedBody = new URLSearchParams(Buffer.concat(body).toString());
-                } else {
-                    // Handle other content types as needed
+                    parsedBody = new URLSearchParams(parsedBody);
                 }
-                // console.log(parsedBody);
+
                 req.body = parsedBody;
                 resolve();
             });
@@ -45,7 +43,7 @@ export const mainRouter = async (req, res) => {
         if (req.fullUrl.pathname === '/login' && req.method === 'POST') {
             req.fullUrl = new URL(req.url.substring('/login'.length), `http://${req.headers.host}`);
             await login(req, res);
-        } else if(req.fullUrl.pathname.startsWith('/users')) {
+        } else if (req.fullUrl.pathname.startsWith('/users')) {
             req.fullUrl = new URL(req.url.substring('/users'.length), `http://${req.headers.host}`);
             await usersRouter(req, res);
         }

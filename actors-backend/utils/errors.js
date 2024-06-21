@@ -23,3 +23,9 @@ export class UnauthorizedError extends APIError {
         super(message, "UnauthorizedError", 401);
     }
 }
+
+export class InvalidCsvError extends APIError {
+    constructor(message) {
+        super(message, "InvalidCsvError", 400);
+    }
+}
