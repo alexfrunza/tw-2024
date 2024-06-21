@@ -1,5 +1,6 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
+import {NotFoundError} from "../utils/errors.js";
 
 export const getActors = async (req, res) => {
 
@@ -48,6 +49,20 @@ export const getActors = async (req, res) => {
             ...data,
             actors: [...Object.values(actors)]
         }
+    };
+    res.statusCode = 200;
+}
+
+export const getActor = async (req, res) => {
+    const resultActor = await pool.query('SELECT * FROM actor WHERE id = $1', [req.params.id]);
+
+    if (resultActor.rows.length === 0) {
+        throw new NotFoundError("Actor not found");
+    }
+
+    res.jsonBody = {
+        message: "Success",
+        data: resultActor.rows[0]
     };
     res.statusCode = 200;
 }

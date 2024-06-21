@@ -26,6 +26,7 @@ export const mainRouter = async (req, res) => {
 
         res.jsonBody = null;
         res.sent = false;
+        req.params = {};
         req.handled = false;
         req.fullUrl = new URL(req.url, `http://${req.headers.host}`);
 
