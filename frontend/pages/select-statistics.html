@@ -118,8 +118,19 @@
         });
 
         // 1. Distribution by category
-        const categories = d3.rollup(data, v => v.length, d => d.category);
-        const categoriesData = Array.from(categories, ([category, count]) => ({category, count}));
+        // Creăm un set pentru a ține evidența categoriilor unice
+        const categorySet = new Set();
+
+        data.forEach(d => {
+            d.category = d.category.trim(); // Se elimină spațiile albe de la început și sfârșit
+            categorySet.add(d.category);
+        });
+
+        const categoriesData = Array.from(categorySet).map(category => ({
+            category,
+            count: data.filter(d => d.category === category).length
+        }));
+
 
         const margin = {top: 40, right: 30, bottom: 40, left: 400},
             width1 = 900 - margin.left - margin.right, // Lățimea ajustată pentru primul grafic
