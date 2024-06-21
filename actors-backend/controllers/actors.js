@@ -66,3 +66,17 @@ export const getActor = async (req, res) => {
     };
     res.statusCode = 200;
 }
+
+export const deleteActor = async (req, res) => {
+    const resultActor = await pool.query('DELETE FROM actor WHERE id = $1', [req.params.id]);
+
+    if (resultActor.rowCount === 0) {
+        throw new NotFoundError("Actor not found");
+    }
+
+    res.jsonBody = {
+        message: "Success"
+    };
+    res.statusCode = 200;
+
+}

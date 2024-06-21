@@ -27,9 +27,9 @@ CREATE TABLE "award_actor"(
     "actor_id" BIGINT NOT NULL,
     "won" BOOLEAN NOT NULL,
     "show_id" BIGINT NOT NULL,
-    FOREIGN KEY ("show_id") REFERENCES "show"("id"),
-    FOREIGN KEY ("award_id") REFERENCES "award"("id"),
-    FOREIGN KEY ("actor_id") REFERENCES "actor"("id"),
+    FOREIGN KEY ("show_id") REFERENCES "show"("id") ON DELETE CASCADE,
+    FOREIGN KEY ("award_id") REFERENCES "award"("id") ON DELETE CASCADE,
+    FOREIGN KEY ("actor_id") REFERENCES "actor"("id") ON DELETE CASCADE,
     UNIQUE (show_id, award_id, actor_id)
 );
 
@@ -38,6 +38,6 @@ CREATE TABLE "award_show"(
     "award_id" BIGINT NOT NULL,
     "show_id" BIGINT NOT NULL,
     "won" BOOLEAN,
-    FOREIGN KEY ("award_id") REFERENCES "award"("id"),
-    FOREIGN KEY ("show_id") REFERENCES "show"("id")
+    FOREIGN KEY ("award_id") REFERENCES "award"("id") ON DELETE CASCADE,
+    FOREIGN KEY ("show_id") REFERENCES "show"("id") ON DELETE CASCADE
 );
