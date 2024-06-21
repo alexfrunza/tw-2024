@@ -101,10 +101,15 @@
 
     <section class="general-statistics">
         <h1>SAG Awards General Statistics</h1>
+
         <div id="win-proportion"></div>
         <button id="export-winners-svg">Export SVG</button>
+        <button id="export-winners-csv">Export CSV</button>
+
         <div id="category-distribution"></div>
         <button id="export-category-svg">Export SVG</button>
+        <button id="export-category-csv">Export CSV</button>
+
     </section>
 
 
@@ -211,7 +216,9 @@
             .style("font-family", "monospace")
             //.style('fill', 'white')
             .classed("svg-text", true)
-            .text(d => d.count);
+            .text(d => d.count)
+            .attr("data-category", d => d.category)
+            .attr("data-count", d => d.count);
 
         svg1.append("g")
             .call(d3.axisLeft(y1).tickSize(0))
@@ -300,7 +307,9 @@
             .style("font-family", "monospace")
             .classed("svg-text", true)
             //.style('fill', 'white')
-            .text(d => d.count);
+            .text(d => d.count)
+            .attr("data-category", d => d.won ? 'Winners' : 'Nominees')
+            .attr("data-count", d => d.count);
 
         svg2.append("g")
             .call(d3.axisLeft(y2).tickSize(0))
@@ -312,9 +321,51 @@
             .call(d3.axisBottom(x2).ticks(5))
             .selectAll("text")
             .attr("class", "axis-label");
+
+
+
+        function exportCSV(containerID, filename) {
+            const svgElement = document.querySelector(containerID + ' svg');
+
+            if (!svgElement) {
+                console.error('SVG element not found.');
+                return;
+            }
+
+            const texts = svgElement.querySelectorAll('text[data-category]');
+
+            let csvContent = "data:text/csv;charset=utf-8,Category,Count\n";
+
+            texts.forEach(text => {
+                const category = text.getAttribute('data-category');
+                const count = text.getAttribute('data-count');
+                if (category && count) {
+                    csvContent += `${category},${count}\n`;
+                }
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", filename + ".csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        document.getElementById('export-category-csv').addEventListener('click', function() {
+            exportCSV('#category-distribution', 'category_distribution');
+        });
+
+        document.getElementById('export-winners-csv').addEventListener('click', function() {
+            exportCSV('#win-proportion', 'winners_proportion');
+        });
+
     }).catch(function(error) {
         console.error('Error loading the CSV data:', error);
     });
+
+
 </script>
 
 <script>
