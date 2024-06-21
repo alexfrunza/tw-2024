@@ -40,6 +40,10 @@
     }
   }
 
+  @at-root #{&}--error {
+    color: red;
+  }
+
   @at-root #{&}--input {
     @include text-xl;
     background-color: $bg-2;

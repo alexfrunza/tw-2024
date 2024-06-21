@@ -35,6 +35,7 @@
                 <input type="password" id="password" name="password" class="login-section--input" required>
                 <button type="submit" class="login-section--button">Login</button>
             </form>
+            <p id="error" class="login-section--error"></p>
         </div>
     </div>
 
@@ -80,6 +81,7 @@
                         window.location.href = '/';
                     } else {
                         console.error('Login failed:', data);
+                        document.getElementById('error').textContent = data.errors[0].message;
                     }
                 })
                 .catch(error => console.error('Error during login:', error));
