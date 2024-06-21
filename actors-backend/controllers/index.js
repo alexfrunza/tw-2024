@@ -4,7 +4,6 @@ import {pool} from "../db.js";
 import {createStringStream} from "../utils/index.js";
 
 export const loadDatasetActorsDb = async (req, res) => {
-    let records = [];
     let actors = {};
     let awards = {};
     let shows = {};
@@ -70,11 +69,9 @@ export const loadDatasetActorsDb = async (req, res) => {
                 await pool.query('INSERT INTO award_actor (award_id, actor_id, won, show_id) VALUES ($1, $2, $3, $4)', [awards[awardLabel].id, actors[nominee].id, won, shows[show].id]);
             }
         }
-
-        records.push(record);
     }
 
-    res.jsonBody = {records};
+    res.jsonBody = {message: "Success"};
     res.statusCode = 200;
 }
 
