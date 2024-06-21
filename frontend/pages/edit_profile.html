@@ -1,67 +1,110 @@
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AcVis</title>
-    <link rel="icon" type="image/png" href="../img/iconmonstr-customer-1-64.png" sizes="64x64">
+    <!DOCTYPE html>
+    <html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>AcVis</title>
+        <link rel="icon" type="image/png" href="../img/iconmonstr-customer-1-64.png" sizes="64x64">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
-    <link rel="stylesheet" type="text/css" href="../css/edit_profile.css">
-    <link rel="stylesheet" type="text/css" href="../css/footer.css">
-</head>
-<body>
+        <link rel="stylesheet" type="text/css" href="../css/index.css">
+        <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="../css/edit_profile.css">
+        <link rel="stylesheet" type="text/css" href="../css/footer.css">
+    </head>
+    <body>
 
-<div class="container">
-    <app-navbar></app-navbar>
+    <div class="container">
+        <app-navbar></app-navbar>
 
-    <section class="edit-profile">
-        <img src="../img/blank-profile-picture-973460_640.png" alt="User Image" class="edit-profile--img">
-        <h2 class="edit-profile--title">Edit profile</h2>
-        <form action="/edit_profile" method="post" class="edit-profile__form">
-            <label for="email" class="edit-profile--label">Email:</label>
-            <input type="text" value="your_email@gmail.com" id="email" name="email" class="edit-profile--input" required>
+        <section class="edit-profile">
+            <img src="../img/blank-profile-picture-973460_640.png" alt="User Image" class="edit-profile--img">
+            <h2 class="edit-profile--title">Edit profile</h2>
+            <form action="/edit_profile" method="post" class="edit-profile__form">
+                <label for="username" class="edit-profile--label">Username:</label>
+                <input type="text" value="your_username" id="username" name="username" class="edit-profile--input" required>
 
-            <label for="username" class="edit-profile--label">Username:</label>
-            <input type="text" value="your_username" id="username" name="username" class="edit-profile--input" required>
+                <label for="email" class="edit-profile--label">Email:</label>
+                <input type="email" value="your_email@gmail.com" id="email" name="email" class="edit-profile--input" required>
 
-            <label for="gender" class="edit-profile--label">Gender:</label>
-            <select name="gender" id="gender" class="edit-profile--input">
-                <option value="">&emsp;</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">Others</option>
-            </select>
+                <label for="firstName" class="edit-profile--label">First name:</label>
+                <input type="text" value="firstName" id="firstName" name="firstName" class="edit-profile--input" required>
 
-            <label for="password" class="edit-profile--label">Password:</label>
-            <input type="password" id="password" name="password" class="edit-profile--input" required>
+                <label for="lastName" class="edit-profile--label">Last name:</label>
+                <input type="text" value="lastName" id="lastName" name="lastName" class="edit-profile--input" required>
 
-            <button type="submit" class="edit-profile--button">Edit Profile</button>
+                <label for="password" class="edit-profile--label">Current password:</label>
+                <input type="password" id="password" name="password" class="edit-profile--input" required>
 
-        </form>
-    </section>
+                <label for="newPassword" class="edit-profile--label">New password:</label>
+                <input type="password" id="newPassword" name="newPassword" class="edit-profile--input" required>
+
+                <label for="confirmNewPassword" class="edit-profile--label">Confirm new password:</label>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="edit-profile--input" required>
+
+                <button type="submit" class="edit-profile--button">Edit Profile</button>
+
+            </form>
+        </section>
 
 
-    <app-footer></app-footer>
-</div>
+        <app-footer></app-footer>
+    </div>
+    <script src="
+https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js
+"></script>
+    <script type="module">
 
-<script>
-    window.onload = function() {
-        const isLoggedIn = localStorage.getItem('token') !== null;
+        function parseJwt (token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
 
-        if (!isLoggedIn) {
-            window.location.href = 'login.html';
+            return JSON.parse(jsonPayload);
         }
-    }
-</script>
 
-<script type="module" src="../js/index.js"></script>
-<script src="../js/drawer.js"></script>
-</body>
-</html>
+        window.onload = async function() {
+
+            const isLoggedIn = localStorage.getItem('token') !== null;
+
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            } else {
+                const token = localStorage.getItem('token');
+                const decoded = parseJwt(token);
+                const userId = decoded.id;
+
+                console.log(userId);
+
+                const response = await fetch(`http://localhost:5000/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'x-access-token': token
+                    }
+                });
+
+                if(response.ok) {
+                    const data = await response.json();
+                    const user = data.data[0];
+
+                    document.getElementById('username').value = user.username;
+                    document.getElementById('email').value = user.email;
+                    document.getElementById('firstName').value = user.first_name;
+                    document.getElementById('lastName').value = user.last_name;
+                } else {
+                    console.error('Failed to fetch user data', response);
+                }
+            }
+        }
+    </script>
+
+    <script type="module" src="../js/index.js"></script>
+    <script src="../js/drawer.js"></script>
+    </body>
+    </html>
