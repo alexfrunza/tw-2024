@@ -44,7 +44,7 @@ export const createUser = async (req, res) => {
 
     const user = result.rows[0];
 
-    const token = jwt.sign({id: user.id}, SECRET_KEY, {expiresIn: 86400});
+    const token = jwt.sign({id: user.id, admin: user.admin}, SECRET_KEY, {expiresIn: 86400});
 
     res.jsonBody = {
         auth: true,

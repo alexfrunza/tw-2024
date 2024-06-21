@@ -19,7 +19,7 @@ export const login = async (req, res) => {
         throw new InvalidPasswordError();
     }
 
-    const token = jwt.sign({id: user.id}, SECRET_KEY, {expiresIn: 86401});
+    const token = jwt.sign({id: user.id, admin: user.admin}, SECRET_KEY, {expiresIn: 86401});
 
     res.jsonBody = {
         auth: true,
