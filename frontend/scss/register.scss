@@ -6,6 +6,9 @@
 
   @at-root #{&}__art {
     @include text-3xl;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   @at-root #{&}__art--img {
@@ -58,6 +61,10 @@
     padding: 10px 20px;
     border-radius: 20px;
     color: $font-color-1;
+  }
+
+  @at-root #{&}--button:hover {
+    background-color: #b81b51;
   }
 
   @media only screen and (min-width: 600px) {
