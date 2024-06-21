@@ -1,13 +1,53 @@
-// dummy, de luat din database
-import * as fs from "node:fs";
-import {parse} from "csv";
-
-const actors = [
-    {id: 1, name: 'Robert Downey Jr.', age: 56, movies: ['Iron Man', 'Sherlock Holmes']},
-    {id: 2, name: 'Chris Hemsworth', age: 38, movies: ['Thor', 'Extraction']}
-];
+import {pool} from "../db.js";
+import {toTitleCase} from "../utils/index.js";
 
 export const getActors = async (req, res) => {
-    res.jsonBody = {actors};
+
+    const queryParams = new URLSearchParams(req.fullUrl.search);
+
+    let queryStr = '';
+    let resultActor = null;
+    let resultActorShows = null;
+
+
+    let limit = queryParams.get('limit');
+    let offset = queryParams.get('offset');
+
+    const data = {};
+    const actors = {};
+
+    if (limit && offset) {
+        queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id" FROM actor ORDER BY actor.id ASC LIMIT $1 OFFSET $2';
+        resultActor = await pool.query(queryStr, [limit, offset]);
+
+        data.limit = limit;
+        data.offset = offset;
+    } else {
+        queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id", show.name "showName" FROM actor JOIN award_actor ON actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
+        resultActor = await pool.query(queryStr);
+    }
+
+    resultActor.rows.forEach(row => {
+        if (actors[row.id] === undefined) {
+            actors[row.id] = {id: row.id, name: toTitleCase(row.name), shows: []};
+        }
+    })
+
+    for await (const actor of Object.values(actors)) {
+        queryStr = 'SELECT DISTINCT show.name "showName", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
+        resultActorShows = await pool.query(queryStr, [actor.id]);
+
+        resultActorShows.rows.forEach(row => {
+            actor.shows.push(toTitleCase(row.showName));
+        });
+    }
+
+    res.jsonBody = {
+        message: "Success",
+        data: {
+            ...data,
+            actors: [...Object.values(actors)]
+        }
+    };
     res.statusCode = 200;
 }
