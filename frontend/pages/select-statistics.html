@@ -15,6 +15,31 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/select-statistics.css">
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .bar {
+            fill: steelblue;
+        }
+        .bar.won {
+            fill: orange;
+        }
+        .axis-label {
+            font-size: 12px;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+        .axis-label {
+            font-family: monospace;
+        }
+
+        #win-proportion, #category-distribution {
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
 
@@ -70,10 +95,166 @@
         </form>
     </section>
 
+    <section class="general-statistics">
+        <h1>SAG Awards General Statistics</h1>
+        <div id="win-proportion"></div>
+        <div id="category-distribution"></div>
+    </section>
+
 
     <app-footer></app-footer>
 </div>
 
+
+
+<script>
+    // URL de la care se încarcă datele CSV
+    const csvUrl = 'http://127.0.0.1:5001/export-actors-csv';
+
+    d3.csv(csvUrl).then(function(data) {
+        // Preprocesarea datelor: Conversia valorilor câmpului 'won' din string în boolean
+        data.forEach(d => {
+            d.won = (d.won.toLowerCase() === 'true');
+        });
+
+        // 1. Distribution by category
+        const categories = d3.rollup(data, v => v.length, d => d.category);
+        const categoriesData = Array.from(categories, ([category, count]) => ({category, count}));
+
+        const margin = {top: 40, right: 30, bottom: 40, left: 400},
+            width1 = 900 - margin.left - margin.right, // Lățimea ajustată pentru primul grafic
+            height1 = categoriesData.length * 20 + margin.top + margin.bottom; // Înălțimea ajustată pentru primul grafic
+
+        const svg1 = d3.select("#category-distribution")
+            .append("svg")
+            .attr("width", width1 + margin.left + margin.right)
+            .attr("height", height1)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Add title for the first chart
+        svg1.append("text")
+            .attr("x", width1 / 2)
+            .attr("y", -margin.top / 2)
+            .attr("class", "title")
+            .style("font-family", "monospace")
+            .style('fill', 'white')
+            .text("Distribution of Nominations by Category");
+
+        const x1 = d3.scaleLinear()
+            .domain([0, d3.max(categoriesData, d => d.count)])
+            .range([0, width1 - 10]);
+
+        const y1 = d3.scaleBand()
+            .domain(categoriesData.map(d => d.category))
+            .range([0, categoriesData.length * 20])
+            .padding(0.1);
+
+        svg1.append("g")
+            .selectAll("rect")
+            .data(categoriesData)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", 0)
+            .attr("y", d => y1(d.category))
+            .attr("width", d => x1(d.count))
+            .attr("height", y1.bandwidth());
+
+        // Adding numbers at the end of each bar
+        svg1.append("g")
+            .selectAll("text")
+            .data(categoriesData)
+            .enter()
+            .append("text")
+            .attr("x", d => x1(d.count) + 5)
+            .attr("y", d => y1(d.category) + y1.bandwidth() / 2)
+            .attr("dy", ".35em")
+            .style("font-family", "monospace")
+            .style('fill', 'white')
+            .text(d => d.count);
+
+        svg1.append("g")
+            .call(d3.axisLeft(y1).tickSize(0))
+            .selectAll("text")
+            .attr("class", "axis-label")
+            .style("text-anchor", "end")
+            .attr("transform", "translate(-10,0)");
+
+        svg1.append("g")
+            .attr("transform", `translate(0,${categoriesData.length * 20})`)
+            .call(d3.axisBottom(x1).ticks(5))
+            .selectAll("text")
+            .attr("class", "axis-label");
+
+        // 2. Proportion of winners vs nominees
+        const winProportion = d3.rollup(data, v => v.length, d => d.won);
+        const winProportionData = Array.from(winProportion, ([won, count]) => ({won, count}));
+
+        const height2 = winProportionData.length * 30 + margin.top + margin.bottom; // Înălțimea ajustată pentru al doilea grafic
+
+        const svg2 = d3.select("#win-proportion")
+            .append("svg")
+            .attr("width", width1 + margin.left + margin.right) // Utilizează aceeași lățime ca primul grafic
+            .attr("height", height2)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Add title for the second chart
+        svg2.append("text")
+            .attr("x", width1 / 2)
+            .attr("y", -margin.top / 2)
+            .attr("class", "title")
+            .style("font-family", "monospace")
+            .style('fill', 'white')
+            .text("Proportion of Winners vs Nominees");
+
+        const x2 = d3.scaleLinear()
+            .domain([0, d3.max(winProportionData, d => d.count)])
+            .range([0, width1 - 10]);
+
+        const y2 = d3.scaleBand()
+            .domain(winProportionData.map(d => d.won ? 'Winners' : 'Nominees'))
+            .range([0, winProportionData.length * 30])
+            .padding(0.1);
+
+        svg2.append("g")
+            .selectAll("rect")
+            .data(winProportionData)
+            .enter()
+            .append("rect")
+            .attr("class", d => d.won ? "bar won" : "bar")
+            .attr("x", 0)
+            .attr("y", d => y2(d.won ? 'Winners' : 'Nominees'))
+            .attr("width", d => x2(d.count))
+            .attr("height", y2.bandwidth());
+
+        svg2.append("g")
+            .selectAll("text")
+            .data(winProportionData)
+            .enter()
+            .append("text")
+            .attr("x", d => x2(d.count) + 5)
+            .attr("y", d => y2(d.won ? 'Winners' : 'Nominees') + y2.bandwidth() / 2)
+            .attr("dy", ".35em")
+            .style("font-family", "monospace")
+            .style('fill', 'white')
+            .text(d => d.count);
+
+        svg2.append("g")
+            .call(d3.axisLeft(y2).tickSize(0))
+            .selectAll("text")
+            .attr("class", "axis-label");
+
+        svg2.append("g")
+            .attr("transform", `translate(0,${winProportionData.length * 30})`)
+            .call(d3.axisBottom(x2).ticks(5))
+            .selectAll("text")
+            .attr("class", "axis-label");
+    }).catch(function(error) {
+        console.error('Error loading the CSV data:', error);
+    });
+</script>
 <script type="module" src="../js/index.js"></script>
 <script src="../js/drawer.js"></script>
 </body>
