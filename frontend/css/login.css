@@ -39,6 +39,10 @@
   margin-bottom: 10px;
 }
 
+.login-section--error {
+  color: red;
+}
+
 .login-section--input {
   font-size: 1.25rem;
   line-height: 1.75rem;
