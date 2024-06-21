@@ -43,6 +43,7 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" class="register-section--input" required>
                 <button type="submit" class="register-section--button">Register</button>
             </form>
+            <p id="error" class="register-section--error"></p>
         </div>
     </div>
 
@@ -72,6 +73,12 @@
         const firstName = document.getElementById('lastName').value;
         const lastName = document.getElementById('lastName').value;
         const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            document.getElementById('error').textContent = 'Password and Confirm Password must match.';
+            return;
+        }
 
         const response = await fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -88,6 +95,7 @@
             window.location.href = '/'; // redirect pe pagina principala
         } else {
             console.error('Register failed:', data);
+            document.getElementById('error').textContent = data.errors[0];
         }
     });
 </script>

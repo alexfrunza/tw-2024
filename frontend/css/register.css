@@ -41,6 +41,10 @@
   margin-bottom: 10px;
 }
 
+.register-section--error {
+  color: red;
+}
+
 .register-section--input {
   font-size: 1.25rem;
   line-height: 1.75rem;
