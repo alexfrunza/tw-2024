@@ -29,7 +29,7 @@ export const updateUser = async (req, res) => {
             throw new UnauthorizedError('Current password is incorrect');
         }
 
-        user.password = bcrypt.hashSync(user.password, 8);
+        //user.password = bcrypt.hashSync(user.password, 8);
     }
 
     let query = 'UPDATE "user" SET username = $1, email = $2, first_name = $3, last_name = $4';
