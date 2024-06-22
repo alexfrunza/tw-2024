@@ -31,7 +31,16 @@ export const loadDatasetActorsDb = async (req, res) => {
             const result = await pool.query('SELECT id FROM award WHERE name = $1 AND year = $2', [award, year]);
 
             if (awards[awardLabel] === undefined && result.rows.length === 0) {
-                const insertQuery = await pool.query('INSERT INTO award (name, year) VALUES ($1, $2) RETURNING id', [award, year]);
+                let queryStr;
+
+                if(nominee === '') {
+                    queryStr = 'INSERT INTO award (name, year, type) VALUES ($1, $2, \'show\') RETURNING id'
+                } else {
+                    queryStr = 'INSERT INTO award (name, year, type) VALUES ($1, $2, \'actor\') RETURNING id'
+                }
+
+                const insertQuery = await pool.query(queryStr, [award, year]);
+
                 awards[awardLabel] = {id: insertQuery.rows[0].id};
             } else {
                 awards[awardLabel] = {id: result.rows[0].id};

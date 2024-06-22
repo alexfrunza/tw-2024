@@ -3,6 +3,9 @@ DROP TABLE IF EXISTS "award_show";
 DROP TABLE IF EXISTS "show";
 DROP TABLE IF EXISTS "actor";
 DROP TABLE IF EXISTS "award";
+DROP TYPE IF EXISTS "award_type";
+
+CREATE TYPE "award_type" AS ENUM ('actor', 'show');
 
 CREATE TABLE "show"(
     "id" SERIAL PRIMARY KEY,
@@ -18,6 +21,7 @@ CREATE TABLE "award"(
     "id" SERIAL PRIMARY KEY,
     "year" VARCHAR(100) NOT NULL,
     "name" VARCHAR(100) NOT NULL,
+    "type" AWARD_TYPE NOT NULL,
     UNIQUE (year, name)
 );
 
