@@ -83,9 +83,10 @@ export const deleteActor = async (req, res) => {
 }
 
 export const createActor = async (req, res) => {
-    const {name} = req.body;
+    let {name} = req.body;
 
     validateActorName(name);
+    name = name.trim();
 
     const resultActor = await pool.query('INSERT INTO actor (name) VALUES ($1) RETURNING id', [name]);
 
@@ -100,13 +101,14 @@ export const createActor = async (req, res) => {
 }
 
 export const modifyActor = async (req, res) => {
-    const {name} = req.body;
+    let {name} = req.body;
 
     validateActorName(name);
+    name = name.trim();
 
     const resultActor = await pool.query('UPDATE actor SET name = $1 WHERE id = $2 RETURNING id', [name, req.params.id]);
 
-    if(resultActor.rows.length === 0) {
+    if (resultActor.rows.length === 0) {
         throw new NotFoundError("Actor not found");
     }
 

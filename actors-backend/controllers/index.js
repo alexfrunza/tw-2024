@@ -1,29 +1,50 @@
-import fs from "node:fs";
 import {parse} from "csv";
 import {pool} from "../db.js";
 import {createStringStream} from "../utils/index.js";
+import {InvalidCsvError} from "../utils/errors.js";
+import {validateActorName, validateAwardName, validateAwardYear, validateShowName} from "../utils/validations.js";
 
 export const loadDatasetActorsDb = async (req, res) => {
     let actors = {};
     let awards = {};
     let shows = {};
 
+    let line = 2;
+
     const parser = createStringStream(req.body)
         .pipe(parse({delimiter: ',', from_line: 2}));
 
     for await (const record of parser) {
         // Fields are in this order: year, category, nominee name, show, won
+        if (record.length !== 5) {
+            throw new InvalidCsvError("Invalid number of fields in CSV. The csv must have on the first line year,category,nominee_name,show_name,won_status. After that the rows must respect that structure.");
+        }
+
         let [year, award, nominee, show, won] = record;
 
-        won = (won === 'True');
-
+        validateAwardName(award);
+        award = award.trim();
+        validateAwardYear(year, true);
+        year = year.trim();
         if (year === '') {
             year = "Unknown";
+        }
+
+        validateActorName(nominee, true);
+        nominee = nominee.trim();
+
+        validateShowName(show, true);
+        show = show.trim();
+
+        if (show === '' && nominee === '') {
+            throw new InvalidCsvError("Show name and nominee name can't be both empty.");
         }
 
         if (show === '') {
             show = 'N/A';
         }
+
+        won = (won === 'True');
 
         const awardLabel = `${award} ${year}`;
 
@@ -33,7 +54,7 @@ export const loadDatasetActorsDb = async (req, res) => {
             if (awards[awardLabel] === undefined && result.rows.length === 0) {
                 let queryStr;
 
-                if(nominee === '') {
+                if (nominee === '') {
                     queryStr = 'INSERT INTO award (name, year, type) VALUES ($1, $2, \'show\') RETURNING id'
                 } else {
                     queryStr = 'INSERT INTO award (name, year, type) VALUES ($1, $2, \'actor\') RETURNING id'
