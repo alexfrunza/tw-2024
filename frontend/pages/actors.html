@@ -28,42 +28,11 @@
             <input type="text" id="search" name="search" class="actors-section--input">
             <button type="submit" class="actors-section--button">Search</button>
         </div>
-        <div class="actors-section__gallery">
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
-            <div class="actors-section__actor">
-                <img src="../img/actor1.webp" alt="Actor 1" class="actors-section__actor--img">
-                <h2 class="actors-section__actor--name">Jenna Ortega</h2>
-                <p class="actors-section__actor--movies">Wednesday, Scream, and Scream VI</p>
-            </div>
+        <div id="actors-container" class="actors-section__gallery">
+
+        </div>
+        <div id="pagination">
+
         </div>
     </div>
 
@@ -80,8 +49,56 @@
         navbarToggle.addEventListener('click', () => {
             navbarLinks.classList.toggle('active');
         });
-    });
 
+        const actorsContainer = document.getElementById('actors-container');
+        const pagination = document.getElementById('pagination');
+        let currentPage = 0;
+        const limit = 8;
+
+        async function loadActors() {
+            const response = await fetch(`http://127.0.0.1:5001/actors?offset=${currentPage * limit}&limit=${limit}`);
+            const data = await response.json();
+            actorsContainer.innerHTML = '';
+            for (const actor of data.data.actors) {
+                const actorElement = document.createElement('a');
+                actorElement.href = `actors/${actor.id}`;
+                actorElement.style.textDecoration = 'none';
+                actorElement.style.color = 'white';
+                actorElement.className = 'actors-section__actor';
+                actorElement.innerHTML = `
+            <div class="actors-section__actor--div"><img class="actors-section__actor--image" src="${actor.imageUrl !== '' ? actor.imageUrl : "../img/unknown.jpg"}" alt="${actor.name}"></div>
+            <h2 class="actors-section__actor--name">${actor.name}</h2>
+            <p class="actors-section__actor--movies">${actor.shows.map(show => show.name).join(', ')}</p>
+        `;
+                actorsContainer.appendChild(actorElement);
+            }
+
+            pagination.innerHTML = '';
+            if (currentPage > 0) {
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Prev';
+                prevButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    currentPage--;
+                    loadActors();
+                });
+                pagination.appendChild(prevButton);
+            }
+
+            if (data.data.actors.length === limit) {
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'Next';
+                nextButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    currentPage++;
+                    loadActors();
+                });
+                pagination.appendChild(nextButton);
+            }
+        }
+
+        loadActors();
+    });
 </script>
 </body>
 </html>

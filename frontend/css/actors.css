@@ -37,17 +37,44 @@
 }
 
 .actors-section__actor {
+  width: 350px;
+  margin: 15px;
   padding: 10px;
-  margin-bottom: 30px;
-  text-align: center;
-  background-color: #2E1916;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
 }
 
-.actors-section__actor--img {
-  width: 100%;
+.actors-section .actors-section__actor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.actors-section__actor--div {
+  display: flex;
+  align-items: center;
+  height: 150px;
 }
 
+.actors-section__actor--image {
+  max-height: 125px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.actors-section__actor--name {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.actors-section .actors-section__actor--movies {
+  font-size: 0.9em;
+  color: #afafaf;
+}
 @media only screen and (min-width: 600px) {
   .actors-section--input {
     max-width: 300px;
@@ -65,12 +92,14 @@
     flex-basis: 30%;
   }
 }
+.actors-section__gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1%;
+}
+
 @media only screen and (min-width: 1024px) {
-  .actors-section__gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-  }
   .actors-section__actor {
     flex-basis: 19%;
   }
