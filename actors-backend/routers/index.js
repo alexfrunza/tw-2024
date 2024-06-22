@@ -4,6 +4,7 @@ import {exportDatasetActorsDb, loadDatasetActorsDb} from "../controllers/index.j
 import {showsRouter} from "./shows.js";
 import {awardsRouter} from "./awards.js";
 import {awardsActorRouter} from "./awards_actor.js";
+import {awardsShowRouter} from "./awards_show.js";
 
 export const mainRouter = async (req, res) => {
     try {
@@ -63,6 +64,9 @@ export const mainRouter = async (req, res) => {
         } else if (req.fullUrl.pathname.startsWith('/awardsActor')) {
             req.fullUrl = new URL(req.url.substring('/awardsActor'.length), `http://${req.headers.host}`);
             await awardsActorRouter(req, res);
+        } else if (req.fullUrl.pathname.startsWith('/awardsShow')) {
+            req.fullUrl = new URL(req.url.substring('/awardsShow'.length), `http://${req.headers.host}`);
+            await awardsShowRouter(req, res);
         } else if (req.fullUrl.pathname.startsWith('/awards')) {
             req.fullUrl = new URL(req.url.substring('/awards'.length), `http://${req.headers.host}`);
             await awardsRouter(req, res);
