@@ -83,9 +83,10 @@ export const deleteShow = async (req, res) => {
 }
 
 export const createShow = async (req, res) => {
-    const {name} = req.body;
+    let {name} = req.body;
 
     validateShowName(name);
+    name = name.trim();
 
     const resultShow = await pool.query('INSERT INTO show (name) VALUES ($1) RETURNING id', [name]);
 
@@ -100,13 +101,14 @@ export const createShow = async (req, res) => {
 }
 
 export const modifyShow = async (req, res) => {
-    const {name} = req.body;
+    let {name} = req.body;
 
     validateShowName(name);
+    name = name.trim();
 
     const resultShow = await pool.query('UPDATE show SET name = $1 WHERE id = $2 RETURNING id', [name, req.params.id]);
 
-    if(resultShow.rows.length === 0) {
+    if (resultShow.rows.length === 0) {
         throw new NotFoundError("Show not found");
     }
 

@@ -32,12 +32,30 @@ export class InvalidCsvError extends APIError {
 
 export class InvalidActorName extends APIError {
     constructor() {
-        super("Actor name must be a string with length greater than 5", "InvalidActorName", 400);
+        super("Actor name must be a string with length greater than 0", "InvalidActorName", 400);
     }
 }
 
 export class InvalidShowName extends APIError {
     constructor() {
-        super("Show name must be a string with length greater than 5", "InvalidShowName", 400);
+        super("Show name must be a string with length greater than 0", "InvalidShowName", 400);
+    }
+}
+
+export class InvalidAwardName extends APIError {
+    constructor() {
+        super("Award name must be a string with length greater than 5", "InvalidAwardName", 400);
+    }
+}
+
+export class InvalidAwardYear extends APIError {
+    constructor() {
+        super("Year name must be a string", "InvalidAwardYear", 400);
+    }
+}
+
+export class InvalidAwardType extends APIError {
+    constructor() {
+        super("The award type must be the strings: 'actor' or 'show'", "InvalidAwardType", 400);
     }
 }

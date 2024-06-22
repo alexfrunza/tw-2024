@@ -1,15 +1,8 @@
-import url from "url";
-import {verifyToken} from "../utils/authentication.js";
 import {actorsRouter} from "./actors.js";
 import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
 import {exportDatasetActorsDb, loadDatasetActorsDb} from "../controllers/index.js";
 import {showsRouter} from "./shows.js";
-
-// dummy, de luat din database
-const actors = [
-    {id: 1, name: 'Robert Downey Jr.', age: 56, movies: ['Iron Man', 'Sherlock Holmes']},
-    {id: 2, name: 'Chris Hemsworth', age: 38, movies: ['Thor', 'Extraction']}
-];
+import {awardsRouter} from "./awards.js";
 
 export const mainRouter = async (req, res) => {
     try {
@@ -66,6 +59,9 @@ export const mainRouter = async (req, res) => {
         } else if (req.fullUrl.pathname.startsWith('/shows')) {
             req.fullUrl = new URL(req.url.substring('/shows'.length), `http://${req.headers.host}`);
             await showsRouter(req, res);
+        } else if (req.fullUrl.pathname.startsWith('/awards')) {
+            req.fullUrl = new URL(req.url.substring('/awards'.length), `http://${req.headers.host}`);
+            await awardsRouter(req, res);
         }
 
         if (!req.handled) {
@@ -101,5 +97,3 @@ export const mainRouter = async (req, res) => {
         }
     }
 };
-
-
