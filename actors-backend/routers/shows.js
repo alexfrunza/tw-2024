@@ -1,35 +1,35 @@
 import {verifyToken} from "../utils/authentication.js";
-import {createActor, deleteActor, getActor, getActors, modifyActor} from "../controllers/actors.js";
+import {createShow, deleteShow, getShow, getShows, modifyShow} from "../controllers/shows.js";
 
-export const actorsRouter = async (req, res) => {
+export const showsRouter = async (req, res) => {
     req.handled = true;
 
     let regexRouteWithId = /^\/(\d+)$/;
 
     if (req.fullUrl.pathname === '/' && req.method === 'GET') {
-        console.log("GET /actors");
-        await getActors(req, res);
+        console.log("GET /shows");
+        await getShows(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'GET') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
-        console.log(`GET /actors/${id}`);
-        await getActor(req, res);
+        console.log(`GET /shows/${id}`);
+        await getShow(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'DELETE') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
-        console.log(`DELETE /actors/${id}`);
+        console.log(`DELETE /shows/${id}`);
         verifyToken(req);
-        await deleteActor(req, res);
+        await deleteShow(req, res);
     } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
-        console.log("POST /actors");
+        console.log("POST /shows");
         verifyToken(req);
-        await createActor(req, res);
+        await createShow(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'PUT') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
-        console.log(`PUT /actors/${id}`);
+        console.log(`PUT /shows/${id}`);
         verifyToken(req);
-        await modifyActor(req, res);
+        await modifyShow(req, res);
     } else {
         req.handled = false;
     }

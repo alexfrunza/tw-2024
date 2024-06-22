@@ -3,6 +3,7 @@ import {verifyToken} from "../utils/authentication.js";
 import {actorsRouter} from "./actors.js";
 import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
 import {exportDatasetActorsDb, loadDatasetActorsDb} from "../controllers/index.js";
+import {showsRouter} from "./shows.js";
 
 // dummy, de luat din database
 const actors = [
@@ -60,9 +61,11 @@ export const mainRouter = async (req, res) => {
             await loadDatasetActorsDb(req, res);
         } else if (req.fullUrl.pathname === '/export-actors-csv' && req.method === 'GET') {
             req.handled = true;
+            console.log("GET /export-actors-csv");
             await exportDatasetActorsDb(req, res);
-        } else if (req.fullUrl.pathname.startsWith('/awards')) {
-            console.log("Not implemented");
+        } else if (req.fullUrl.pathname.startsWith('/shows')) {
+            req.fullUrl = new URL(req.url.substring('/shows'.length), `http://${req.headers.host}`);
+            await showsRouter(req, res);
         }
 
         if (!req.handled) {
