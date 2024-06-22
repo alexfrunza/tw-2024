@@ -1,5 +1,4 @@
 import {pool} from "../db.js";
-import {toTitleCase} from "../utils/index.js";
 import {APIError, NotFoundError} from "../utils/errors.js";
 import {
     validateBoolean,
@@ -151,10 +150,12 @@ export const createAwardActor = async (req, res) => {
         throw new APIError("The actor has already been nominated for this award for this show", 400);
     }
 
-    const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [award_id, show_id]);
+    if (won === true) {
+        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [award_id, show_id]);
 
-    if (resultAwardWinnings.rows[0].count > 0) {
-        throw new APIError("An actor has already won this award for this show", 400);
+        if (resultAwardWinnings.rows[0].count > 0) {
+            throw new APIError("An actor has already won this award for this show", 400);
+        }
     }
 
     const resultAwardActor = await pool.query('INSERT INTO award_actor (won, award_id, actor_id, show_id) VALUES ($1, $2, $3, $4) RETURNING id', [won, award_id, actor_id, show_id]);
@@ -194,10 +195,12 @@ export const modifyAwardActor = async (req, res) => {
         throw new NotFoundError("Award actor not found");
     }
 
-    const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [resultAwardActor.rows[0].award_id, resultAwardActor.rows[0].show_id]);
+    if (won === true) {
+        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [resultAwardActor.rows[0].award_id, resultAwardActor.rows[0].show_id]);
 
-    if (resultAwardWinnings.rows[0].count > 0) {
-        throw new APIError("An actor has already won this award for this show", 400);
+        if (resultAwardWinnings.rows[0].count > 0) {
+            throw new APIError("An actor has already won this award for this show", 400);
+        }
     }
 
     const resultAwardActorUpdate = await pool.query('UPDATE award_actor SET won = $1 WHERE id = $2 RETURNING id, award_id, actor_id, won, show_id', [won, req.params.id]);
