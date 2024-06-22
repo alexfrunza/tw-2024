@@ -1,6 +1,6 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
-import {NotFoundError} from "../utils/errors.js";
+import {APIError, NotFoundError} from "../utils/errors.js";
 import {validateAwardName, validateAwardType, validateAwardYear, validateShowName} from "../utils/validations.js";
 
 export const getAwards = async (req, res) => {
@@ -97,11 +97,15 @@ export const modifyAward = async (req, res) => {
     validateShowName(name);
     name = name.trim();
 
-    validateAwardType(type);
+    validateAwardType(type, true);
+    if (type) {
+        throw new APIError("Type cannot be modified", 400);
+    }
+
     validateAwardYear(year);
     year = year.trim();
 
-    const resultAward = await pool.query('UPDATE award SET name = $1, type = $2, year = $3 WHERE id = $4 RETURNING id', [name, type, year, req.params.id]);
+    const resultAward = await pool.query('UPDATE award SET name = $1, year = $2 WHERE id = $3 RETURNING id, type', [name, year, req.params.id]);
 
     if (resultAward.rows.length === 0) {
         throw new NotFoundError("Award not found");
@@ -112,7 +116,7 @@ export const modifyAward = async (req, res) => {
         data: {
             id: resultAward.rows[0].id,
             name,
-            type,
+            type: resultAward.rows[0].type,
             year
         }
     };

@@ -36,7 +36,11 @@ export const validateAwardYear = (year, optional = false) => {
     }
 }
 
-export const validateAwardType = (type) => {
+export const validateAwardType = (type, optional = false) => {
+    if (!type && optional) {
+        return;
+    }
+
     if (type !== 'actor' && type !== 'show') {
         throw new InvalidAwardType();
     }
