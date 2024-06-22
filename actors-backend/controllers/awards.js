@@ -1,7 +1,13 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {APIError, NotFoundError} from "../utils/errors.js";
-import {validateAwardName, validateAwardType, validateAwardYear, validateShowName} from "../utils/validations.js";
+import {
+    validateAwardName,
+    validateAwardType,
+    validateAwardYear,
+    validateInteger,
+    validateShowName
+} from "../utils/validations.js";
 
 export const getAwards = async (req, res) => {
     const queryParams = new URLSearchParams(req.fullUrl.search);
@@ -16,6 +22,12 @@ export const getAwards = async (req, res) => {
     const awards = [];
 
     if (limit && offset) {
+        limit = parseInt(limit, 10);
+        validateInteger(limit, "limit");
+
+        offset = parseInt(offset, 10);
+        validateInteger(offset, "offset");
+
         queryStr = 'SELECT DISTINCT award.name "name", award.id "id", award.year "year", award.type "type" FROM award ORDER BY award.id ASC LIMIT $1 OFFSET $2';
         resultAward = await pool.query(queryStr, [limit, offset]);
 

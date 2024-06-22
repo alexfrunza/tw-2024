@@ -1,7 +1,7 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
-import {validateActorName} from "../utils/validations.js";
+import {validateActorName, validateInteger} from "../utils/validations.js";
 
 import fetch from 'node-fetch';
 
@@ -41,6 +41,12 @@ export const getActors = async (req, res) => {
     const actors = {};
 
     if (limit && offset) {
+        limit = parseInt(limit, 10);
+        validateInteger(limit, "limit");
+
+        offset = parseInt(offset, 10);
+        validateInteger(offset, "offset");
+
         queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id" FROM actor ORDER BY actor.id ASC LIMIT $1 OFFSET $2';
         resultActor = await pool.query(queryStr, [limit, offset]);
 

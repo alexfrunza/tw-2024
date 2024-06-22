@@ -1,7 +1,7 @@
 import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
-import {validateShowName} from "../utils/validations.js";
+import {validateInteger, validateShowName} from "../utils/validations.js";
 
 export const getShows = async (req, res) => {
 
@@ -19,6 +19,12 @@ export const getShows = async (req, res) => {
     const shows = {};
 
     if (limit && offset) {
+        limit = parseInt(limit, 10);
+        validateInteger(limit, "limit");
+
+        offset = parseInt(offset, 10);
+        validateInteger(offset, "offset");
+
         queryStr = 'SELECT DISTINCT show.name "name", show.id "id" FROM show ORDER BY show.id ASC LIMIT $1 OFFSET $2';
         resultShow = await pool.query(queryStr, [limit, offset]);
 
