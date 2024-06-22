@@ -38,15 +38,44 @@
   }
 
   @at-root #{&}__actor {
+    width: 350px;
+    margin: 15px;
     padding: 10px;
-    margin-bottom: 30px;
-    text-align: center;
-    background-color: $bg-3;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
   }
 
-  @at-root #{&}__actor--img {
-    width: 100%;
+  .actors-section__actor:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @at-root #{&}__actor--div {
+    display: flex;
+    align-items: center;
+    height: 150px;
+  }
+
+  @at-root #{&}__actor--image {
+    max-height: 125px;
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  @at-root #{&}__actor--name {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+
+  .actors-section__actor--movies {
+    font-size: 0.9em;
+    color: #afafaf;
   }
 
   @media only screen and (min-width: 600px) {
@@ -70,12 +99,15 @@
     }
   }
 
+  @at-root #{&}__gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1%;
+  }
+
   @media only screen and (min-width: 1024px) {
-    @at-root #{&}__gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1%;
-    }
+
 
     @at-root #{&}__actor {
       flex-basis: 19%;

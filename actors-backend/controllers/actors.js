@@ -3,14 +3,36 @@ import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
 import {validateActorName} from "../utils/validations.js";
 
-export const getActors = async (req, res) => {
+import fetch from 'node-fetch';
 
+async function getActorImage(actorName) {
+    const formattedName = actorName.replace(/ /g, '_');
+    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original|thumbnail&pithumbsize=1000&titles=${formattedName}&origin=*`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const pages = data.query.pages;
+        const pageId = Object.keys(pages)[0];
+        const imageUrl = pages[pageId].thumbnail?.source || pages[pageId].original?.source;
+
+        if (imageUrl) {
+            return imageUrl;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Eroare la preluarea imaginii:', error);
+        return null;
+    }
+}
+
+export const getActors = async (req, res) => {
     const queryParams = new URLSearchParams(req.fullUrl.search);
 
     let queryStr = '';
     let resultActor = null;
     let resultActorShows = null;
-
 
     let limit = queryParams.get('limit');
     let offset = queryParams.get('offset');
@@ -31,9 +53,9 @@ export const getActors = async (req, res) => {
 
     resultActor.rows.forEach(row => {
         if (actors[row.id] === undefined) {
-            actors[row.id] = {id: row.id, name: toTitleCase(row.name), shows: []};
+            actors[row.id] = {id: row.id, name: toTitleCase(row.name), shows: [], imageUrl: ''};
         }
-    })
+    });
 
     for await (const actor of Object.values(actors)) {
         queryStr = 'SELECT DISTINCT show.name "showName", show.id "showId", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
@@ -42,6 +64,10 @@ export const getActors = async (req, res) => {
         resultActorShows.rows.forEach(row => {
             actor.shows.push({name: toTitleCase(row.showName), id: row.showId});
         });
+
+        // Obține URL-ul imaginii pentru actor
+        const imageUrl = await getActorImage(actor.name);
+        actor.imageUrl = imageUrl || '';
     }
 
     res.jsonBody = {
@@ -52,7 +78,8 @@ export const getActors = async (req, res) => {
         }
     };
     res.statusCode = 200;
-}
+};
+
 
 export const getActor = async (req, res) => {
     const resultActor = await pool.query('SELECT * FROM actor WHERE id = $1', [req.params.id]);
