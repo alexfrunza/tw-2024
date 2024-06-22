@@ -59,3 +59,15 @@ export class InvalidAwardType extends APIError {
         super("The award type must be the strings: 'actor' or 'show'", "InvalidAwardType", 400);
     }
 }
+
+export class InvalidInteger extends APIError {
+    constructor(message) {
+        super(message, "InvalidInteger", 400);
+    }
+}
+
+export class InvalidBoolean extends APIError {
+    constructor(message) {
+        super(message, "InvalidBoolean", 400);
+    }
+}

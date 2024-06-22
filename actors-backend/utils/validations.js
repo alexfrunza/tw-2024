@@ -1,4 +1,11 @@
-import {InvalidActorName, InvalidAwardName, InvalidAwardType, InvalidAwardYear, InvalidShowName} from "./errors.js";
+import {
+    InvalidActorName,
+    InvalidAwardName,
+    InvalidAwardType,
+    InvalidAwardYear, InvalidBoolean,
+    InvalidInteger,
+    InvalidShowName
+} from "./errors.js";
 
 export const validateActorName = (name, optional = false) => {
     if (!name && optional) {
@@ -43,5 +50,17 @@ export const validateAwardType = (type, optional = false) => {
 
     if (type !== 'actor' && type !== 'show') {
         throw new InvalidAwardType();
+    }
+}
+
+export const validateInteger = (value, name) => {
+    if (!Number.isInteger(value)) {
+        throw new InvalidInteger("The value of " + name + " must be an integer");
+    }
+}
+
+export const validateBoolean = (value, name) => {
+    if (typeof value !== 'boolean') {
+        throw new InvalidBoolean("The value of " + name + " must be a boolean");
     }
 }

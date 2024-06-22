@@ -3,6 +3,7 @@ import {APIError, NotFoundError, ServerError} from "../utils/errors.js";
 import {exportDatasetActorsDb, loadDatasetActorsDb} from "../controllers/index.js";
 import {showsRouter} from "./shows.js";
 import {awardsRouter} from "./awards.js";
+import {awardsActorRouter} from "./awards_actor.js";
 
 export const mainRouter = async (req, res) => {
     try {
@@ -59,6 +60,9 @@ export const mainRouter = async (req, res) => {
         } else if (req.fullUrl.pathname.startsWith('/shows')) {
             req.fullUrl = new URL(req.url.substring('/shows'.length), `http://${req.headers.host}`);
             await showsRouter(req, res);
+        } else if (req.fullUrl.pathname.startsWith('/awardsActor')) {
+            req.fullUrl = new URL(req.url.substring('/awardsActor'.length), `http://${req.headers.host}`);
+            await awardsActorRouter(req, res);
         } else if (req.fullUrl.pathname.startsWith('/awards')) {
             req.fullUrl = new URL(req.url.substring('/awards'.length), `http://${req.headers.host}`);
             await awardsRouter(req, res);
