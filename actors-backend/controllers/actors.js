@@ -25,7 +25,7 @@ export const getActors = async (req, res) => {
         data.limit = limit;
         data.offset = offset;
     } else {
-        queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id", show.name "showName" FROM actor JOIN award_actor ON actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
+        queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id" FROM actor ORDER BY actor.id ASC';
         resultActor = await pool.query(queryStr);
     }
 
@@ -36,11 +36,11 @@ export const getActors = async (req, res) => {
     })
 
     for await (const actor of Object.values(actors)) {
-        queryStr = 'SELECT DISTINCT show.name "showName", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
+        queryStr = 'SELECT DISTINCT show.name "showName", show.id "showId", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
         resultActorShows = await pool.query(queryStr, [actor.id]);
 
         resultActorShows.rows.forEach(row => {
-            actor.shows.push(toTitleCase(row.showName));
+            actor.shows.push({name: toTitleCase(row.showName), id: row.showId});
         });
     }
 
@@ -105,7 +105,10 @@ export const modifyActor = async (req, res) => {
     validateActorName(name);
 
     const resultActor = await pool.query('UPDATE actor SET name = $1 WHERE id = $2 RETURNING id', [name, req.params.id]);
-    console.log(resultActor)
+
+    if(resultActor.rows.length === 0) {
+        throw new NotFoundError("Actor not found");
+    }
 
     res.jsonBody = {
         message: "Success",

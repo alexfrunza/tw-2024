@@ -35,3 +35,9 @@ export class InvalidActorName extends APIError {
         super("Actor name must be a string with length greater than 5", "InvalidActorName", 400);
     }
 }
+
+export class InvalidShowName extends APIError {
+    constructor() {
+        super("Show name must be a string with length greater than 5", "InvalidShowName", 400);
+    }
+}
