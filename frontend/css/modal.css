@@ -1,0 +1,60 @@
+.clear-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.modal-confirm {
+  overflow: auto;
+  position: fixed;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #0A0019;
+  top: 0;
+  display: none;
+  height: 100%;
+  left: 0;
+  z-index: 10;
+}
+
+.modal-confirm-content {
+  border: 2px solid #777;
+  padding: 25px;
+  background-color: #ffffff;
+  width: 70%;
+  margin: 10% auto;
+}
+
+.close-modal-confirm {
+  font-size: 30px;
+  color: #999;
+  font-weight: 600;
+  float: right;
+}
+
+.close-modal-confirm:hover,
+.close-modal-confirm:focus {
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+}
+
+.content-modal-confirm {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.modal-confirm-button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #B4B0B8;
+  color: #0A0019;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+/*# sourceMappingURL=modal.css.map */
