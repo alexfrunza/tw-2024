@@ -81,11 +81,13 @@
   }
 
   @at-root #{&}__show--name {
+    word-break: break-all;
     font-size: 1.2em;
     margin: 10px 0;
   }
 
   .shows-section__show--movies {
+    word-break: break-all;
     font-size: 0.9em;
     color: #afafaf;
   }

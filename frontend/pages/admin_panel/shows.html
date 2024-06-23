@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/loading_spinner.css">
+    <link rel="stylesheet" type="text/css" href="../../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="spinner" class="spinner">
+        Loading&#8230;
+    </div>
+    <div id="modal-confirm" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <span class="close-modal-confirm">&times;</span>
+            <p class="content-modal-confirm"></p>
+            <button class="modal-confirm-button">Yes</button>
+        </div>
+
+    </div>
+
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Shows
+        </div>
+        <admin-navbar></admin-navbar>
+        <div class="users-panel__content">
+            <div class="users-panel__headers">
+                <div class="users-panel__header">
+                    Name
+                </div>
+                <div class="users-panel__header">
+                    Id
+                </div>
+                <div class="users-panel__header">
+                    Actions
+                </div>
+            </div>
+        </div>
+        <div class="admin-dash__pagination">
+            <button class="clear-button"><img class="admin-dash--pagination-icon"
+                                              src="../img/iconmonstr-angel-left-thin-240.png"
+                                              alt="pagination left"></button>
+            <span class="pagination-counter"></span>
+            <button class="clear-button"><img class="admin-dash--pagination-icon"
+                                              src="../img/iconmonstr-angel-right-thin-240.png"
+                                              alt="pagination left"></button>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+
+    function openModalDeleteShow(id) {
+        document.getElementById('modal-confirm').style.display = 'block';
+
+        const modalContent = document.querySelector('.content-modal-confirm');
+        modalContent.innerText = `Are you sure you want to delete the show with id ${id}?`;
+        const modalButton = document.querySelector('.modal-confirm-button');
+        modalButton.onclick = async function () {
+            const result = await fetch(`http://127.0.0.1:5001/shows/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+
+            window.location.reload();
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        const modal = document.getElementById('modal-confirm');
+        const buttonModal = document.querySelector('.close-modal-confirm');
+
+        buttonModal.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        const spinnerDiv = document.getElementById('spinner');
+        const paginationDiv = document.querySelector('.admin-dash__pagination');
+
+        paginationDiv.style.visibility = 'hidden';
+
+        function showSpinner() {
+            spinnerDiv.style.visibility = 'visible';
+        }
+
+        function hideSpinner() {
+            spinnerDiv.style.visibility = 'hidden';
+        }
+
+        showSpinner();
+        const urlParams = new URLSearchParams(window.location.search);
+        let page = urlParams.get('page')
+        page = parseInt(page, 10)
+        page = page ? page : 1;
+
+        const limit = 5;
+        const offset = (page - 1) * limit;
+
+        const result = await fetch(`http://127.0.0.1:5001/shows?offset=${offset}&limit=${limit}`);
+        const data = await result.json();
+
+        const paginationCounter = document.querySelector('.pagination-counter');
+        paginationCounter.innerText = `${page} | ${data.data.pages}`;
+
+
+        const templateShow = (show) => `
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <p class="users-panel--username"> ${show.name} </p>
+                </div>
+                <div class="users-panel__field">
+                    ${show.id}
+                </div>
+                <div class="users-panel__field">
+                <button onClick="openModalDeleteShow(${show.id})" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete show"></button>
+                <a href="/admin_panel/add_show.html?action=edit&id=${show.id}"> <img class="admin-dash--action-icon" src="../img/iconmonstr-pencil-square-filled-240.png" alt="edit show"></a>
+                <a href="/show.html?id=${show.id}"> <img class="admin-dash--action-icon" src="../img/iconmonstr-eye-filled-240.png" alt="view show"></a>
+                </div>
+            </div>
+        `;
+
+        const shows = data.data.shows.map(templateShow).join('');
+        document.getElementsByClassName('users-panel__content')[0].innerHTML += shows;
+
+        const buttonRight = document.querySelector('.admin-dash--pagination-icon[src$="angel-right-thin-240.png"]');
+        const buttonLeft = document.querySelector('.admin-dash--pagination-icon[src$="angel-left-thin-240.png"]');
+
+        if (page === 1) {
+            buttonLeft.disabled = true;
+        } else if (page === data.data.pages) {
+            buttonRight.disabled = true;
+        }
+
+        buttonRight.addEventListener('click', () => {
+            if (page + 1 > data.data.pages)
+                return;
+            window.location.href = `shows.html?page=${page + 1}`;
+        });
+        buttonLeft.addEventListener('click', () => {
+            if (page - 1 < 1)
+                return;
+            window.location.href = `shows.html?page=${page - 1}`;
+        });
+
+        hideSpinner();
+        paginationDiv.style.visibility = 'visible';
+        console.log(data)
+    });
+</script>
+</body>
+</html>

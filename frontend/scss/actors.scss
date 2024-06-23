@@ -81,11 +81,13 @@
   }
 
   @at-root #{&}__actor--name {
+    word-break: break-all;
     font-size: 1.2em;
     margin: 10px 0;
   }
 
   .actors-section__actor--movies {
+    word-break: break-all;
     font-size: 0.9em;
     color: #afafaf;
   }

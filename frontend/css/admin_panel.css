@@ -79,6 +79,10 @@
   margin-bottom: 20px;
 }
 
+.users-panel--username {
+  word-break: break-all;
+}
+
 .users-panel__menu--button {
   padding: 10px 20px;
   border-radius: 10px;
