@@ -1,3 +1,5 @@
+import {parseJwt} from "../utils/jwt_decode.js";
+
 const navBarTemplate = document.createElement('template')
 
 navBarTemplate.innerHTML = `
@@ -6,9 +8,9 @@ navBarTemplate.innerHTML = `
             <a href="/index.html">AcVis</a>
         </div>
         <div class="navbar__links" id="navbarLinks">
+            <a href="/admin_panel/admin_buttons.html">Admin Dash</a>
             <a href="/about.html">About</a>
             <a href="/actors.html">Actors</a>
-            <a href="/actor.html">Actor</a>
             <a href="/edit_profile.html">Edit Profile</a>
             <a href="/register.html">Register</a>
             <a href="/login.html">Login</a>
@@ -24,9 +26,16 @@ class Navbar extends HTMLElement {
         this.appendChild(navBarTemplate.content.cloneNode(true));
 
         const navbarLinks = this.querySelector('#navbarLinks');
+        const token = localStorage.getItem('token');
         const isLoggedIn = localStorage.getItem('token') !== null;
+        const jwtBody = token ? parseJwt(localStorage.getItem('token')) : null;
 
-        if(isLoggedIn) {
+        if (!(isLoggedIn && jwtBody.admin)) {
+            const adminDashLink = navbarLinks.querySelector('a[href="/admin_panel/admin_panel.html"]');
+            adminDashLink.remove();
+        }
+
+        if (isLoggedIn) {
             // daca userul e logat, nu afisam 'Register' si 'Login'
             const registerLink = navbarLinks.querySelector('a[href="/register.html"]');
             const loginLink = navbarLinks.querySelector('a[href="/login.html"]');
