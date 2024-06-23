@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Add Actor
+        </div>
+        <div class="users-panel__menu">
+            <button class="users-panel__menu--button">Add User</button>
+            <button class="users-panel__menu--button">Delete Users</button>
+            <button class="users-panel__menu--button">Export Users</button>
+
+            <a href="/admin_panel/add_actor.html" class="users-panel__menu--button">Add Actor</a>
+            <a href="/admin_panel/actors_list.html" class="users-panel__menu--button">See Actors</a>
+
+            <a href="/admin_panel/import_actors.html" class="users-panel__menu--button">Import actors db</a>
+            <a href="/admin_panel/export_actors.html" class="users-panel__menu--button">Export actors db</a>
+        </div>
+        <div class="users-panel__content">
+            <form id="add-actor-form" class="admin-dash-form--form">
+                <label for="name" class="admin-dash-section--label">Name:</label>
+                <input type="text" id="name" name="name" class="admin-dash-section--input" required>
+                <button type="submit" class="admin-dash-section--button">Add Actor</button>
+            </form>
+            <p id="error" class="login-section--error"></p>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const addActorForm = document.getElementById('add-actor-form');
+
+        addActorForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+
+            const response = await fetch('http://127.0.0.1:5001/actors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    name
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.status !== 201) {
+                document.getElementById('error').innerText = data.errors[0].message;
+            } else {
+                console.log("success")
+                window.location.href = '/admin_panel/actors_list.html';
+            }
+        });
+    });
+</script>
+</body>
+</html>

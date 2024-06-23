@@ -28,8 +28,8 @@ class Navbar extends HTMLElement {
 
         if(isLoggedIn) {
             // daca userul e logat, nu afisam 'Register' si 'Login'
-            const registerLink = navbarLinks.querySelector('a[href="register.html"]');
-            const loginLink = navbarLinks.querySelector('a[href="login.html"]');
+            const registerLink = navbarLinks.querySelector('a[href="/register.html"]');
+            const loginLink = navbarLinks.querySelector('a[href="/login.html"]');
             registerLink.remove();
             loginLink.remove();
             const logoutButton = this.querySelector('#logout');
@@ -39,7 +39,7 @@ class Navbar extends HTMLElement {
             });
         } else {
             // daca userul nu e logat, nu afisam 'Edit Profile' si 'Logout'
-            const editProfileLink = navbarLinks.querySelector('a[href="edit_profile.html"]');
+            const editProfileLink = navbarLinks.querySelector('a[href="/edit_profile.html"]');
             const logoutLink = navbarLinks.querySelector('#logout');
             logoutLink.remove();
             editProfileLink.remove();
