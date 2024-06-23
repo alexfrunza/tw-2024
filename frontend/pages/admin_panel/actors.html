@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="../../css/loading_spinner.css">
+    <link rel="stylesheet" type="text/css" href="../../css/modal.css">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
     <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
@@ -22,6 +23,14 @@
 <div class="container">
     <div id="spinner" class="spinner">
         Loading&#8230;
+    </div>
+    <div id="modal-confirm" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <span class="close-modal-confirm">&times;</span>
+            <p class="content-modal-confirm"></p>
+            <button class="modal-confirm-button">Yes</button>
+        </div>
+
     </div>
 
     <app-navbar></app-navbar>
@@ -62,8 +71,40 @@
 <script src="../../js/drawer.js"></script>
 <script>
 
+    function openModalDeleteActor(id) {
+        document.getElementById('modal-confirm').style.display = 'block';
+
+        const modalContent = document.querySelector('.content-modal-confirm');
+        modalContent.innerText = `Are you sure you want to delete the actor with id ${id}?`;
+        const modalButton = document.querySelector('.modal-confirm-button');
+        modalButton.onclick = async function () {
+            const result = await fetch(`http://127.0.0.1:5001/actors/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+
+            window.location.reload();
+        }
+    }
+
 
     document.addEventListener('DOMContentLoaded', async (event) => {
+        const modal = document.getElementById('modal-confirm');
+        const buttonModal = document.querySelector('.close-modal-confirm');
+
+        buttonModal.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
         const spinnerDiv = document.getElementById('spinner');
         const paginationDiv = document.querySelector('.admin-dash__pagination');
 
@@ -92,6 +133,7 @@
         const paginationCounter = document.querySelector('.pagination-counter');
         paginationCounter.innerText = `${page} | ${data.data.pages}`;
 
+
         const templateActor = (actor) => `
             <div class="users-panel--user">
                 <div class="users-panel__field">
@@ -102,7 +144,7 @@
                     ${actor.id}
                 </div>
                 <div class="users-panel__field">
-                <button class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete actor"></button>
+                <button onClick="openModalDeleteActor(${actor.id})" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete actor"></button>
                 <a href="/admin_panel/add_actor.html?action=edit&id=${actor.id}"> <img class="admin-dash--action-icon" src="../img/iconmonstr-pencil-square-filled-240.png" alt="edit actor"></a>
                 <a href="/actor.html?id=${actor.id}"> <img class="admin-dash--action-icon" src="../img/iconmonstr-eye-filled-240.png" alt="view actor"></a>
                 </div>
