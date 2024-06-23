@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../css/navbar.css">
     <link rel="stylesheet" type="text/css" href="../css/actors.css">
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../css/loading_spinner.css">
 </head>
 <body>
 
@@ -43,6 +44,12 @@
 <script type="module" src="../js/index.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
+
+        function hideSpinner() {
+            const spinnerDiv = document.getElementById('spinner');
+            spinnerDiv.style.visibility = 'hidden';
+        }
+
         const navbarToggle = document.getElementById('navbarToggle');
         const navbarLinks = document.getElementById('navbarLinks');
 
@@ -56,9 +63,15 @@
         const limit = 8;
 
         async function loadActors() {
+            actorsContainer.innerHTML = '';
+            const spinnerDiv = document.createElement('div');
+            spinnerDiv.className = 'spinner';
+            spinnerDiv.id = 'spinner';
+            spinnerDiv.textContent = 'Loading...';
+            spinnerDiv.style.visibility = 'visible';
+            actorsContainer.appendChild(spinnerDiv);
             const response = await fetch(`http://127.0.0.1:5001/actors?offset=${currentPage * limit}&limit=${limit}`);
             const data = await response.json();
-            actorsContainer.innerHTML = '';
             for (const actor of data.data.actors) {
                 const actorElement = document.createElement('a');
                 actorElement.href = `actors/${actor.id}`;
@@ -73,6 +86,10 @@
                 actorsContainer.appendChild(actorElement);
             }
 
+            hideSpinner();
+
+
+
             pagination.innerHTML = '';
             if (currentPage > 0) {
                 const prevButton = document.createElement('button');
@@ -81,6 +98,7 @@
                 prevButton.addEventListener('click', (event) => {
                     event.preventDefault();
                     currentPage--;
+                    actorsContainer.innerHTML = '';
                     loadActors();
                 });
                 pagination.appendChild(prevButton);
@@ -93,6 +111,7 @@
                 nextButton.addEventListener('click', (event) => {
                     event.preventDefault();
                     currentPage++;
+                    actorsContainer.innerHTML = '';
                     loadActors();
                 });
                 pagination.appendChild(nextButton);
