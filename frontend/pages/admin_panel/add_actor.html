@@ -42,32 +42,71 @@
 <script type="module" src="../../js/index.js"></script>
 <script src="../../js/drawer.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
+    document.addEventListener('DOMContentLoaded', async (event) => {
         const addActorForm = document.getElementById('add-actor-form');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const [action, id] = [urlParams.get('action'), urlParams.get('id')]
+
+        if (action === 'edit' && id) {
+            document.getElementsByClassName('users-panel--title')[0].innerText = 'Dashboard - Edit Actor';
+            document.getElementsByClassName('admin-dash--button')[0].innerText = 'Edit Actor';
+
+
+            const result = await fetch('http://127.0.0.1:5001/actors/' + id);
+            const data = await result.json();
+
+            if (result.status !== 200) {
+                window.location.href = '/error404.html';
+                return;
+            }
+
+            document.getElementById('name').value = data.data.name;
+        }
 
         addActorForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const name = document.getElementById('name').value;
 
-            const response = await fetch('http://127.0.0.1:5001/actors', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                },
-                body: JSON.stringify({
-                    name
-                })
-            });
+            if (action === 'edit' && id) {
+                const response = await fetch('http://127.0.0.1:5001/actors/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (response.status !== 201) {
-                document.getElementById('error').innerText = data.errors[0].message;
+                if (response.status !== 200) {
+                    document.getElementById('error').innerText = data.errors[0].message;
+                } else {
+                    window.location.href = '/admin_panel/actors_list.html';
+                }
             } else {
-                console.log("success")
-                window.location.href = '/admin_panel/actors_list.html';
+                const response = await fetch('http://127.0.0.1:5001/actors', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status !== 201) {
+                    document.getElementById('error').innerText = data.errors[0].message;
+                } else {
+                    window.location.href = '/admin_panel/actors_list.html';
+                }
             }
         });
     });
