@@ -23,20 +23,25 @@
             align-items: center;
             margin-bottom: 50px;
         }
+
         .bar {
             fill: steelblue;
         }
+
         .bar.won {
             fill: orange;
         }
+
         .axis-label {
             font-size: 12px;
         }
+
         .title {
             font-size: 16px;
             font-weight: bold;
             text-anchor: middle;
         }
+
         .axis-label {
             font-family: monospace;
         }
@@ -49,61 +54,18 @@
             margin-top: 100px;
             margin-bottom: 50px;
         }
+
+        .legend {
+            font-size: 12px;
+            font-family: monospace;
+        }
     </style>
 </head>
+
 <body>
 
 <div class="container">
     <app-navbar></app-navbar>
-
-    <section class="select-statistics">
-        <img src="../img/rc-xyz-nft-gallery-w9coDxtsfts-unsplash.jpg" alt="Statistic 1" class="select-statistics--img">
-        <h2 class="select-statistics--title">Select statistics</h2>
-        <form action="/edit_profile" method="post" class="select-statistics__form">
-            <label for="stats1" class="select-statistics--label">Statistics 1:</label>
-            <select name="gender" id="stats1" class="select-statistics--input">
-                <option value="">&emsp;</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <label for="stats2" class="select-statistics--label">Statistics 2:</label>
-            <select name="gender" id="stats2" class="select-statistics--input">
-                <option value="">&emsp;</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <label for="stats3" class="select-statistics--label">Statistics 3:</label>
-            <select name="gender" id="stats3" class="select-statistics--input">
-                <option value="">&emsp;</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <label for="stats4" class="select-statistics--label">Statistics 4:</label>
-            <select name="gender" id="stats4" class="select-statistics--input">
-                <option value="">&emsp;</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <label for="stats5" class="select-statistics--label">Statistics 5:</label>
-            <select name="gender" id="stats5" class="select-statistics--input">
-                <option value="">&emsp;</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-
-            <button type="submit" class="select-statistics--button">Select</button>
-
-        </form>
-    </section>
 
     <section class="general-statistics">
         <h1>SAG Awards General Statistics</h1>
@@ -129,12 +91,11 @@
 </div>
 
 
-
 <script>
     // URL de la care se încarcă datele CSV
     const csvUrl = 'http://127.0.0.1:5001/export-actors-csv';
 
-    d3.csv(csvUrl).then(function(data) {
+    d3.csv(csvUrl).then(function (data) {
         // Preprocesarea datelor: Conversia valorilor câmpului 'won' din string în boolean
         data.forEach(d => {
             d.won = (d.won.toLowerCase() === 'true');
@@ -248,213 +209,220 @@
         // 2. Proportion of winners vs nominees
         const winProportion = d3.rollup(data, v => v.length, d => d.won);
         const winProportionData = Array.from(winProportion, ([won, count]) => ({won, count}));
+        const total = d3.sum(winProportionData, d => d.count);
 
-        const height2 = winProportionData.length * 30 + margin.top + margin.bottom; // Înălțimea ajustată pentru al doilea grafic
+        const width2 = 900;
+        const height2 = 450;
+        const radius = Math.min(width2, height2) / 2 - margin.top;
 
         const svg2 = d3.select("#win-proportion")
             .append("svg")
-            .attr("width", width1 + margin.left + margin.right) // Utilizează aceeași lățime ca primul grafic
+            .attr("width", width2)
             .attr("height", height2)
             .append("g")
-            .attr("transform", `translate(${margin.left - 175},${margin.top})`);
+            .attr("transform", `translate(${width2 / 2},${height2 / 2})`);
 
         svg2.append("style")
             .text(`
-        .bar {
-            fill: steelblue;
-        }
-        .bar.won {
-            fill: orange;
-        }
-        .axis-label {
-            font-size: 12px;
-            font-family: monospace;
-        }
-        .title {
-            font-size: 16px;
-            font-weight: bold;
-            text-anchor: middle;
-
-        }
-    `);
-
-        // Add title for the second chart
-        svg2.append("text")
-            .attr("x", width1 / 2)
-            .attr("y", -margin.top / 2)
-            .attr("class", "title")
-            .style("font-family", "monospace")
-            //.style('fill', 'white')
-            .classed("svg-text", true)
-            .text("Proportion of Winners vs Nominees");
-
-        const x2 = d3.scaleLinear()
-            .domain([0, d3.max(winProportionData, d => d.count)])
-            .range([0, width1 - 10]);
-
-        const y2 = d3.scaleBand()
-            .domain(winProportionData.map(d => d.won ? 'Winners' : 'Nominees'))
-            .range([0, winProportionData.length * 30])
-            .padding(0.1);
-
-        svg2.append("g")
-            .selectAll("rect")
-            .data(winProportionData)
-            .enter()
-            .append("rect")
-            .attr("class", d => d.won ? "bar won" : "bar")
-            .attr("x", 0)
-            .attr("y", d => y2(d.won ? 'Winners' : 'Nominees'))
-            .attr("width", d => x2(d.count))
-            .attr("height", y2.bandwidth());
-
-        svg2.append("g")
-            .selectAll("text")
-            .data(winProportionData)
-            .enter()
-            .append("text")
-            .attr("x", d => x2(d.count) + 5)
-            .attr("y", d => y2(d.won ? 'Winners' : 'Nominees') + y2.bandwidth() / 2)
-            .attr("dy", ".35em")
-            .style("font-family", "monospace")
-            .classed("svg-text", true)
-            //.style('fill', 'white')
-            .text(d => d.count)
-            .attr("data-category", d => d.won ? 'Winners' : 'Nominees')
-            .attr("data-count", d => d.count);
-
-        svg2.append("g")
-            .call(d3.axisLeft(y2).tickSize(0))
-            .selectAll("text")
-            .attr("class", "axis-label");
-
-        svg2.append("g")
-            .attr("transform", `translate(0,${winProportionData.length * 30})`)
-            .call(d3.axisBottom(x2).ticks(5))
-            .selectAll("text")
-            .attr("class", "axis-label");
-
-
-
-        function exportCSV(containerID, filename) {
-            const svgElement = document.querySelector(containerID + ' svg');
-
-            if (!svgElement) {
-                console.error('SVG element not found.');
-                return;
-            }
-
-            const texts = svgElement.querySelectorAll('text[data-category]');
-
-            let csvContent = "data:text/csv;charset=utf-8,Category,Count\n";
-
-            texts.forEach(text => {
-                const category = text.getAttribute('data-category');
-                const count = text.getAttribute('data-count');
-                if (category && count) {
-                    csvContent += `${category},${count}\n`;
+                .arc {
+                    fill: steelblue;
                 }
-            });
+                .arc.won {
+                    fill: orange;
+                }
+                .title {
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-anchor: middle;
+                    font-family: monospace;
+                }
+                .label {
+                    font-size: 12px;
+                    font-family: monospace;
+                }
+            `);
 
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", filename + ".csv");
+        const color = d3.scaleOrdinal()
+            .domain(winProportionData.map(d => d.won ? 'Winners' : 'Nominees'))
+            .range(["orange", "steelblue"]);
+
+        const pie = d3.pie()
+            .sort(null)
+            .value(d => d.count);
+
+        const arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius);
+
+        const arcs = svg2.selectAll(".arc")
+            .data(pie(winProportionData))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+
+        arcs.append("path")
+            .attr("d", arc)
+            .attr("class", d => d.data.won ? 'arc won' : 'arc')
+            .attr("fill", d => color(d.data.won ? 'Winners' : 'Nominees'));
+
+        arcs.append("text")
+            .attr("transform", d => {
+                const [x, y] = arc.centroid(d);
+                return `translate(${x - 35},${y - 10})`;
+            })
+            .attr("dy", "0.35em")
+            .attr("class", "label")
+            .text(d => `${d.data.count} (${((d.data.count / total) * 100).toFixed(1)}%)`)
+            .classed("svg-text", true)
+            .style('fill', 'white');
+
+
+        // Add title for the pie chart
+        svg2.append("text")
+            .attr("x", 0)
+            .attr("y", -(height2 / 2) + 20)
+            .attr("class", "title")
+            .text("Proportion of Winners vs Nominees")
+            .classed("svg-text", true);
+
+        // Add legend
+        const legend = svg2.append("g")
+            .attr("transform", `translate(${width2 / 2 - 100},${-height2 / 2 + 40})`)
+            .attr("class", "legend");
+
+        legend.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("fill", color("Nominees"));
+
+        legend.append("text")
+            .attr("x", 20)
+            .attr("y", 10)
+            .attr("class", "label")
+            .text("Winners")
+            .classed("svg-text", true);
+
+        legend.append("rect")
+            .attr("x", 0)
+            .attr("y", 20)
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("fill", color("Winners"));
+
+        legend.append("text")
+            .attr("x", 20)
+            .attr("y", 30)
+            .attr("class", "label")
+            .text("Nominees")
+            .classed("svg-text", true);
+
+        // Export buttons functionality
+        document.getElementById('export-winners-svg').addEventListener('click', function () {
+            const svgElement = document.querySelector('#win-proportion svg');
+            const serializer = new XMLSerializer();
+            const source = serializer.serializeToString(svgElement);
+            const blob = new Blob([source], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'winners_vs_nominees.svg';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
-
-        document.getElementById('export-category-csv').addEventListener('click', function() {
-            exportCSV('#category-distribution', 'category_distribution');
         });
 
-        document.getElementById('export-winners-csv').addEventListener('click', function() {
-            exportCSV('#win-proportion', 'winners_proportion');
+        document.getElementById('export-winners-csv').addEventListener('click', function () {
+            const csvContent = 'data:text/csv;charset=utf-8,Category,Count\n'
+                + winProportionData.map(d => `${d.won ? 'Winners' : 'Nominees'},${d.count}`).join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.href = encodedUri;
+            link.download = 'winners_vs_nominees.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
 
-    }).catch(function(error) {
-        console.error('Error loading the CSV data:', error);
-    });
+        document.getElementById('export-winners-webp').addEventListener('click', function () {
+            const svgElement = document.querySelector('#win-proportion svg');
+            const serializer = new XMLSerializer();
+            const source = serializer.serializeToString(svgElement);
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const image = new Image();
+            image.onload = function () {
+                canvas.width = image.width;
+                canvas.height = image.height;
+                context.drawImage(image, 0, 0);
+                canvas.toBlob(function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'winners_vs_nominees.webp';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, 'image/webp');
+            };
+            image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source);
+        });
 
+        document.getElementById('export-category-svg').addEventListener('click', function () {
+            const svgElement = document.querySelector('#category-distribution svg');
+            const serializer = new XMLSerializer();
+            const source = serializer.serializeToString(svgElement);
+            const blob = new Blob([source], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'category_distribution.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
 
-</script>
+        document.getElementById('export-category-csv').addEventListener('click', function () {
+            const csvContent = 'data:text/csv;charset=utf-8,Category,Count\n'
+                + categoriesData.map(d => `${d.category},${d.count}`).join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.href = encodedUri;
+            link.download = 'category_distribution.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
 
-<script>
-    // Funcție pentru exportul SVG
-    function exportSVG(containerID, filename) {
-        const svgElement = document.querySelector(containerID + ' svg');
-        const svgString = new XMLSerializer().serializeToString(svgElement);
-
-        // Adăugare stiluri direct în SVG
-        const styledSvgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style><![CDATA[' + getSvgStyles(containerID) + ']]></style>');
-
-        const blob = new Blob([styledSvgString], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename + ".svg";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-    // Funcție pentru a obține stilurile CSS pentru SVG
-    function getSvgStyles(containerID) {
-        const svgStyle = document.querySelector(containerID + ' style');
-        return svgStyle ? svgStyle.textContent : '';
-    }
-
-    // Actualizare pentru adăugarea evenimentelor de click pentru export
-    document.getElementById('export-category-svg').addEventListener('click', function() {
-        exportSVG('#category-distribution', 'category_distribution');
-    });
-
-    document.getElementById('export-winners-svg').addEventListener('click', function() {
-        exportSVG('#win-proportion', 'winners_proportion');
-    });
-
-    function exportWebP(containerID, filename) {
-        const svgElement = document.querySelector(containerID + ' svg');
-        const svgString = new XMLSerializer().serializeToString(svgElement);
-
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
-        const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-        const url = URL.createObjectURL(svgBlob);
-
-        const img = new Image();
-        img.onload = function () {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            context.drawImage(img, 0, 0);
-
-            canvas.toBlob(function (blob) {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = filename + ".webp";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }, 'image/webp');
-        };
-        img.src = url;
-    }
-
-    document.getElementById('export-category-webp').addEventListener('click', function() {
-        exportWebP('#category-distribution', 'category_distribution');
-    });
-
-    document.getElementById('export-winners-webp').addEventListener('click', function() {
-        exportWebP('#win-proportion', 'winners_proportion');
+        document.getElementById('export-category-webp').addEventListener('click', function () {
+            const svgElement = document.querySelector('#category-distribution svg');
+            const serializer = new XMLSerializer();
+            const source = serializer.serializeToString(svgElement);
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const image = new Image();
+            image.onload = function () {
+                canvas.width = image.width;
+                canvas.height = image.height;
+                context.drawImage(image, 0, 0);
+                canvas.toBlob(function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'category_distribution.webp';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, 'image/webp');
+            };
+            image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source);
+        });
     });
 </script>
 
 <script type="module" src="../js/index.js"></script>
 <script src="../js/drawer.js"></script>
+
 </body>
 </html>
