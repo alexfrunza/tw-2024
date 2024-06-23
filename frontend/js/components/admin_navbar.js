@@ -10,7 +10,7 @@ adminNavbarTemplate.innerHTML = `
     <a href="/admin_panel/shows_list.html" class="users-panel__menu--button">See Shows</a>
 
     <a href="/admin_panel/add_actor.html" class="users-panel__menu--button">Add Actor</a>
-    <a href="/admin_panel/actors_list.html" class="users-panel__menu--button">See Actors</a>
+    <a href="/admin_panel/actors.html" class="users-panel__menu--button">See Actors</a>
 
     <a href="/admin_panel/import_actors.html" class="users-panel__menu--button">Import actors db</a>
     <a href="/admin_panel/export_actors.html" class="users-panel__menu--button">Export actors db</a>
