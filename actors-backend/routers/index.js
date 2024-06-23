@@ -35,10 +35,15 @@ export const mainRouter = async (req, res) => {
             req.on('end', () => {
                 let parsedBody = Buffer.concat(body).toString();
 
-                if (req.headers['content-type'] === 'application/json') {
-                    parsedBody = JSON.parse(parsedBody);
-                } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
-                    parsedBody = new URLSearchParams(parsedBody);
+                try {
+                    if (req.headers['content-type'] === 'application/json') {
+                        parsedBody = JSON.parse(parsedBody);
+                    } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+                        parsedBody = new URLSearchParams(parsedBody);
+                    }
+                } catch (err) {
+                    console.log("invalid json");
+                    req.body = {};
                 }
 
                 // console.log(req.body)
