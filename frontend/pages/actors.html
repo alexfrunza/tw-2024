@@ -76,6 +76,7 @@
             pagination.innerHTML = '';
             if (currentPage > 0) {
                 const prevButton = document.createElement('button');
+                prevButton.className = 'nav-button';
                 prevButton.textContent = 'Prev';
                 prevButton.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -87,6 +88,7 @@
 
             if (data.data.actors.length === limit) {
                 const nextButton = document.createElement('button');
+                nextButton.className = 'nav-button';
                 nextButton.textContent = 'Next';
                 nextButton.addEventListener('click', (event) => {
                     event.preventDefault();
