@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/shows.css">
+    <link rel="stylesheet" type="text/css" href="../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../css/loading_spinner.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <h2 class="page-title"> Shows </h2>
+    <div class="shows-section">
+        <div class="shows-section__navigation">
+            <label for="search"></label>
+            <input type="text" id="search" name="search" class="shows-section--input">
+            <button type="submit" class="shows-section--button">Search</button>
+        </div>
+        <div id="shows-container" class="shows-section__gallery">
+
+        </div>
+        <div id="pagination">
+
+        </div>
+    </div>
+
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../js/index.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+
+        function hideSpinner() {
+            const spinnerDiv = document.getElementById('spinner');
+            spinnerDiv.style.visibility = 'hidden';
+        }
+
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarLinks = document.getElementById('navbarLinks');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+
+        const showsContainer = document.getElementById('shows-container');
+        const pagination = document.getElementById('pagination');
+        let currentPage = 0;
+        const limit = 8;
+
+        async function loadshows() {
+            showsContainer.innerHTML = '';
+            const spinnerDiv = document.createElement('div');
+            spinnerDiv.className = 'spinner';
+            spinnerDiv.id = 'spinner';
+            spinnerDiv.textContent = 'Loading...';
+            spinnerDiv.style.visibility = 'visible';
+            showsContainer.appendChild(spinnerDiv);
+            const response = await fetch(`http://127.0.0.1:5001/shows?offset=${currentPage * limit}&limit=${limit}`);
+            const data = await response.json();
+            for (const show of data.data.shows) {
+                const showElement = document.createElement('a');
+                showElement.href = `show.html?id=${show.id}`;
+                showElement.style.textDecoration = 'none';
+                showElement.style.color = 'white';
+                showElement.className = 'shows-section__show';
+                showElement.innerHTML = `
+            <h2 class="shows-section__show--name">${show.name}</h2>
+            <p class="shows-section__show--movies">${show.actors.map(actor => actor.name).join(', ')}</p>
+        `;
+                showsContainer.appendChild(showElement);
+            }
+
+            hideSpinner();
+
+
+            pagination.innerHTML = '';
+            if (currentPage > 0) {
+                const prevButton = document.createElement('button');
+                prevButton.className = 'nav-button';
+                prevButton.textContent = 'Prev';
+                prevButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    currentPage--;
+                    showsContainer.innerHTML = '';
+                    loadshows();
+                });
+                pagination.appendChild(prevButton);
+            }
+
+            if (data.data.shows.length === limit) {
+                const nextButton = document.createElement('button');
+                nextButton.className = 'nav-button';
+                nextButton.textContent = 'Next';
+                nextButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    currentPage++;
+                    showsContainer.innerHTML = '';
+                    loadshows();
+                });
+                pagination.appendChild(nextButton);
+            }
+        }
+
+        loadshows();
+    });
+</script>
+</body>
+</html>

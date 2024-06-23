@@ -1,0 +1,128 @@
+@import 'vars';
+
+.nav-button {
+  @include text-lg;
+  padding: 5px 20px;
+  border-radius: 30px;
+  background-color: $color-h-1;
+  color: #0A0019;
+}
+
+.nav-button:hover {
+  background-color: #7bb543;
+}
+
+.page-title {
+  @include text-4xl;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.shows-section {
+  margin-bottom: 100px;
+
+  @at-root #{&}__navigation {
+    margin-bottom: 30px;
+  }
+
+  @at-root #{&}--input {
+    @include text-xl;
+    background-color: $bg-color;
+    width: 100%;
+    border: #B4B0B8 solid 2px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: $font-color-1;
+
+    &:hover {
+      border: #54C2E1 solid 2px;
+    }
+  }
+
+  @at-root #{&}--button {
+    background-color: $color-h-3;
+    width: 50%;
+    margin-top: 20px;
+    max-width: 300px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: $font-color-1;
+  }
+
+  @at-root #{&}__show {
+    width: 350px;
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+
+  .shows-section__show:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @at-root #{&}__show--div {
+    display: flex;
+    align-items: center;
+    height: 150px;
+  }
+
+  @at-root #{&}__show--image {
+    max-height: 125px;
+    width: auto;
+    margin-bottom: 10px;
+  }
+
+  @at-root #{&}__show--name {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+
+  .shows-section__show--movies {
+    font-size: 0.9em;
+    color: #afafaf;
+  }
+
+  @media only screen and (min-width: 600px) {
+    @at-root #{&}--input {
+      max-width: 300px;
+    }
+
+    @at-root #{&}--button {
+      margin-left: 30px;
+      max-width: 100px;
+    }
+
+    @at-root #{&}__gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5%;
+    }
+
+    @at-root #{&}__show {
+      flex-basis: 30%;
+    }
+  }
+
+  @at-root #{&}__gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1%;
+  }
+
+  @media only screen and (min-width: 1024px) {
+
+
+    @at-root #{&}__show {
+      flex-basis: 19%;
+    }
+  }
+}

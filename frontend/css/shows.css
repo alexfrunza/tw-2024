@@ -1,0 +1,131 @@
+.clear-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.nav-button {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  padding: 5px 20px;
+  border-radius: 30px;
+  background-color: #9ADD5C;
+  color: #0A0019;
+}
+
+.nav-button:hover {
+  background-color: #7bb543;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.shows-section {
+  margin-bottom: 100px;
+}
+.shows-section__navigation {
+  margin-bottom: 30px;
+}
+
+.shows-section--input {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  background-color: #0A0019;
+  width: 100%;
+  border: #B4B0B8 solid 2px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: #fdfdfd;
+}
+.shows-section--input:hover {
+  border: #54C2E1 solid 2px;
+}
+
+.shows-section--button {
+  background-color: #54C2E1;
+  width: 50%;
+  margin-top: 20px;
+  max-width: 300px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #fdfdfd;
+}
+
+.shows-section__show {
+  width: 350px;
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.shows-section .shows-section__show:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.shows-section__show--div {
+  display: flex;
+  align-items: center;
+  height: 150px;
+}
+
+.shows-section__show--image {
+  max-height: 125px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.shows-section__show--name {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.shows-section .shows-section__show--movies {
+  font-size: 0.9em;
+  color: #afafaf;
+}
+@media only screen and (min-width: 600px) {
+  .shows-section--input {
+    max-width: 300px;
+  }
+  .shows-section--button {
+    margin-left: 30px;
+    max-width: 100px;
+  }
+  .shows-section__gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+  }
+  .shows-section__show {
+    flex-basis: 30%;
+  }
+}
+.shows-section__gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1%;
+}
+
+@media only screen and (min-width: 1024px) {
+  .shows-section__show {
+    flex-basis: 19%;
+  }
+}
+
+/*# sourceMappingURL=shows.css.map */
