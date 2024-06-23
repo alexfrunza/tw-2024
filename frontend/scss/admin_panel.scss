@@ -1,5 +1,49 @@
 @import 'vars';
 
+.admin-dash {
+  @at-root #{&}__content {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+
+  @at-root #{&}--form {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @at-root #{&}--label {
+    @include text-2xl;
+    margin-bottom: 10px;
+  }
+
+  @at-root #{&}--input {
+    @include text-xl;
+    background-color: $bg-2;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: $font-color-1;
+    margin-bottom: 20px;
+  }
+
+  @at-root #{&}--button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: $font-color-2;
+    color: #0A0019;
+    margin-bottom: 20px;
+    align-self: center;
+  }
+
+  @at-root #{&}--error {
+    color: red;
+  }
+}
+
 .users-panel {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -15,6 +59,7 @@
     background-color: $font-color-2;
     color: #0A0019;
     margin-bottom: 20px;
+    display: inline-block;
   }
 
   @at-root #{&}__content {
