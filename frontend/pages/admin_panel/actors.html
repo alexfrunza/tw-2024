@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/loading_spinner.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="spinner" class="spinner">
+        Loading&#8230;
+    </div>
+
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Actors
+        </div>
+        <admin-navbar></admin-navbar>
+        <div class="users-panel__content">
+            <div class="users-panel__headers">
+                <div class="users-panel__header">
+                    Name
+                </div>
+                <div class="users-panel__header">
+                    Id
+                </div>
+                <div class="users-panel__header">
+                    Actions
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        const spinnerDiv = document.getElementById('spinner');
+
+        function showSpinner() {
+            spinnerDiv.style.visibility = 'visible';
+        }
+
+        function hideSpinner() {
+            spinnerDiv.style.visibility = 'hidden';
+        }
+
+        showSpinner();
+        const urlParams = new URLSearchParams(window.location.search);
+        let page = urlParams.get('page')
+        page = parseInt(page, 10)
+        page = page ? page : 1;
+
+        const limit = 5;
+        const offset = (page - 1) * limit;
+
+        const result = await fetch(`http://127.0.0.1:5001/actors?offset=${offset}&limit=${limit}`);
+        const data = await result.json();
+
+        const templateActor = (actor) => `
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <img src="${actor.imageUrl ? actor.imageUrl : "../img/unknown.jpg"}" class="users-panel--profile-image" alt="profile image">
+                    <p class="users-panel--username"> ${actor.name} </p>
+                </div>
+                <div class="users-panel__field">
+                    ${actor.id}
+                </div>
+                <div class="users-panel__field">
+                    Manager
+                </div>
+            </div>
+        `;
+
+        const actors = data.data.actors.map(templateActor).join('');
+        document.getElementsByClassName('users-panel__content')[0].innerHTML += actors;
+        hideSpinner();
+        console.log(data)
+    });
+</script>
+</body>
+</html>
