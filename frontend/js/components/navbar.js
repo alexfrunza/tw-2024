@@ -11,6 +11,7 @@ navBarTemplate.innerHTML = `
             <a href="/admin_panel/admin_buttons.html">Admin Dash</a>
             <a href="/about.html">About</a>
             <a href="/actors.html">Actors</a>
+            <a href="/select-statistics.html">Statistics</a>
             <a href="/edit_profile.html">Edit Profile</a>
             <a href="/register.html">Register</a>
             <a href="/login.html">Login</a>
@@ -31,7 +32,7 @@ class Navbar extends HTMLElement {
         const jwtBody = token ? parseJwt(localStorage.getItem('token')) : null;
 
         if (!(isLoggedIn && jwtBody.admin)) {
-            const adminDashLink = navbarLinks.querySelector('a[href="/admin_panel/admin_panel.html"]');
+            const adminDashLink = navbarLinks.querySelector('a[href="/admin_panel/admin_buttons.html"]');
             adminDashLink.remove();
         }
 
