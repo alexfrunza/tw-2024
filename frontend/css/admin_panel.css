@@ -1,3 +1,47 @@
+.admin-dash__content {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.admin-dash--form {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-dash--label {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 10px;
+}
+
+.admin-dash--input {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  background-color: #3A0F3C;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #fdfdfd;
+  margin-bottom: 20px;
+}
+
+.admin-dash--button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #B4B0B8;
+  color: #0A0019;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.admin-dash--error {
+  color: red;
+}
+
 .users-panel {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -14,6 +58,7 @@
   background-color: #B4B0B8;
   color: #0A0019;
   margin-bottom: 20px;
+  display: inline-block;
 }
 
 .users-panel__content {

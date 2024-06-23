@@ -25,24 +25,14 @@
         <div class="users-panel--title">
             Dashboard - Add Actor
         </div>
-        <div class="users-panel__menu">
-            <button class="users-panel__menu--button">Add User</button>
-            <button class="users-panel__menu--button">Delete Users</button>
-            <button class="users-panel__menu--button">Export Users</button>
-
-            <a href="/admin_panel/add_actor.html" class="users-panel__menu--button">Add Actor</a>
-            <a href="/admin_panel/actors_list.html" class="users-panel__menu--button">See Actors</a>
-
-            <a href="/admin_panel/import_actors.html" class="users-panel__menu--button">Import actors db</a>
-            <a href="/admin_panel/export_actors.html" class="users-panel__menu--button">Export actors db</a>
-        </div>
-        <div class="users-panel__content">
-            <form id="add-actor-form" class="admin-dash-form--form">
-                <label for="name" class="admin-dash-section--label">Name:</label>
-                <input type="text" id="name" name="name" class="admin-dash-section--input" required>
-                <button type="submit" class="admin-dash-section--button">Add Actor</button>
+        <admin-navbar></admin-navbar>
+        <div class="admin-dash__content">
+            <form id="add-actor-form" class="admin-dash--form">
+                <label for="name" class="admin-dash--label">Name:</label>
+                <input type="text" id="name" name="name" class="admin-dash--input" required>
+                <button type="submit" class="admin-dash--button">Add Actor</button>
             </form>
-            <p id="error" class="login-section--error"></p>
+            <p id="error" class="admin-dash--error"></p>
         </div>
     </div>
 
