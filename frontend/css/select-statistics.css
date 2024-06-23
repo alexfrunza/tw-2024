@@ -1,3 +1,16 @@
+.export-button {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  padding: 5px 20px;
+  border-radius: 30px;
+  background-color: #9ADD5C;
+  color: #0A0019;
+}
+
+.export-button:hover {
+  background-color: #7bb543;
+}
+
 .select-statistics {
   margin: 50px 0 100px 0;
   display: flex;

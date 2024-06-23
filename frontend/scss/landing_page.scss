@@ -29,6 +29,10 @@
     color: #0A0019;
   }
 
+  @at-root #{&}--button:hover {
+    background-color: #7bb543;
+  }
+
   @at-root #{&}--img {
     border-radius: 30px;
     width: 350px;
