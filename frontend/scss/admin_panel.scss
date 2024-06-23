@@ -70,6 +70,10 @@
     margin-bottom: 20px;
   }
 
+  @at-root #{&}--username {
+    word-break: break-all;
+  }
+
   @at-root #{&}__menu--button {
     padding: 10px 20px;
     border-radius: 10px;

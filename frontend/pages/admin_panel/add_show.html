@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Add Show
+        </div>
+        <admin-navbar></admin-navbar>
+        <div class="admin-dash__content">
+            <form id="add-show-form" class="admin-dash--form">
+                <label for="name" class="admin-dash--label">Name:</label>
+                <input type="text" id="name" name="name" class="admin-dash--input" required>
+                <button type="submit" class="admin-dash--button">Add Show</button>
+            </form>
+            <p id="error" class="admin-dash--error"></p>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        const addActorForm = document.getElementById('add-show-form');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const [action, id] = [urlParams.get('action'), urlParams.get('id')]
+
+        if (action === 'edit' && id) {
+            document.getElementsByClassName('users-panel--title')[0].innerText = 'Dashboard - Edit Show';
+            document.getElementsByClassName('admin-dash--button')[0].innerText = 'Edit Show';
+
+
+            const result = await fetch('http://127.0.0.1:5001/shows/' + id);
+            const data = await result.json();
+
+            if (result.status !== 200) {
+                window.location.href = '/error404.html';
+                return;
+            }
+
+            document.getElementById('name').value = data.data.name;
+        }
+
+        addActorForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+
+            if (action === 'edit' && id) {
+                const response = await fetch('http://127.0.0.1:5001/shows/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status !== 200) {
+                    document.getElementById('error').innerText = data.errors[0].message;
+                } else {
+                    window.location.href = '/admin_panel/shows.html';
+                    return;
+                }
+            } else {
+                const response = await fetch('http://127.0.0.1:5001/shows', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status !== 201) {
+                    document.getElementById('error').innerText = data.errors[0].message;
+                } else {
+                    window.location.href = '/admin_panel/shows.html';
+                    return;
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
