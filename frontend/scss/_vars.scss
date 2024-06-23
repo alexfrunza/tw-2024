@@ -79,3 +79,13 @@ $color-h-5: #FFCC33;
   font-size: 8rem;
   line-height: 1;
 }
+
+.clear-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

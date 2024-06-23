@@ -16,6 +16,23 @@
     flex-direction: column;
   }
 
+  @at-root #{&}__pagination {
+    display: flex;
+    align-items: center;
+  }
+
+  @at-root #{&}--pagination-icon {
+    width: 32px;
+    height: 32px;
+    margin: 10px 20px;
+  }
+
+  @at-root #{&}--action-icon {
+    width: 32px;
+    height: 32px;
+    margin: 10px 20px 10px 0;
+  }
+
   @at-root #{&}--label {
     @include text-2xl;
     margin-bottom: 10px;

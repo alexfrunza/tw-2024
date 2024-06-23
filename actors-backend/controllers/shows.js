@@ -28,6 +28,11 @@ export const getShows = async (req, res) => {
         queryStr = 'SELECT DISTINCT show.name "name", show.id "id" FROM show ORDER BY show.id ASC LIMIT $1 OFFSET $2';
         resultShow = await pool.query(queryStr, [limit, offset]);
 
+        const queryStrCount = 'SELECT COUNT(*) FROM show';
+        const resultCount = await pool.query(queryStrCount);
+
+        data.count = resultCount.rows[0].count;
+        data.pages = Math.ceil(data.count / limit);
         data.limit = limit;
         data.offset = offset;
     } else {

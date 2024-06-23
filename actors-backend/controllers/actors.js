@@ -50,6 +50,11 @@ export const getActors = async (req, res) => {
         queryStr = 'SELECT DISTINCT actor.name "name", actor.id "id" FROM actor ORDER BY actor.id ASC LIMIT $1 OFFSET $2';
         resultActor = await pool.query(queryStr, [limit, offset]);
 
+        const queryStrCount = 'SELECT COUNT(*) FROM actor';
+        const resultCount = await pool.query(queryStrCount);
+
+        data.count = resultCount.rows[0].count;
+        data.pages = Math.ceil(data.count / limit);
         data.limit = limit;
         data.offset = offset;
     } else {

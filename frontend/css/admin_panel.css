@@ -1,3 +1,13 @@
+.clear-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .admin-dash__content {
   margin-top: 50px;
   display: flex;
@@ -11,6 +21,23 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.admin-dash__pagination {
+  display: flex;
+  align-items: center;
+}
+
+.admin-dash--pagination-icon {
+  width: 32px;
+  height: 32px;
+  margin: 10px 20px;
+}
+
+.admin-dash--action-icon {
+  width: 32px;
+  height: 32px;
+  margin: 10px 20px 10px 0;
 }
 
 .admin-dash--label {
