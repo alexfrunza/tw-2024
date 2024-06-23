@@ -86,7 +86,8 @@
                 if (response.status !== 200) {
                     document.getElementById('error').innerText = data.errors[0].message;
                 } else {
-                    window.location.href = '/admin_panel/actors_list.html';
+                    window.location.href = '/admin_panel/actors.html';
+                    return;
                 }
             } else {
                 const response = await fetch('http://127.0.0.1:5001/actors', {
@@ -105,7 +106,8 @@
                 if (response.status !== 201) {
                     document.getElementById('error').innerText = data.errors[0].message;
                 } else {
-                    window.location.href = '/admin_panel/actors_list.html';
+                    window.location.href = '/admin_panel/actors.html';
+                    return;
                 }
             }
         });

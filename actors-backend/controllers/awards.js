@@ -31,6 +31,11 @@ export const getAwards = async (req, res) => {
         queryStr = 'SELECT DISTINCT award.name "name", award.id "id", award.year "year", award.type "type" FROM award ORDER BY award.id ASC LIMIT $1 OFFSET $2';
         resultAward = await pool.query(queryStr, [limit, offset]);
 
+        const queryStrCount = 'SELECT COUNT(*) FROM award';
+        const resultCount = await pool.query(queryStrCount);
+
+        data.count = resultCount.rows[0].count;
+        data.pages = Math.ceil(data.count / limit);
         data.limit = limit;
         data.offset = offset;
     } else {
