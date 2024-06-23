@@ -99,6 +99,11 @@ export const getActor = async (req, res) => {
         throw new NotFoundError("Actor not found");
     }
 
+    resultActor.rows[0].name = toTitleCase(resultActor.rows[0].name);
+    const imageUrl = await getActorImage(resultActor.rows[0].name);
+    resultActor.rows[0].imageUrl = imageUrl || '';
+
+
     res.jsonBody = {
         message: "Success",
         data: resultActor.rows[0]

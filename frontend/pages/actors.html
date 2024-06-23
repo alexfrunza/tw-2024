@@ -74,7 +74,7 @@
             const data = await response.json();
             for (const actor of data.data.actors) {
                 const actorElement = document.createElement('a');
-                actorElement.href = `actors/${actor.id}`;
+                actorElement.href = `actor.html?id=${actor.id}`;
                 actorElement.style.textDecoration = 'none';
                 actorElement.style.color = 'white';
                 actorElement.className = 'actors-section__actor';

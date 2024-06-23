@@ -21,9 +21,9 @@
     <app-navbar></app-navbar>
 
     <div class="actor-profile">
-        <img src="../img/jdepp.jpg" alt="johnny depp" class="actor-profile--image">
+        <img src="../img/unknown.jpg" alt="unknown" class="actor-profile--image">
         <div class="actor-profile--name">
-            <h1>Johnny Depp</h1>
+            <h1>Unknown</h1>
         </div>
     </div>
     <div class="description">
@@ -46,6 +46,37 @@
 <script type="module" src="../js/index.js"></script>
 <script src="../js/drawer.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if (id) {
+            try {
+                // Facem o cerere GET către server pentru a obține detaliile actorului
+                const response = await fetch(`http://127.0.0.1:5001/actors/${id}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                // Actualizăm numele actorului în pagină
+                const actorNameElement = document.querySelector('.actor-profile--name h1');
+                actorNameElement.textContent = data.data.name;
+
+                // Actualizăm imaginea actorului în pagină sau folosim o imagine default dacă nu există imageUrl
+                const actorImageElement = document.querySelector('.actor-profile--image');
+                actorImageElement.src = data.data.imageUrl !== '' ? data.data.imageUrl : '../img/unknown.jpg';
+
+            } catch (error) {
+                console.error('Error fetching actor data:', error);
+            }
+        } else {
+            console.error('ID parameter not found in URL');
+        }
+    });
+</script>
 
 </body>
 </html>
