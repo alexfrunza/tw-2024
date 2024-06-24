@@ -137,7 +137,7 @@
         const templateActor = (actor) => `
             <div class="users-panel--user">
                 <div class="users-panel__field">
-                    <img src="${actor.imageUrl ? actor.imageUrl : "../img/unknown.jpg"}" class="users-panel--profile-image" alt="profile image">
+                    <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w500' + actor.profile_path : "../img/unknown.jpg"}" class="users-panel--profile-image" alt="profile image">
                     <p class="users-panel--username"> ${actor.name} </p>
                 </div>
                 <div class="users-panel__field">
