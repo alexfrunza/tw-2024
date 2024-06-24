@@ -12,6 +12,7 @@ navBarTemplate.innerHTML = `
             <a href="/about.html">About</a>
             <a href="/actors.html">Actors</a>
             <a href="/shows.html">Shows</a>
+            <a href="/awards.html">Awards</a>
             <a href="/select-statistics.html">Statistics</a>
             <a href="/edit_profile.html">Edit Profile</a>
             <a href="/register.html">Register</a>

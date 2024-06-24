@@ -16,6 +16,7 @@
     flex-direction: column;
   }
 
+
   @at-root #{&}__pagination {
     display: flex;
     align-items: center;
@@ -118,6 +119,14 @@
     gap: 10px;
     width: 300px;
     flex-shrink: 0;
+  }
+
+  &--link {
+    text-decoration: none;
+    color: $font-color-1;
+    &:hover {
+      color: $font-color-2;
+    }
   }
 
   @at-root #{&}--profile-image {
