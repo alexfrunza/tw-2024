@@ -41,7 +41,7 @@
         </div>
         <admin-navbar></admin-navbar>
         <div class="users-panel__content">
-            <h2 class="users-panel--subtitle"></h2>
+            <h2 class="users-panel--subtitle">Award</h2>
             <p id="error" class="admin-dash--error"></p>
             <div class="users-panel__headers">
                 <div class="users-panel__header">
@@ -58,11 +58,13 @@
         <form id="add-nomination-form" class="admin-dash--form">
             <label for="won" class="admin-dash--label">Won:</label>
             <select id="won" name="won" class="admin-dash--input" required>
+                <option value="" disabled selected>-</option>
                 <option value="false">False</option>
                 <option value="true">True</option>
             </select>
             <label for="show" class="admin-dash--label">Show:</label>
             <select id="show" name="show" class="admin-dash--input" required>
+                <option value="" disabled selected>Select a show</option>
             </select>
             <button id='btn-submit-nomination' type="submit" class="admin-dash--button">Add Nomination</button>
         </form>
