@@ -67,7 +67,13 @@
 
                 // Actualizăm imaginea actorului în pagină sau folosim o imagine default dacă nu există imageUrl
                 const actorImageElement = document.querySelector('.actor-profile--image');
-                actorImageElement.src = data.data.imageUrl !== '' ? data.data.imageUrl : '../img/unknown.jpg';
+                let path = data.data.profile_path;
+                if(!path) {
+                    actorImageElement.src = '../img/unknown.jpg';
+                } else {
+                    actorImageElement.src = 'https://image.tmdb.org/t/p/w500' + path;
+                }
+
 
                 // Generăm lista de filme în care actorul este cunoscut
                 const descriptionElement = document.getElementById('description');

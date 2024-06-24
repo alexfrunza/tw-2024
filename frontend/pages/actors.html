@@ -24,11 +24,6 @@
 
     <h2 class="page-title"> Actors </h2>
     <div class="actors-section">
-        <div class="actors-section__navigation">
-            <label for="search"></label>
-            <input type="text" id="search" name="search" class="actors-section--input">
-            <button type="submit" class="actors-section--button">Search</button>
-        </div>
         <div id="actors-container" class="actors-section__gallery">
 
         </div>
@@ -79,7 +74,7 @@
                 actorElement.style.color = 'white';
                 actorElement.className = 'actors-section__actor';
                 actorElement.innerHTML = `
-            <div class="actors-section__actor--div"><img class="actors-section__actor--image" src="${actor.imageUrl !== '' ? actor.imageUrl : "../img/unknown.jpg"}" alt="${actor.name}"></div>
+            <div class="actors-section__actor--div"><img class="actors-section__actor--image" src="${actor.profile_path !== '' ? 'https://image.tmdb.org/t/p/w500' + actor.profile_path : "../img/unknown.jpg"}" alt="${actor.name}"></div>
             <h2 class="actors-section__actor--name">${actor.name}</h2>
             <p class="actors-section__actor--movies">${actor.shows.map(show => show.name).join(', ')}</p>
         `;
