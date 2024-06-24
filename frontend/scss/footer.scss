@@ -48,7 +48,6 @@ app-footer {
   @media only screen and (min-width: 600px) {
     display: flex;
     justify-content: space-around;
-    // add gap between elements
     gap: 20px;
 
     @at-root #{&}--text {

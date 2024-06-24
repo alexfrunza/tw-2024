@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import {pool} from "../db.js";
 import jwt from "jsonwebtoken";
-import { validateRegisterInput } from "../utils/validations.js";
+import {validateRegisterInput} from "../utils/validations.js";
 
 const SECRET_KEY = 'secret_key';
 

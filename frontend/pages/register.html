@@ -23,7 +23,8 @@
 
     <div class="register-section">
         <div class="register-section__art">
-            <img src="../img/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg" alt="Hero Image" class="register-section__art--img">
+            <img src="../img/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg" alt="Hero Image"
+                 class="register-section__art--img">
             <h2 class="register-section__art--title"> Create your account now! </h2>
         </div>
         <div class="register-section__form">
@@ -40,7 +41,8 @@
                 <label for="password" class="register-section--label">Password:</label>
                 <input type="password" id="password" name="password" class="register-section--input" required>
                 <label for="confirmPassword" class="register-section--label">Confirm password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" class="register-section--input" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="register-section--input"
+                       required>
                 <button type="submit" class="register-section--button">Register</button>
             </form>
             <p id="error" class="register-section--error"></p>
@@ -85,7 +87,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, email, firstName, lastName, password })
+            body: JSON.stringify({username, email, firstName, lastName, password})
         });
 
         const data = await response.json();
@@ -101,7 +103,7 @@
 </script>
 
 <script>
-    window.onload = function() {
+    window.onload = function () {
         const isLoggedIn = localStorage.getItem('token') !== null;
 
         if (isLoggedIn) {

@@ -10,7 +10,7 @@ export function validateFilePath(pathname, ext) {
         throw new NotFoundError("Page not found.");
     }
 
-    if(ext === 'map' && filePathSplit[1] !== 'css') {
+    if (ext === 'map' && filePathSplit[1] !== 'css') {
         throw new NotFoundError("Page not found.");
     }
 

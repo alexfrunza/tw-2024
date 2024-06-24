@@ -139,7 +139,7 @@ export const modifyAward = async (req, res) => {
 
     validateAwardType(type, true);
     if (type) {
-        throw new APIError("Type cannot be modified", 'APIError',400);
+        throw new APIError("Type cannot be modified", 'APIError', 400);
     }
 
     validateAwardYear(year);
