@@ -26,8 +26,8 @@
             <h1>Unknown</h1>
         </div>
     </div>
-    <div class="description">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur autem blanditiis, commodi dicta earum esse fugiat illum in ipsa ipsam ipsum itaque libero nam nesciunt nostrum, numquam odio perspiciatis porro qui tenetur vel voluptatum? A consequuntur distinctio dolor doloremque, eos ex illo illum impedit in itaque laborum magnam, necessitatibus nesciunt nobis obcaecati officiis omnis perspiciatis provident quae rem repellat reprehenderit similique suscipit tempora, temporibus ut voluptas! A accusamus alias autem cum delectus dolorem dolores enim eos est hic illo ipsa itaque necessitatibus neque nesciunt, nihil optio placeat provident qui quidem quis quod repellendus repudiandae saepe sed unde vel veniam!
+    <div class="description" id="description">
+        <!-- Aici va fi actualizată descrierea actorului -->
     </div>
     <div class="news-container">
         <p>Recent news:</p>
@@ -68,6 +68,16 @@
                 // Actualizăm imaginea actorului în pagină sau folosim o imagine default dacă nu există imageUrl
                 const actorImageElement = document.querySelector('.actor-profile--image');
                 actorImageElement.src = data.data.imageUrl !== '' ? data.data.imageUrl : '../img/unknown.jpg';
+
+                // Generăm lista de filme în care actorul este cunoscut
+                const descriptionElement = document.getElementById('description');
+                descriptionElement.innerHTML = `<h2>Known For:</h2><ul id="movie-list"></ul>`;
+                const movieList = document.getElementById('movie-list');
+                data.data.known_for.forEach(movie => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<strong>${movie.title}</strong> (${movie.release_date.split('-')[0]}): ${movie.overview}`;
+                    movieList.appendChild(listItem);
+                });
 
             } catch (error) {
                 console.error('Error fetching actor data:', error);

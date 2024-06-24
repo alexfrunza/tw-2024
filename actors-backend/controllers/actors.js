@@ -2,6 +2,7 @@ import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
 import {validateActorName, validateInteger} from "../utils/validations.js";
+import { API_KEY } from '../config.js';
 
 import fetch from 'node-fetch';
 
@@ -91,6 +92,27 @@ export const getActors = async (req, res) => {
     res.statusCode = 200;
 };
 
+const getActorDetails = async (name) => {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/search/person?query=${name}&include_adult=false&language=en-US&page=1`, {
+            headers: {
+                'Authorization': API_KEY,
+                'accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const tmdbData = await response.json();
+        return tmdbData.results[0];
+    } catch (error) {
+        console.error('Error fetching actor details:', error);
+        return null;
+    }
+};
+
 
 export const getActor = async (req, res) => {
     const resultActor = await pool.query('SELECT * FROM actor WHERE id = $1', [req.params.id]);
@@ -99,9 +121,23 @@ export const getActor = async (req, res) => {
         throw new NotFoundError("Actor not found");
     }
 
-    resultActor.rows[0].name = toTitleCase(resultActor.rows[0].name);
-    const imageUrl = await getActorImage(resultActor.rows[0].name);
-    resultActor.rows[0].imageUrl = imageUrl || '';
+    const actor = resultActor.rows[0];
+    actor.name = toTitleCase(actor.name);
+
+    const imageUrl = await getActorImage(actor.name);
+    actor.imageUrl = imageUrl || '';
+
+    const tmdbActor = await getActorDetails(actor.name);
+
+    if (tmdbActor) {
+        actor.known_for = tmdbActor.known_for.map(movie => ({
+            title: movie.title || movie.name,
+            release_date: movie.release_date || movie.first_air_date,
+            overview: movie.overview
+        }));
+    } else {
+        actor.known_for = [];
+    }
 
 
     res.jsonBody = {
