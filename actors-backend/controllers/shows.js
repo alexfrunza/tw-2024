@@ -2,6 +2,8 @@ import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
 import {validateInteger, validateShowName} from "../utils/validations.js";
+import fetch from "node-fetch";
+import {API_KEY} from "../config.js";
 
 export const getShows = async (req, res) => {
 
@@ -68,8 +70,61 @@ export const getShows = async (req, res) => {
     res.statusCode = 200;
 }
 
+const getShowDetails = async (name) => {
+    try {
+        let responseMovie;
+        let responseTv = await fetch(`https://api.themoviedb.org/3/search/tv?query=${name}&include_adult=false&language=en-US&page=1`, {
+            headers: {
+                'Authorization': API_KEY,
+                'accept': 'application/json'
+            }
+        });
+
+        let tmdbDataTv;
+        let tmdbDataMovie;
+
+        responseMovie = await fetch(`https://api.themoviedb.org/3/search/movie?query=${name}&include_adult=false&language=en-US&page=1`, {
+            headers: {
+                'Authorization': API_KEY,
+                'accept': 'application/json'
+            }
+        });
+
+
+        if (!responseMovie.ok && !responseTv.ok) {
+            throw new Error('Network response was not ok');
+        } else if (!responseMovie.ok) {
+            tmdbDataTv = await responseTv.json();
+            return tmdbDataTv.results[0];
+        } else if (!responseTv.ok) {
+            tmdbDataMovie = await responseMovie.json();
+            return tmdbDataMovie.results[0];
+        } else {
+            tmdbDataMovie = await responseMovie.json();
+            tmdbDataTv = await responseTv.json();
+
+            if (tmdbDataTv.results[0].popularity > tmdbDataMovie.results[0].popularity) {
+                return tmdbDataTv.results[0];
+            } else {
+                return tmdbDataMovie.results[0];
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching actor details:', error);
+        return null;
+    }
+};
+
 export const getShow = async (req, res) => {
     const resultShow = await pool.query('SELECT * FROM show WHERE id = $1', [req.params.id]);
+
+    const queryStr = 'SELECT DISTINCT actor.name "actorName", actor.id "actorId" FROM show JOIN award_actor ON show.id = $1 AND show.id = award_actor.show_id JOIN actor ON actor.id = award_actor.actor_id';
+    const resultShowActors = await pool.query(queryStr, [req.params.id]);
+    const actors = [];
+
+    resultShowActors.rows.forEach(row => {
+        actors.push({name: toTitleCase(row.actorName), id: row.actorId});
+    })
 
     if (resultShow.rows.length === 0) {
         throw new NotFoundError("Show not found");
@@ -77,7 +132,7 @@ export const getShow = async (req, res) => {
 
     res.jsonBody = {
         message: "Success",
-        data: resultShow.rows[0]
+        data: {db: {...resultShow.rows[0], actors}, tmdb: await getShowDetails(resultShow.rows[0].name)}
     };
     res.statusCode = 200;
 }
