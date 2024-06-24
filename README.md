@@ -81,11 +81,10 @@
 5. [Characteristics of the application](#characteristics-of-the-application)
 
     1. [Account Management](#account-management)
-   
-    2. [User Section](#user-section)
-    3. [Admin Section](#admin-section)
+
+    2. [Admin Section](#admin-section)
     
-    4. [Session management](#session-management)
+    3. [Session management](#session-management)
 
          1. [Description](#description)
 
@@ -93,7 +92,7 @@
 
          3. [Requirements and constraints](#requirements-and-constraints)
 
-   5. [Other functionalities](#other-functionalities)
+    4. [Other functionalities](#other-functionalities)
 
         1. [Description](#description)
 
