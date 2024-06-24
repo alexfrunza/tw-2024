@@ -14,6 +14,7 @@ export const getShows = async (req, res) => {
 
     let limit = queryParams.get('limit');
     let offset = queryParams.get('offset');
+    let actorsShow = queryParams.get('actorsShow');
 
     const data = {};
     const shows = {};
@@ -47,6 +48,8 @@ export const getShows = async (req, res) => {
     })
 
     for await (const show of Object.values(shows)) {
+        if (actorsShow === 'false') continue;
+
         queryStr = 'SELECT DISTINCT actor.name "actorName", actor.id "actorId", show.id "id" FROM show JOIN award_actor ON show.id = $1 AND show.id = award_actor.show_id JOIN actor ON actor.id = award_actor.actor_id ORDER BY show.id ASC';
         resultShowActors = await pool.query(queryStr, [show.id]);
 
