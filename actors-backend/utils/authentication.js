@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import {UnauthorizedError} from "./errors.js";
+import {ForbiddenError, UnauthorizedError} from "./errors.js";
 
 const SECRET_KEY = 'secret_key';
 
@@ -19,4 +19,10 @@ export const verifyToken = (req, res) => {
 
         req.jwtPayload = decoded;
     });
+};
+
+export const verifyAdmin = (req) => {
+    if (!req.jwtPayload.admin) {
+        throw new ForbiddenError("Forbidden");
+    }
 };

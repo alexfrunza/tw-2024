@@ -18,6 +18,12 @@ export class NotFoundError extends APIError {
     }
 }
 
+export class ForbiddenError extends APIError {
+    constructor(message) {
+        super(message, "ForbiddenError", 403);
+    }
+}
+
 export class UnauthorizedError extends APIError {
     constructor(message) {
         super(message, "UnauthorizedError", 401);

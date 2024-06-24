@@ -1,4 +1,4 @@
-import {verifyToken} from "../utils/authentication.js";
+import {verifyAdmin, verifyToken} from "../utils/authentication.js";
 import {
     createAwardActor,
     deleteAwardActor,
@@ -24,16 +24,19 @@ export const awardsActorRouter = async (req, res) => {
         req.params.id = id;
         console.log(`DELETE /awardsActor/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await deleteAwardActor(req, res);
     } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
         console.log("POST /awardsActor");
         verifyToken(req);
+        verifyAdmin(req);
         await createAwardActor(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'PUT') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
         console.log(`PUT /awardsActor/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await modifyAwardActor(req, res);
     } else {
         req.handled = false;
