@@ -42,6 +42,7 @@
         <admin-navbar></admin-navbar>
         <div class="users-panel__content">
             <h2 class="users-panel--subtitle"></h2>
+            <p id="error" class="admin-dash--error"></p>
             <div class="users-panel__headers">
                 <div class="users-panel__header">
                     Name
@@ -54,6 +55,17 @@
                 </div>
             </div>
         </div>
+        <form id="add-nomination-form" class="admin-dash--form">
+            <label for="won" class="admin-dash--label">Won:</label>
+            <select id="won" name="won" class="admin-dash--input" required>
+                <option value="false">False</option>
+                <option value="true">True</option>
+            </select>
+            <label for="show" class="admin-dash--label">Show:</label>
+            <select id="show" name="show" class="admin-dash--input" required>
+            </select>
+            <button id='btn-submit-nomination' type="submit" class="admin-dash--button">Add Nomination</button>
+        </form>
     </div>
 
     <app-footer></app-footer>
@@ -99,8 +111,9 @@
     }
 
     async function updateWonStatus(id, won, type) {
+        let result;
         if (type === 'actor') {
-            const result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
+            result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,21 +123,24 @@
                     won: !won
                 })
             });
+        } else {
+            result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    won: !won
+                })
+            });
+        }
 
+        if (result.status === 200) {
             window.location.reload();
         } else {
-            const result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                body: JSON.stringify({
-                    won: !won
-                })
-            });
-
-            window.location.reload();
+            const data = await result.json();
+            document.getElementById('error').innerText = data.errors[0].message;
         }
     }
 
@@ -139,7 +155,7 @@
                     ${nomination.won}
                 </div>
                 <div class="users-panel__field">
-                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, '${nomination.name}', '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
                 <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-down-alt-filled-240.png" alt="make nominee to win"></button>
                 </div>
             </div>
@@ -154,7 +170,7 @@
                     ${nomination.won}
                 </div>
                 <div class="users-panel__field">
-                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, '${nomination.name}', '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
                 <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-up-alt-filled-240.png" alt="make nominee to lose"></button>
                 </div>
             </div>
@@ -202,14 +218,100 @@
 
         document.getElementsByClassName('users-panel--subtitle')[0].innerText = `${data.data.name} - ${data.data.year}`;
 
-
         let nominations;
 
         if (data.data.type === 'actor') {
             nominations = data.data.actors;
+
+            let newLabel = document.createElement('label');
+            newLabel.setAttribute('for', 'actor');
+            newLabel.setAttribute('class', 'admin-dash--label');
+            newLabel.innerText = 'Actor:';
+
+            let newSelect = document.createElement('select');
+            newSelect.setAttribute('id', 'actor');
+            newSelect.setAttribute('name', 'actor');
+            newSelect.setAttribute('class', 'admin-dash--input');
+            newSelect.setAttribute('required', '');
+
+            let responseActors = await fetch('http://127.0.0.1:5001/actors?imageActor=false&showsActor=false');
+            let dataActors = await responseActors.json();
+
+            dataActors.data.actors.forEach(actor => {
+                let newOption = document.createElement('option');
+                newOption.setAttribute('value', actor.id);
+                newOption.innerText = `${actor.id}. ${actor.name}`;
+                newSelect.appendChild(newOption);
+            });
+
+            const referenceElement = document.getElementById('btn-submit-nomination');
+
+            document.getElementById('add-nomination-form').insertBefore(newLabel, referenceElement);
+            document.getElementById('add-nomination-form').insertBefore(newSelect, referenceElement);
         } else {
             nominations = data.data.shows;
         }
+
+        let responseShows = await fetch('http://127.0.0.1:5001/shows?actorsShows=false');
+
+        let dataShows = await responseShows.json();
+        dataShows.data.shows.forEach(show => {
+            let newOption = document.createElement('option');
+            newOption.setAttribute('value', show.id);
+            newOption.innerText = `${show.id}. ${show.name}`;
+            document.getElementById('show').appendChild(newOption);
+        });
+
+        const addNominationForm = document.getElementById('add-nomination-form');
+
+        addNominationForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            let won = document.getElementById('won').value;
+            won = won === 'true';
+            let show = document.getElementById('show').value;
+            show = parseInt(show, 10);
+
+            let actor = document.getElementById('actor') ? document.getElementById('actor').value : null;
+            if (actor !== null) actor = parseInt(actor, 10);
+
+            let result;
+            if (data.data.type === 'actor') {
+                result = await fetch('http://127.0.0.1:5001/awardsActor', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        award_id: id,
+                        actor_id: actor,
+                        show_id: show,
+                        won: won
+                    })
+                })
+            } else {
+                result = await fetch('http://127.0.0.1:5001/awardsShow', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        award_id: id,
+                        show_id: show,
+                        won: won
+                    })
+                })
+            }
+
+            const dataResponse = await result.json();
+            if (result.status !== 201) {
+                document.getElementById('error').innerText = dataResponse.errors[0].message;
+            } else {
+                window.location.reload();
+            }
+        })
 
         nominations = nominations.map(nomination => templateNomination(nomination, data.data.type)).join('');
         document.getElementsByClassName('users-panel__content')[0].innerHTML += nominations;

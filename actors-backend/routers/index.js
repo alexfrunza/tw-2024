@@ -92,6 +92,7 @@ export const mainRouter = async (req, res) => {
             res.end(JSON.stringify(res.jsonBody));
         }
     } catch (err) {
+        console.log(err)
         if (err instanceof APIError) {
             res.writeHead(err.statusCode, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({

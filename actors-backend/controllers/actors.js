@@ -37,6 +37,8 @@ export const getActors = async (req, res) => {
 
     let limit = queryParams.get('limit');
     let offset = queryParams.get('offset');
+    let imageActor = queryParams.get('imageActor');
+    let showsActor = queryParams.get('showsActor');
 
     const data = {};
     const actors = {};
@@ -70,16 +72,19 @@ export const getActors = async (req, res) => {
     });
 
     for await (const actor of Object.values(actors)) {
-        queryStr = 'SELECT DISTINCT show.name "showName", show.id "showId", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
-        resultActorShows = await pool.query(queryStr, [actor.id]);
+        if (showsActor !== 'false') {
+            queryStr = 'SELECT DISTINCT show.name "showName", show.id "showId", actor.id "id" FROM actor JOIN award_actor ON actor.id = $1 AND actor.id = award_actor.actor_id JOIN show ON show.id = award_actor.show_id ORDER BY actor.id ASC';
+            resultActorShows = await pool.query(queryStr, [actor.id]);
 
-        resultActorShows.rows.forEach(row => {
-            actor.shows.push({name: toTitleCase(row.showName), id: row.showId});
-        });
+            resultActorShows.rows.forEach(row => {
+                actor.shows.push({name: toTitleCase(row.showName), id: row.showId});
+            });
+        }
 
-        // Obține URL-ul imaginii pentru actor
-        const imageUrl = await getActorImage(actor.name);
-        actor.imageUrl = imageUrl || '';
+        if (imageActor !== 'false') {
+            const imageUrl = await getActorImage(actor.name);
+            actor.imageUrl = imageUrl || '';
+        }
     }
 
     res.jsonBody = {

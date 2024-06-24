@@ -152,14 +152,14 @@ export const createAwardActor = async (req, res) => {
     const resultAwardActorGet = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND actor_id = $2 AND show_id = $3', [award_id, actor_id, show_id]);
 
     if (resultAwardActorGet.rows[0].count > 0) {
-        throw new APIError("The actor has already been nominated for this award for this show", 400);
+        throw new APIError("The actor has already been nominated for this award for this show", 'APIError', 400);
     }
 
     if (won === true) {
-        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [award_id, show_id]);
+        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND won = true', [award_id]);
 
         if (resultAwardWinnings.rows[0].count > 0) {
-            throw new APIError("An actor has already won this award for this show", 400);
+            throw new APIError("An actor has already won this award for this show", 'APIError', 400);
         }
     }
 
@@ -201,10 +201,10 @@ export const modifyAwardActor = async (req, res) => {
     }
 
     if (won === true) {
-        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND show_id = $2 AND won = true', [resultAwardActor.rows[0].award_id, resultAwardActor.rows[0].show_id]);
+        const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_actor WHERE award_id = $1 AND won = true', [resultAwardActor.rows[0].award_id]);
 
         if (resultAwardWinnings.rows[0].count > 0) {
-            throw new APIError("An actor has already won this award for this show", 400);
+            throw new APIError("An actor has already won this award for this show", 'APIError', 400);
         }
     }
 
