@@ -42,6 +42,7 @@
         <admin-navbar></admin-navbar>
         <div class="users-panel__content">
             <h2 class="users-panel--subtitle"></h2>
+            <p id="error" class="admin-dash--error"></p>
             <div class="users-panel__headers">
                 <div class="users-panel__header">
                     Name
@@ -99,8 +100,9 @@
     }
 
     async function updateWonStatus(id, won, type) {
+        let result;
         if (type === 'actor') {
-            const result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
+            result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,21 +112,24 @@
                     won: !won
                 })
             });
+        } else {
+            result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    won: !won
+                })
+            });
+        }
 
+        if (result.status === 200) {
             window.location.reload();
         } else {
-            const result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                body: JSON.stringify({
-                    won: !won
-                })
-            });
-
-            window.location.reload();
+            const data = await result.json();
+            document.getElementById('error').innerText = data.errors[0].message;
         }
     }
 
@@ -139,7 +144,7 @@
                     ${nomination.won}
                 </div>
                 <div class="users-panel__field">
-                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, '${nomination.name}', '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
                 <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-down-alt-filled-240.png" alt="make nominee to win"></button>
                 </div>
             </div>
@@ -154,7 +159,7 @@
                     ${nomination.won}
                 </div>
                 <div class="users-panel__field">
-                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, '${nomination.name}', '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
                 <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-up-alt-filled-240.png" alt="make nominee to lose"></button>
                 </div>
             </div>

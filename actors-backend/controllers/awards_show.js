@@ -126,7 +126,7 @@ export const createAwardShow = async (req, res) => {
     }
 
     if (resultAward.rows[0].type === 'actor') {
-        throw new APIError("Cannot create award show for actor award", 400);
+        throw new APIError("Cannot create award show for actor award", 'APIError', 400);
     }
 
     const resultShow = await pool.query('SELECT * FROM show WHERE id = $1', [show_id]);
@@ -138,14 +138,14 @@ export const createAwardShow = async (req, res) => {
     const resultAwardShowGet = await pool.query('SELECT COUNT(*) FROM award_show WHERE award_id = $1 AND show_id = $2', [award_id, show_id]);
 
     if (resultAwardShowGet.rows[0].count > 0) {
-        throw new APIError("The show has already been nominated for this award", 400);
+        throw new APIError("The show has already been nominated for this award", 'APIError', 400);
     }
 
     if (won === true) {
         const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_show WHERE award_id = $1 AND won = true', [award_id]);
 
         if (resultAwardWinnings.rows[0].count > 0) {
-            throw new APIError("A show has already won this award", 400);
+            throw new APIError("A show has already won this award", 'APIError', 400);
         }
     }
 
@@ -186,7 +186,7 @@ export const modifyAwardShow = async (req, res) => {
         const resultAwardWinnings = await pool.query('SELECT COUNT(*) FROM award_show WHERE award_id = $1 AND won = true', [resultAwardShow.rows[0].award_id]);
 
         if (resultAwardWinnings.rows[0].count > 0) {
-            throw new APIError("A show has already won this award", 400);
+            throw new APIError("A show has already won this award", 'APIError', 400);
         }
     }
 
