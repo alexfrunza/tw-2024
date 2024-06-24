@@ -359,21 +359,12 @@ Users can refer to this document to understand the functionalities and operation
 - To modify their credentials, the user must be authenticated.
 - To authenticate, the user needs an account registered in the database.
 
-### User Section
-#### Description and Generalities
-- The User Section is intended for the admin, providing them with the ability to view a list of all users in the database. Additionally, they have the ability to delete users from the database if desired.
-#### Information Update
-- Upon clicking the delete button next to each user, the credentials of the selected user are deleted from the database.
-#### Operating Conditions
-- The user must be authenticated.
-- The user must have admin rights.
-
 ### Admin Section
 #### Description and Generalities
-- The Admin Section is intended for users with administrator rights, providing them with facilities that a normal user does not have. When the admin accesses the control panel, they can add/modify actor and movie pages directly from the platform. Additionally, they are able to delete user accounts.
+- The Admin Section is intended for users with administrator rights, providing them with facilities that a normal user does not have. When the admin accesses the admin dashboard, they can view a list of shows, actors, awards, add and delete them, or import/export actors via CSV.
 #### Information Update
-- When the admin adds an actor or a movie, the information is inserted into the database.
-- When the admin modifies an actor or movie, the information is updated in the database.
+- When the admin adds an actor, show or award, the information is inserted into the database.
+- When the admin modifies an actor, show or award, the information is updated in the database.
 #### Operating Conditions
 - The user must be authenticated.
 - The user must have admin rights.
@@ -412,21 +403,17 @@ Users can refer to this document to understand the functionalities and operation
 
 #### Description
 
-- The application will crawl the movie database and get the latest movies.
-
-- The application will allow users to search for actors and movies.
-
 - The application will allow users to see the details of an actor or a movie.
 
 - The application will allow users to see the connections between actors and movies.
 
 #### Data flow
 
-- The user will search for an actor or a movie.
+- The user will access a show/actor page.
 
 - The application will send a request to the server.
 
-- The server will search for the actor or movie in the database.
+- The server will search for the actor or show in the database.
 
 - The server will send the results to the user.
 
@@ -450,7 +437,7 @@ Users can refer to this document to understand the functionalities and operation
 
 - Authorization is done with JWT tokens.
 
-- Passwords are hashed with argon2.
+- Passwords are hashed with Bcrypt.
 
 - The application is using prepared statements to prevent SQL injection.
 
