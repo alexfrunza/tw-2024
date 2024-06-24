@@ -1,4 +1,4 @@
-import {verifyToken} from "../utils/authentication.js";
+import {verifyAdmin, verifyToken} from "../utils/authentication.js";
 import {createShow, deleteShow, getShow, getShows, modifyShow} from "../controllers/shows.js";
 
 export const showsRouter = async (req, res) => {
@@ -19,20 +19,21 @@ export const showsRouter = async (req, res) => {
         req.params.id = id;
         console.log(`DELETE /shows/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await deleteShow(req, res);
     } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
         console.log("POST /shows");
         verifyToken(req);
+        verifyAdmin(req);
         await createShow(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'PUT') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
         console.log(`PUT /shows/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await modifyShow(req, res);
     } else {
         req.handled = false;
     }
 };
-
-

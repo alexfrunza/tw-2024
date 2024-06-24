@@ -1,4 +1,4 @@
-import {verifyToken} from "../utils/authentication.js";
+import {verifyAdmin, verifyToken} from "../utils/authentication.js";
 import {
     createAwardShow,
     deleteAwardShow,
@@ -25,16 +25,19 @@ export const awardsShowRouter = async (req, res) => {
         req.params.id = id;
         console.log(`DELETE /awardsShow/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await deleteAwardShow(req, res);
     } else if (req.fullUrl.pathname === '/' && req.method === 'POST') {
         console.log("POST /awardsShow");
         verifyToken(req);
+        verifyAdmin(req);
         await createAwardShow(req, res);
     } else if (regexRouteWithId.test(req.fullUrl.pathname) && req.method === 'PUT') {
         let id = parseInt(req.fullUrl.pathname.match(regexRouteWithId)[1], 10);
         req.params.id = id;
         console.log(`PUT /awardsShow/${id}`);
         verifyToken(req);
+        verifyAdmin(req);
         await modifyAwardShow(req, res);
     } else {
         req.handled = false;
