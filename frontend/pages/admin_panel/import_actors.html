@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/loading_spinner.css">
+    <link rel="stylesheet" type="text/css" href="../../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="spinner" class="spinner">
+        Loading&#8230;
+    </div>
+    <div id="modal-confirm" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <span class="close-modal-confirm">&times;</span>
+            <p class="content-modal-confirm"></p>
+            <button class="modal-confirm-button">Yes</button>
+        </div>
+
+    </div>
+
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Import actors
+        </div>
+        <admin-navbar></admin-navbar>
+        <div class="users-panel__content">
+            <input type="file" id="file" class="admin-dash--button">
+            <button id="upload" class="admin-dash--button">Upload</button>
+            <small id="status" class="admin-dash--error" style="text-align: center; font-size: 20px;"></small>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+
+    const file = document.getElementById('file');
+    const upload = document.getElementById('upload');
+    const status = document.getElementById('status');
+
+    upload.addEventListener('click', () => {
+        status.innerHTML = 'uploading';
+
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(file.files[0]);
+
+        fileReader.onload = async (event) => {
+            const content = event.target.result;
+
+            const response = await fetch('http://127.0.0.1:5001/load-actors-csv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/octet-stream",
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
+                body: content
+            })
+            const data = await response.json();
+
+            if (response.status !== 200) {
+                if (response.status === 500) {
+                    status.innerHTML = "There was a problem with the csv";
+                } else {
+                    status.innerHTML = data.errors[0].message;
+                }
+            } else {
+                status.innerHTML = 'Uploaded';
+            }
+        }
+    });
+</script>
+</body>
+</html>
