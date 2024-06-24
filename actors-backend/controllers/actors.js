@@ -6,28 +6,6 @@ import {API_KEY} from '../config.js';
 
 import fetch from 'node-fetch';
 
-async function getActorImage(actorName) {
-    const formattedName = actorName.replace(/ /g, '_');
-    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original|thumbnail&pithumbsize=1000&titles=${formattedName}&origin=*`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const pages = data.query.pages;
-        const pageId = Object.keys(pages)[0];
-        const imageUrl = pages[pageId].thumbnail?.source || pages[pageId].original?.source;
-
-        if (imageUrl) {
-            return imageUrl;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error('Eroare la preluarea imaginii:', error);
-        return null;
-    }
-}
-
 export const getActors = async (req, res) => {
     const queryParams = new URLSearchParams(req.fullUrl.search);
 
@@ -67,7 +45,7 @@ export const getActors = async (req, res) => {
 
     resultActor.rows.forEach(row => {
         if (actors[row.id] === undefined) {
-            actors[row.id] = {id: row.id, name: toTitleCase(row.name), shows: [], imageUrl: ''};
+            actors[row.id] = {id: row.id, name: toTitleCase(row.name), shows: []};
         }
     });
 
@@ -82,8 +60,12 @@ export const getActors = async (req, res) => {
         }
 
         if (imageActor !== 'false') {
-            const imageUrl = await getActorImage(actor.name);
-            actor.imageUrl = imageUrl || '';
+            const tmdbActor = await getActorDetails(actor.name);
+            if (tmdbActor) {
+                actor.profile_path = tmdbActor.profile_path;
+            } else {
+                actor.profile_path = '';
+            }
         }
     }
 
@@ -128,12 +110,12 @@ export const getActor = async (req, res) => {
     const actor = resultActor.rows[0];
     actor.name = toTitleCase(actor.name);
 
-    const imageUrl = await getActorImage(actor.name);
-    actor.imageUrl = imageUrl || '';
 
     const tmdbActor = await getActorDetails(actor.name);
 
+
     if (tmdbActor) {
+        actor.profile_path = tmdbActor.profile_path;
         actor.known_for = tmdbActor.known_for.map(movie => ({
             title: movie.title || movie.name,
             release_date: movie.release_date || movie.first_air_date,
@@ -141,6 +123,7 @@ export const getActor = async (req, res) => {
         }));
     } else {
         actor.known_for = [];
+        actor.profile_path = '';
     }
 
 
