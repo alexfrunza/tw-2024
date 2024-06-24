@@ -147,7 +147,7 @@ export const getActor = async (req, res) => {
     }
 
     const newsArticles = await getActorNews(actor.name);
-    if(newsArticles) {
+    if (newsArticles) {
         actor.news = newsArticles;
     } else {
         actor.news = [];

@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="description" id="description">
-        <!-- Aici va fi actualizată descrierea actorului -->
+
     </div>
     <div class="news-container" id="news-container">
         <p>Recent news:</p>
@@ -40,35 +40,31 @@
 <script src="../js/drawer.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', async function() {
+    document.addEventListener('DOMContentLoaded', async function () {
 
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
         if (id) {
             try {
-                // Facem o cerere GET către server pentru a obține detaliile actorului
                 const response = await fetch(`http://127.0.0.1:5001/actors/${id}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
 
-                // Actualizăm numele actorului în pagină
                 const actorNameElement = document.querySelector('.actor-profile--name h1');
                 actorNameElement.textContent = data.data.name;
 
-                // Actualizăm imaginea actorului în pagină sau folosim o imagine default dacă nu există imageUrl
                 const actorImageElement = document.querySelector('.actor-profile--image');
                 let path = data.data.profile_path;
-                if(!path) {
+                if (!path) {
                     actorImageElement.src = '../img/unknown.jpg';
                 } else {
                     actorImageElement.src = 'https://image.tmdb.org/t/p/w500' + path;
                 }
 
 
-                // Generăm lista de filme în care actorul este cunoscut
                 const descriptionElement = document.getElementById('description');
                 descriptionElement.innerHTML = `<h2>Known For:</h2><ul id="movie-list"></ul>`;
                 const movieList = document.getElementById('movie-list');

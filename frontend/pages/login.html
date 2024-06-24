@@ -71,7 +71,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({username, password})
             })
                 .then(response => response.json())
                 .then(data => {
@@ -90,7 +90,7 @@
 </script>
 
 <script>
-    window.onload = function() {
+    window.onload = function () {
         const isLoggedIn = localStorage.getItem('token') !== null;
 
         if (isLoggedIn) {

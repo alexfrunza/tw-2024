@@ -1,7 +1,6 @@
 const adminNavbarTemplate = document.createElement('template')
 
 
-
 adminNavbarTemplate.innerHTML = `
 <div class="users-panel__menu">
     <a href="/admin_panel/add_show.html" class="users-panel__menu--button">Add Show</a>
