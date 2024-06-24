@@ -37,6 +37,9 @@
   background-color: #9ADD5C;
   color: #0A0019;
 }
+.error--button:hover {
+  background-color: #7bb543;
+}
 @media (min-width: 600px) {
   .error {
     gap: 50px;

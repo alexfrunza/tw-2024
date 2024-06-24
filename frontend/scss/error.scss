@@ -30,6 +30,10 @@
     color: #0A0019;
   }
 
+  &--button:hover {
+    background-color: #7bb543;
+  }
+
   @media (min-width: 600px) {
     gap: 50px;
 
