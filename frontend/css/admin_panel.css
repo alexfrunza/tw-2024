@@ -79,6 +79,10 @@
   margin-bottom: 20px;
 }
 
+.users-panel--subtitle {
+  margin-bottom: 20px;
+}
+
 .users-panel--username {
   word-break: break-all;
 }

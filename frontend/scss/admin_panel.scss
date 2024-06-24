@@ -70,6 +70,10 @@
     margin-bottom: 20px;
   }
 
+  @at-root #{&}--subtitle {
+    margin-bottom: 20px;
+  }
+
   @at-root #{&}--username {
     word-break: break-all;
   }

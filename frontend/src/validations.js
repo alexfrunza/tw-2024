@@ -1,12 +1,20 @@
 import {NotFoundError} from "./errors.js";
 
 export function validateFilePath(pathname, ext) {
-    const IMAGE_EXT = ["png", "jpg", "gif", "ico", "svg", "webp"];
+    const IMAGE_EXT = ["png", "jpg", "gif", "ico", "svg", "webp", "scss", "map"];
     const VALID_EXT = ['js', 'css', ...IMAGE_EXT];
 
     const filePathSplit = pathname.split("/");
 
-    if (!VALID_EXT.includes(ext)) {
+    if (!VALID_EXT.includes(ext) && !pathname.endsWith('.css.map')) {
+        throw new NotFoundError("Page not found.");
+    }
+
+    if(ext === 'map' && filePathSplit[1] !== 'css') {
+        throw new NotFoundError("Page not found.");
+    }
+
+    if (ext === 'scss' && filePathSplit[1] !== 'scss') {
         throw new NotFoundError("Page not found.");
     }
 
