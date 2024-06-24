@@ -29,16 +29,9 @@
     <div class="description" id="description">
         <!-- Aici va fi actualizată descrierea actorului -->
     </div>
-    <div class="news-container">
+    <div class="news-container" id="news-container">
         <p>Recent news:</p>
-        <div class="news-container__news">
-            <img src="../img/jdepp.jpg" alt="johnny depp photo" class="news-container--image">
-            <p class="news-container--title">News Title</p>
-        </div>
-        <div class="news-container__news">
-            <img src="../img/jdepp.jpg" alt="johnny depp photo" class="news-container--image">
-            <p class="news-container--title">News Title</p>
-        </div>
+
     </div>
     <app-footer></app-footer>
 </div>
@@ -83,6 +76,19 @@
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `<strong>${movie.title}</strong> (${movie.release_date.split('-')[0]}): ${movie.overview}`;
                     movieList.appendChild(listItem);
+                });
+
+                const newsContainer = document.getElementById('news-container');
+                data.data.news.slice(0, 3).forEach(article => {
+                    const newsItem = document.createElement('div');
+                    newsItem.classList.add('news-container__news');
+                    newsItem.innerHTML = `
+                        <img src="${article.urlToImage || '../img/unknown.jpg'}" alt="${article.title}" class="news-container--image">
+                        <p class="news-container--title"><a href="${article.url}" target="_blank">${article.title}</a></p>
+                        <p class="news-container--source">Source: ${article.source.name}</p>
+                        <p class="news-container--description">${article.description}</p>
+                    `;
+                    newsContainer.appendChild(newsItem);
                 });
 
             } catch (error) {

@@ -75,11 +75,27 @@
 }
 .news-container--image {
   width: 25%;
-  margin: 20px;
+  margin-top: 75px;
+  margin-bottom: 15px;
+}
+.news-container--title a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+.news-container--title :hover {
+  text-decoration: underline;
+}
+.news-container--source {
+  font-style: oblique;
+  margin: 10px 0;
+}
+.news-container--description {
+  text-indent: 25px;
 }
 .news-container__news {
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=actor.css.map */

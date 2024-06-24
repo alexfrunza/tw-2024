@@ -2,7 +2,7 @@ import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
 import {validateActorName, validateInteger} from "../utils/validations.js";
-import {API_KEY} from '../config.js';
+import {API_KEY, API_KEY_NEWS} from '../config.js';
 
 import fetch from 'node-fetch';
 
@@ -100,6 +100,26 @@ const getActorDetails = async (name) => {
     }
 };
 
+const getActorNews = async (name) => {
+    try {
+        const response = await fetch(`https://newsapi.org/v2/everything?q="${name}"&apiKey=${API_KEY_NEWS}&searchIn=title&language=en`, {
+            headers: {
+                'accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const newsData = await response.json();
+        return newsData.articles;
+    } catch (error) {
+        console.error('Error fetching actor news:', error);
+        return null;
+    }
+}
+
 export const getActor = async (req, res) => {
     const resultActor = await pool.query('SELECT * FROM actor WHERE id = $1', [req.params.id]);
 
@@ -126,6 +146,12 @@ export const getActor = async (req, res) => {
         actor.profile_path = '';
     }
 
+    const newsArticles = await getActorNews(actor.name);
+    if(newsArticles) {
+        actor.news = newsArticles;
+    } else {
+        actor.news = [];
+    }
 
     res.jsonBody = {
         message: "Success",

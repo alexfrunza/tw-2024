@@ -62,12 +62,33 @@
 
   &--image {
     width: 25%;
-    margin: 20px;
+    margin-top: 75px;
+    margin-bottom: 15px;
   }
 
+  &--title a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+
+  &--title :hover {
+    text-decoration: underline;
+  }
+
+  &--source {
+    font-style: oblique;
+    margin: 10px 0;
+  }
+
+  &--description {
+    text-indent: 25px;
+  }
 
   &__news {
     display: flex;
-    align-items: center;
+    flex-direction: column;
   }
+
+
 }
