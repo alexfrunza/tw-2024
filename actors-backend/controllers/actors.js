@@ -2,7 +2,7 @@ import {pool} from "../db.js";
 import {toTitleCase} from "../utils/index.js";
 import {NotFoundError} from "../utils/errors.js";
 import {validateActorName, validateInteger} from "../utils/validations.js";
-import { API_KEY } from '../config.js';
+import {API_KEY} from '../config.js';
 
 import fetch from 'node-fetch';
 
@@ -117,7 +117,6 @@ const getActorDetails = async (name) => {
         return null;
     }
 };
-
 
 export const getActor = async (req, res) => {
     const resultActor = await pool.query('SELECT * FROM actor WHERE id = $1', [req.params.id]);

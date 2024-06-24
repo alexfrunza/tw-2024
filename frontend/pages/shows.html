@@ -72,7 +72,12 @@
             showsContainer.appendChild(spinnerDiv);
             const response = await fetch(`http://127.0.0.1:5001/shows?offset=${currentPage * limit}&limit=${limit}`);
             const data = await response.json();
+
+
             for (const show of data.data.shows) {
+                const actorsStr = show.actors.map(actor => actor.name).join(', ');
+                const trimmedStr = actorsStr.length > 100 ? actorsStr.substring(0, 100) + '...' : actorsStr;
+
                 const showElement = document.createElement('a');
                 showElement.href = `show.html?id=${show.id}`;
                 showElement.style.textDecoration = 'none';
@@ -80,7 +85,7 @@
                 showElement.className = 'shows-section__show';
                 showElement.innerHTML = `
             <h2 class="shows-section__show--name">${show.name}</h2>
-            <p class="shows-section__show--movies">${show.actors.map(actor => actor.name).join(', ')}</p>
+            <p class="shows-section__show--movies">${trimmedStr}</p>
         `;
                 showsContainer.appendChild(showElement);
             }
