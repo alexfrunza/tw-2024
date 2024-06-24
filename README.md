@@ -38,27 +38,39 @@
 
         3. [Register page](#register-page)
 
-        4. [Dashboard](#dashboard)
+        4. [Actors page](#actors-page)
+       
+        5. [Actor page](#actor-page) 
+       
+        6. [Error 400 page](#error-400-page)
+       
+        7. [Error 404 page](#error-404-page)
+       
+        8. [Error 500 page](#error-500-page)
 
-        5. [Actors page](#actors-page)
-       
-        6. [Actor page](#actor-page) 
-       
-        7. [Error 400 page](#error-400-page)
-       
-        8. [Error 404 page](#error-404-page)
-       
-        9. [Error 500 page](#error-500-page)
-       
-       10. [Profile page](#profile-page)
+        9. [Edit profile page](#edit-profile-page)
 
-       11. [Edit profile page](#edit-profile-page)
+       10. [Statistics page](#statistics-page)
        
-       12. [Select statistics page](#select-statistics-page)
-
-       13. [Statistics page](#statistics-page)
+       11. [Shows Page](#shows-page)
        
-       14. [About page](#about-page)
+       12. [Show Page](#show-page)
+       
+       13. [Awards Page](#awards-page)
+       
+       14. [Award Page](#award-page)
+       
+       15. [About page](#about-page)
+       
+       16. [Admin dashboard Page](#admin-dashboard-page)
+       
+       17. [See shows Page](#see-shows-page)
+       
+       18. [Add show Page](#add-show-page)
+       
+       19. [See actors Page](#see-actors-page)
+       
+       20. [Add award Page](#add-award-page)
 
     2. [Hardware interface](#hardware-interface)
 
@@ -98,6 +110,12 @@ Students in 2nd at UAIC, Faculty of Computer Science, group B4
 - Ștefan Vlad - [vladstefan303@gmail.com](mailto:vladstefan303@gmail.com)
 
 ## Introduction
+
+![Level_1_diagram.png](images/Level_1_diagram.png)
+
+![Level_2_diagram.png](images/Level_2_diagram.png)
+
+![database.png](images/database.png)
 
 ### Purpose
 
@@ -201,21 +219,14 @@ Users can refer to this document to understand the functionalities and operation
 
 #### Register page
 
-- The register page will contain a form where the user can enter their username, email, and password to create an
+- The register page will contain a form where the user can enter their username, email, name and password to create an
   account.
 
 ![Register page](images/register.png)
 
-#### Dashboard
-
-- The dashboard will contain a summary of the user's activity, such as the latest searches and the latest viewed actors
-  and movies.
-
-![Dashboard](images/dashboard.png)
-
 #### Actors page
 
-- The actors page will contain a list of actors that the user can search for.
+- The actors page will contain a list of actors.
 
 ![Actors page](images/actors.png)
 
@@ -243,35 +254,77 @@ Users can refer to this document to understand the functionalities and operation
 
 ![error500.png](images/error500.png)
 
-#### Profile page
-
-- Profile page will show information about a user.
-
-![profile.png](images/profile.png)
-
 #### Edit profile page
 
 - The edit profile page will contain a form where the user can edit their profile information.
 
 ![Edit profile page](images/edit_profile.png)
 
-#### Select statistics page
-
-- The select statistics page offers a a statistics generation configuration
-
-![select-statistics.png](images/select-statistics.png)
-
 #### Statistics page
 
-- The statistics page will contain visualizations of the data, such as pie charts and bar charts.
+- The statistics page will contain visualizations of the data, such as pie charts, bar charts and line charts.
 
 ![Statistics page](images/statistics.png)
+
+#### Shows Page
+
+- The shows page will contain a list of shows.
+
+![Shows page](images/shows.png)
+
+#### Show Page
+
+- The show's page will show information about a show.
+
+![Show page](images/show.png)
+
+#### Awards Page
+
+- The awards page will contain a list of awards.
+
+![Awards page](images/awards.png)
+
+#### Award Page
+
+- The award's page will show information about an award.
+
+![Award page](images/award.png)
 
 #### About page
 
 - About page presents information about Screen Actors Guild.
 
 ![about.png](images/about.png)
+
+#### Admin dashboard Page
+
+- Admin dashboard Page provides the admin with the ability to view a list of shows, actors, awards, to add and delete them, to import/export actors via CSV.
+
+![admin_dashboard.png](images/admin_dashboard.png)
+
+#### See shows Page
+
+- See shows Page shows a list of shows and the ability to edit or delete a show.
+
+![see_shows.png](images/see_shows.png)
+
+#### Add show Page
+
+- Add show Page allows the admin to add a new show.
+
+![add_show.png](images/add_show.png)
+
+#### See actors Page
+
+- See actors Page shows a list of actors and the ability to edit or delete an actor.
+
+![see_actors.png](images/see_actors.png)
+
+#### Add award Page
+
+- Add award Page allows the admin to add a new award.
+
+![add_award.png](images/add_award.png)
 
 ### Hardware interface
 
