@@ -64,10 +64,33 @@ export const getAward = async (req, res) => {
         throw new NotFoundError("Award not found");
     }
 
-    res.jsonBody = {
-        message: "Success",
-        data: resultAward.rows[0]
-    };
+    if (resultAward.rows[0].type === 'actor') {
+        const resultActor = await pool.query('SELECT award_actor.won "won", award_actor.id "awardId", actor.id, actor.name FROM actor JOIN award_actor ON actor.id = award_actor.actor_id AND award_actor.award_id = $1 ORDER BY award_actor.id', [req.params.id]);
+        res.jsonBody = {
+            message: "Success",
+            data: {
+                id: resultAward.rows[0].id,
+                name: resultAward.rows[0].name,
+                year: resultAward.rows[0].year,
+                type: resultAward.rows[0].type,
+                actors: resultActor.rows
+            }
+        };
+    } else {
+        const resultShow = await pool.query('SELECT award_show.won "won", award_show.id "awardId", show.id, show.name FROM show JOIN award_show ON show.id = award_show.show_id AND award_show.award_id = $1 ORDER BY award_show.id', [req.params.id]);
+        res.jsonBody = {
+            message: "Success",
+            data: {
+                id: resultAward.rows[0].id,
+                name: resultAward.rows[0].name,
+                year: resultAward.rows[0].year,
+                type: resultAward.rows[0].type,
+                shows: resultShow.rows
+            }
+        };
+
+    }
+
     res.statusCode = 200;
 }
 

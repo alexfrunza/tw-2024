@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AcVis</title>
+    <link rel="icon" type="image/png" href="../../img/iconmonstr-customer-1-64.png" sizes="64x64">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../css/loading_spinner.css">
+    <link rel="stylesheet" type="text/css" href="../../css/modal.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="../../css/admin_panel.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="spinner" class="spinner">
+        Loading&#8230;
+    </div>
+    <div id="modal-confirm" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <span class="close-modal-confirm">&times;</span>
+            <p class="content-modal-confirm"></p>
+            <button class="modal-confirm-button">Yes</button>
+        </div>
+
+    </div>
+
+    <app-navbar></app-navbar>
+
+    <div class="users-panel">
+        <div class="users-panel--title">
+            Dashboard - Assign Award
+        </div>
+        <admin-navbar></admin-navbar>
+        <div class="users-panel__content">
+            <h2 class="users-panel--subtitle"></h2>
+            <div class="users-panel__headers">
+                <div class="users-panel__header">
+                    Name
+                </div>
+                <div class="users-panel__header">
+                    Won
+                </div>
+                <div class="users-panel__header">
+                    Actions
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<script type="module" src="../../js/index.js"></script>
+<script src="../../js/drawer.js"></script>
+<script>
+
+    function openModalDeleteNomination(id, name, type) {
+        document.getElementById('modal-confirm').style.display = 'block';
+
+        const modalContent = document.querySelector('.content-modal-confirm');
+        modalContent.innerText = `Are you sure you want to delete the nomination for ${name}?`;
+        const modalButton = document.querySelector('.modal-confirm-button');
+
+        if (type === 'actor') {
+            modalButton.onclick = async function () {
+                const result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                window.location.reload();
+            }
+        } else {
+            modalButton.onclick = async function () {
+                const result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                window.location.reload();
+            }
+        }
+
+    }
+
+    async function updateWonStatus(id, won, type) {
+        if (type === 'actor') {
+            const result = await fetch(`http://127.0.0.1:5001/awardsActor/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    won: !won
+                })
+            });
+
+            window.location.reload();
+        } else {
+            const result = await fetch(`http://127.0.0.1:5001/awardsShow/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    won: !won
+                })
+            });
+
+            window.location.reload();
+        }
+    }
+
+    const templateNomination = (nomination, type) => {
+        if (nomination.won) {
+            return `
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <p class="users-panel--username"> ${nomination.name} </p>
+                </div>
+                <div class="users-panel__field">
+                    ${nomination.won}
+                </div>
+                <div class="users-panel__field">
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-down-alt-filled-240.png" alt="make nominee to win"></button>
+                </div>
+            </div>
+        `
+        } else {
+            return `
+            <div class="users-panel--user">
+                <div class="users-panel__field">
+                    <p class="users-panel--username"> ${nomination.name} </p>
+                </div>
+                <div class="users-panel__field">
+                    ${nomination.won}
+                </div>
+                <div class="users-panel__field">
+                <button onClick="openModalDeleteNomination(${nomination.awardId}, ${nomination.name}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-trash-can-filled-240.png" alt="delete nomination"></button>
+                <button onClick="updateWonStatus(${nomination.awardId}, ${nomination.won}, '${type}')" class="clear-button"><img class="admin-dash--action-icon" src="../img/iconmonstr-arrow-up-alt-filled-240.png" alt="make nominee to lose"></button>
+                </div>
+            </div>
+        `
+        }
+    };
+
+
+    document.addEventListener('DOMContentLoaded', async (event) => {
+        const modal = document.getElementById('modal-confirm');
+        const buttonModal = document.querySelector('.close-modal-confirm');
+
+        buttonModal.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        const spinnerDiv = document.getElementById('spinner');
+
+        function showSpinner() {
+            spinnerDiv.style.visibility = 'visible';
+        }
+
+        function hideSpinner() {
+            spinnerDiv.style.visibility = 'hidden';
+        }
+
+        showSpinner();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get('id')
+        id = parseInt(id, 10)
+        if (!Number.isInteger(id)) {
+            window.location.href = '/error404.html';
+            return;
+        }
+
+        const result = await fetch(`http://127.0.0.1:5001/awards/${id}`);
+        const data = await result.json();
+
+        document.getElementsByClassName('users-panel--subtitle')[0].innerText = `${data.data.name} - ${data.data.year}`;
+
+
+        let nominations;
+
+        if (data.data.type === 'actor') {
+            nominations = data.data.actors;
+        } else {
+            nominations = data.data.shows;
+        }
+
+        nominations = nominations.map(nomination => templateNomination(nomination, data.data.type)).join('');
+        document.getElementsByClassName('users-panel__content')[0].innerHTML += nominations;
+
+        hideSpinner();
+    });
+</script>
+</body>
+</html>
