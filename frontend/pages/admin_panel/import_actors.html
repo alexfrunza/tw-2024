@@ -40,6 +40,7 @@
             Dashboard - Import actors
         </div>
         <admin-navbar></admin-navbar>
+
         <div class="users-panel__content">
             <input type="file" id="file" class="admin-dash--button">
             <button id="upload" class="admin-dash--button">Upload</button>
@@ -59,7 +60,7 @@
     const status = document.getElementById('status');
 
     upload.addEventListener('click', () => {
-        status.innerHTML = 'uploading';
+        status.innerHTML = 'Uploading...';
 
         const fileReader = new FileReader();
         fileReader.readAsArrayBuffer(file.files[0]);
@@ -84,7 +85,7 @@
                     status.innerHTML = data.errors[0].message;
                 }
             } else {
-                status.innerHTML = 'Uploaded';
+                status.innerHTML = 'Uploaded!';
             }
         }
     });
